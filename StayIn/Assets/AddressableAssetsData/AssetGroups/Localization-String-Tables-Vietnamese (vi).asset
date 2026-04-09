@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Vietnamese (vi)
   m_GUID: 07a78bbf20119164e83d5c84a84c601e
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: d03e003f48640e045af9ba2c51268247
+    m_Address: StayInGameText_vi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-vi
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 518dcf2f87b6fa84fa4d6e23d5ea3165, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: dbe5673b083a64f4e880c1e0c6bd5503, type: 2}
+    - {fileID: 11400000, guid: 3f5c9c1c51e483f48b7448629ec3d545, type: 2}

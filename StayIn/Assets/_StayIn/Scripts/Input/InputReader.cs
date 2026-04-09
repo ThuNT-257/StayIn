@@ -12,7 +12,7 @@ public class InputReader : ScriptableObject, StayInInput.IPlayerActions {
     private StayInInput _gameInput;
 
     private void OnEnable() {
-        if(_gameInput != null) {
+        if(_gameInput == null) {
             _gameInput = new StayInInput();
             _gameInput.Player.SetCallbacks(this);
         }

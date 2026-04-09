@@ -14,8 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Localization-Assets-Shared
   m_GUID: 7abe854679d9a0145bd4ef45ff7c0ea7
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: cc57f5139c87a1343bea2fdf258dd1bf
+    m_Address: Assets/_StayIn/Localization/StayInGameText Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 518dcf2f87b6fa84fa4d6e23d5ea3165, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: aa77418166d8b7e44824c6ae5c85f8eb, type: 2}
+    - {fileID: 11400000, guid: fd7516b17d63b3d4db0408fe902086c3, type: 2}
