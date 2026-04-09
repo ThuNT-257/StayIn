@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StayInGameText Shared Data
   m_EditorClassIdentifier: 
   m_TableCollectionName: StayInGameText
-  m_TableCollectionNameGuidString: 00000000000000000000000000000000
+  m_TableCollectionNameGuidString: cc57f5139c87a1343bea2fdf258dd1bf
   m_Entries: []
   m_Metadata:
     m_Items: []
