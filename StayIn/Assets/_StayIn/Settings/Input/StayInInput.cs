@@ -105,7 +105,7 @@ public partial class @StayInInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b598e515-41a0-4bc3-a279-2b55c1026e44"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

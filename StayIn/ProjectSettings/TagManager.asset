@@ -2,13 +2,14 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Item
   - Water
   - UI
   - 
@@ -38,6 +39,20 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Collision
+    uniqueID: 4051805975
+    locked: 0
+  - name: Floor
+    uniqueID: 2488456569
+    locked: 0
+  - name: Player
+    uniqueID: 4102933817
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Walls
+    uniqueID: 389229977
+    locked: 0
+  m_RenderingLayers:
+  - Default
