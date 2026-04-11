@@ -4,11 +4,11 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour {
     [Header("Settings")]
     [SerializeField]
-    private float interactRange = 0.5f;
+    private float interactRange = 1.5f;
     [SerializeField]
     private LayerMask itemLayer;
     [SerializeField]
-    private Vector2 scanOffset = new Vector2(0, 0.5f);
+    private Vector2 scanOffset = new Vector2(0, 1f);
 
     [Header("References")]
     [SerializeField]

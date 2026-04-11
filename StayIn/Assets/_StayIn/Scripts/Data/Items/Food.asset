@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Food
   m_EditorClassIdentifier: 
   itemId: item_data_food
-  itemName: 
+  itemName: Food
   category: 0
   weight: 1
   icon: {fileID: 0}
-  otherSprite: {fileID: 0}
   description: 
+  hasDurability: 1
+  maxDurability: 1
+  isStackable: 1
+  maxStackSize: 99

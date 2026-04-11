@@ -17,5 +17,8 @@ MonoBehaviour:
   category: 2
   weight: 1
   icon: {fileID: 21300000, guid: cff887f60d62ca1469f92b2a6481d93d, type: 3}
-  otherSprite: {fileID: 5383860243982572956, guid: 68f21135a2ec720428f9b4dc27c8b88a, type: 3}
   description: This is good for health.
+  hasDurability: 1
+  maxDurability: 1
+  isStackable: 1
+  maxStackSize: 99

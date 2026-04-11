@@ -17,5 +17,8 @@ MonoBehaviour:
   category: 1
   weight: 1
   icon: {fileID: 0}
-  otherSprite: {fileID: 0}
-  description: 
+  description: Utility
+  hasDurability: 0
+  maxDurability: 0
+  isStackable: 1
+  maxStackSize: 99
