@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public enum ItemType { Food, Water, Medicine, Utility}
+
+[CreateAssetMenu(fileName = "NewItem", menuName = "StayIn/Item Data")]
+public class ItemData : ScriptableObject {
+
+    [Header("Datas")]
+    [SerializeField] private string itemID;
+    [SerializeField] private string itemName;
+    [SerializeField] private ItemType itemType;
+    [SerializeField] private Sprite itemIcon;
+    [SerializeField] private string description;
+
+    [Header("Settings")]
+    [SerializeField] private bool isStackable;
+    [SerializeField] private int maxStack = 99;
+
+    [Header("Effects")]
+    [SerializeField] private int restoreValue;
+
+    public string ItemID => itemID;
+    public string ItemName => itemName;
+    public ItemType ItemType => itemType;
+    public Sprite ItemIcon => itemIcon;
+    public string Description => description;
+    public int RestoreValue => restoreValue;
+    public bool IsStackable => isStackable;
+    public int MaxStack => isStackable ? maxStack : 1;
+}

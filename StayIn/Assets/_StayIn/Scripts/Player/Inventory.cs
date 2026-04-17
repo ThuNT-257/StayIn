@@ -12,19 +12,19 @@ public class Inventory : MonoBehaviour {
 
     public event Action OnInventoryChanged;
 
-    public bool CanAddItem(ItemData item) {
-        return currentWeight + item.Weight <= playerStats.MaxCapacity;
-    }
+    //public bool CanAddItem(ItemData item) {
+        //return currentWeight + item.Weight <= playerStats.MaxCapacity;
+    //}
 
-    public bool AddItemToInventory(ItemData newItem) {
-        if (CanAddItem(newItem)) {
-            itemList.Add(newItem);
-            currentWeight += newItem.Weight;
-            OnInventoryChanged?.Invoke();
-            return true;
-        }
-        return false;
-    }
+    //public bool AddItemToInventory(ItemData newItem) {
+        //if (CanAddItem(newItem)) {
+            //itemList.Add(newItem);
+            //currentWeight += newItem.Weight;
+            //OnInventoryChanged?.Invoke();
+            //return true;
+        //}
+        //return false;
+    //}
 
     public List<ItemData> EmptyInventory() {
         if(itemList.Count == 0) return null;
