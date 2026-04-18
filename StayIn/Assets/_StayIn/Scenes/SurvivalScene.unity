@@ -1104,9 +1104,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1995314673}
-        m_TargetAssemblyTypeName: DayManager, Assembly-CSharp
-        m_MethodName: OnNextDayButtonClicked
+      - m_Target: {fileID: 1995314676}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: EndDay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2106,6 +2106,7 @@ GameObject:
   - component: {fileID: 1995314673}
   - component: {fileID: 1995314674}
   - component: {fileID: 1995314675}
+  - component: {fileID: 1995314676}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2133,7 +2134,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 696e50e70c674344698fc780b935d2e7, type: 2}
   characterPrefab: {fileID: 6102062322653943105, guid: c8eb10dbc9524cf429f8cf3c31ac5bfd, type: 3}
   container: {fileID: 2090970858}
-  distributionUI: {fileID: 1017777330}
 --- !u!4 &1995314672
 Transform:
   m_ObjectHideFlags: 0
@@ -2196,6 +2196,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18205b478ffd03c41be85ca2eecc9631, type: 2}
   - {fileID: 11400000, guid: 69e9477b42c2a46499e0c6c9009525b3, type: 2}
   resource: []
+--- !u!114 &1995314676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995314670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a74d9a8743937d54b913ef24b692d91b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceUI: {fileID: 1717536463}
+  distributionUI: {fileID: 1017777330}
 --- !u!1 &2090970857
 GameObject:
   m_ObjectHideFlags: 0

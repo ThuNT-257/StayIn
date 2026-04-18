@@ -16,8 +16,10 @@ public class CharacterManager : MonoBehaviour {
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private Transform container;
 
-    [Header("UI Settings")]
-    [SerializeField] private DistributionPanelUI distributionUI;
+    public List<CharacterData> GetCharacterList()
+    {
+        return allCharacters;
+    }
 
     private void Awake() {
         Instance = this;
@@ -26,7 +28,6 @@ public class CharacterManager : MonoBehaviour {
     private void Start() {
         GenerateRandomTeam();
         InitializeCharacters();
-        distributionUI.DisplayDistributionList();
     }
 
     private void GenerateRandomTeam() {
@@ -105,9 +106,5 @@ public class CharacterManager : MonoBehaviour {
         }
 
         RefreshAllUIs();
-    }
-
-    public List<CharacterData> GetCharacterList() {
-        return allCharacters;
     }
 }

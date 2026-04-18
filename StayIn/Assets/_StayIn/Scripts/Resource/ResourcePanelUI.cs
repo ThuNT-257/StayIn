@@ -7,25 +7,41 @@ public class ResourcePanelUI : MonoBehaviour {
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private Transform container;
 
+    private List<ResourceUI> resourcePool = new List<ResourceUI>();
+
     public void DisplayResourceList() {
-        if (container == null || itemPrefab == null) {
+        if (container == null || itemPrefab == null || ResourceManager.Instance == null) {
             return;
-        }
-        foreach (Transform child in container) {
-            Destroy(child.gameObject);
         }
 
-        if(ResourceManager.Instance == null) {
-            return;
+        foreach(ResourceUI resourceItem in resourcePool)
+        {
+            resourceItem.gameObject.SetActive(false);
         }
 
         List<ResourceManager.ResourceItem> currentResource = ResourceManager.Instance.resource;
 
-        foreach (ResourceManager.ResourceItem item in currentResource) {
-            if (item.quantity > 0) {
-                GameObject newItem = Instantiate(itemPrefab, container);
-                ResourceUI ui = newItem.GetComponent<ResourceUI>();
-                ui.SetUp(item);
+        int uiIndex = 0;
+        foreach (ResourceManager.ResourceItem resItem in currentResource)
+        {
+            if (resItem.quantity > 0)
+            {
+                ResourceUI uiInstance;
+
+                if (uiIndex < resourcePool.Count)
+                {
+                    uiInstance = resourcePool[uiIndex];
+                }
+                else
+                {
+                    GameObject newItem = Instantiate(itemPrefab, container);
+                    uiInstance = newItem.GetComponent<ResourceUI>();
+                    resourcePool.Add(uiInstance);
+                }
+
+                uiInstance.gameObject.SetActive(true);
+                uiInstance.SetUp(resItem);
+                uiIndex++;
             }
         }
     }

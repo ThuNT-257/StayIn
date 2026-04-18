@@ -20,7 +20,6 @@ public class DistributedItemUi : MonoBehaviour
         currentData = data;
         characterNameText.text = data.CharacterName;
         
-        characterNameText.text = data.CharacterName;
         foodToggle.isOn = false;
         waterToggle.isOn = false;
         medicineToggle.isOn = false;
