@@ -55,4 +55,24 @@ public class CharacterData : ScriptableObject {
         return avatarNormal;
     }
 
+    public void Eat(int amount) {
+        if(IsDead || isExploring) {
+            return;
+        }
+        Hunger = Mathf.Clamp(Hunger + amount, 0, 10);
+    }
+
+    public void Drink(int amount) {
+        if(isDead || isExploring) {
+            return;
+        }
+        Thirsty = Mathf.Clamp(Thirsty + amount, 0, 10);
+    }
+
+    public void Heal(int amount) {
+        if (IsDead || isExploring) {
+            return;
+        }
+        Health = Mathf.Clamp(Health + amount, 0, 10);
+    }
 }

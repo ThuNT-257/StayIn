@@ -2,12 +2,21 @@
 using UnityEngine;
 
 public class ResourcePanelUI : MonoBehaviour {
+    public static ResourcePanelUI Instance;
 
     [SerializeField] private GameObject panelObject;
     [SerializeField] private GameObject itemPrefab;
     [SerializeField] private Transform container;
 
     private List<ResourceUI> resourcePool = new List<ResourceUI>();
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
+    }
 
     public void DisplayResourceList() {
         if (container == null || itemPrefab == null || ResourceManager.Instance == null) {
@@ -52,6 +61,14 @@ public class ResourcePanelUI : MonoBehaviour {
 
         if(isActive ) {
             DisplayResourceList();
+        }
+    }
+
+    public void UpdateResourcePreviews(string itemID, int count) {
+        foreach (ResourceUI slot in resourcePool) {
+            if (slot.gameObject.activeSelf) {
+                slot.RefreshPreviews(itemID, count);
+            }
         }
     }
 }

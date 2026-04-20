@@ -1,40 +1,98 @@
+using Assets._StayIn.Scripts.Definitions;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    private static GameManager instance;
 
-    [Header("References")]
-    [SerializeField] private ResourcePanelUI resourceUI;
-    [SerializeField] private DistributionPanelUI distributionUI;
+    public static GameManager Instance {
+        get {
+            if(instance == null) {
+                instance = FindAnyObjectByType<GameManager>();
+                if(instance == null ) {
+                    Debug.Log("There is no GameManager in Scene.");
+                }
+            }
+            return instance;
+        }
+    }
 
-    private int currentDay = 1;
-
-    public int GetCurrentDay() => currentDay;
+    public static event Action<List<DayActionData>> DayAction;
 
     private void Awake()
     {
-        Instance = this;
+        if(instance != null && instance != this) {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
     }
 
-    private void Start()
-    {
-        StartCoroutine(InitializeGameRoutine());
+    private void OnEnable() {
+        DayManager.OnDayChanged += ProcessDaySummary;
     }
 
-    private System.Collections.IEnumerator InitializeGameRoutine()
-    {
-        yield return new WaitForEndOfFrame();
-        distributionUI.OpenPanel();
+    private void OnDisable() {
+        DayManager.OnDayChanged -= ProcessDaySummary;
     }
 
-    public void EndDay()
-    {
-        CharacterManager.Instance.ProcessNewDay();
+    private void Start() {
+        DayManager.Instance.Init();
+        CharacterManager.Instance.Init();
+        ResourceManager.Instance.Init();
+        DistributionPanelUI.Instance.OpenPanel();
+        RefreshAllUI();
+    }
 
-        currentDay++;
+    public void RefreshAllUI() {
+        CharacterListUI.Instance.DisplayCharacterList();
+        DistributionPanelUI.Instance.DisplayDistributionList();
+        ResourcePanelUI.Instance.DisplayResourceList();
+    }
 
-        resourceUI.DisplayResourceList();
-        distributionUI.DisplayDistributionList();
+    public void ProcessDaySummary(int nextDay) {
+        if (nextDay == 1) return;
+        List<DistributedItemUi> distributionList = DistributionPanelUI.Instance.GetCurrenDistributionList();
+        List<DayActionData> actionPackets = new List<DayActionData>();
+
+        foreach(DistributedItemUi itemUI in distributionList) {
+            if (!itemUI.gameObject.activeSelf) {
+                continue;
+            }
+
+            bool fed = false;
+            bool watered = false;
+            bool healed = false;
+
+            if (itemUI.WillEat && ResourceManager.Instance.RemoveItem("item_01", 1)) {
+                itemUI.CurrentCharacter.Eat(5);
+                fed = true;
+            }
+
+            if (itemUI.WillDrink && ResourceManager.Instance.RemoveItem("item_02", 1)) {
+                itemUI.CurrentCharacter.Drink(10);
+                watered = true;
+            }
+            if (itemUI.WillHeal && ResourceManager.Instance.RemoveItem("item_03", 1)) {
+                itemUI.CurrentCharacter.Heal(10);
+                healed = true;
+            }
+
+            actionPackets.Add(new DayActionData {
+                character = itemUI.CurrentCharacter,
+                isFed = fed,
+                isWatered = watered,
+                isHealed = healed,
+            });
+        }
+
+        DayAction?.Invoke(actionPackets);
+        RefreshAllUI();
+    }
+
+    public void OnNextDayButtonClicked() {
+        StartCoroutine(FadeManager.Instance.StartFade(DayManager.Instance.NextDay));
     }
 }

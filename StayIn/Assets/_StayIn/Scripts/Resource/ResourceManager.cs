@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
@@ -17,10 +18,14 @@ public class ResourceManager : MonoBehaviour {
     public List<ResourceItem> resource = new List<ResourceItem>();
 
     private void Awake() {
-        if (Instance == null) { Instance = this; } else { Destroy(gameObject); }
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
-    private void Start() {
+    public void Init() {
         SetUpResources();
     }
 
@@ -42,8 +47,21 @@ public class ResourceManager : MonoBehaviour {
         }
     }
 
-    public int GetQuantity(ItemData item) {
-        ResourceItem slot = resource.Find(x => x.itemData.ItemID == item.ItemID);
+    public bool RemoveItem(string itemID, int amount) {
+        ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
+        if (slot != null) {
+            if (slot.itemData.IsStackable) {
+                slot.quantity -= amount;
+            } else {
+                slot.quantity = 0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public int GetItemQuantity(string itemID) {
+        ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
         return slot != null ? slot.quantity : 0;
     }
 }

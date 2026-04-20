@@ -1,41 +1,41 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DayManager : MonoBehaviour {
-    public static DayManager Instance;
 
-    [Header("Managers")]
-    [SerializeField]
-    private DayUI dayUI;
-
-    [Header("Settings")]
-    [SerializeField] private int currentDay = 1;
-
-    private void Awake() {
-        Instance = this;
-        if (dayUI == null) {
-            dayUI = GetComponent<DayUI>();
+    private static DayManager instance;
+    public static DayManager Instance {
+        get {
+            if(instance == null) {
+                instance = FindAnyObjectByType<DayManager>();
+                if(instance == null ) {
+                    Debug.Log("There is no DayManager in Scene.");
+                }
+            }
+            return instance;
         }
     }
 
-    private void Start() {
-        if (dayUI != null) {
-            dayUI.UpdateUI(currentDay);
+    [SerializeField] private int currentDay = 1;
+
+    public static event Action<int> OnDayChanged;
+
+    public int CurrentDay => currentDay;
+
+    private void Awake() {
+        if(instance != null && instance != this) {
+            Destroy(this.gameObject);
+            return;
         }
-        dayUI.SetUp();
+        instance = this;
+    }
+
+    public void Init() {
+        OnDayChanged?.Invoke(currentDay);
     }
 
     public void NextDay() {
         currentDay++;
-        if (dayUI != null) {
-            dayUI.UpdateUI(currentDay);
-        }
-        if(CharacterManager.Instance != null) {
-            CharacterManager.Instance.ProcessNewDay();
-        }
-    }
-
-    public void OnNextDayButtonClicked() {
-        StartCoroutine(FadeManager.Instance.StartFade(NextDay));
+        OnDayChanged?.Invoke(currentDay);
     }
 }

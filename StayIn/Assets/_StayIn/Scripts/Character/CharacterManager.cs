@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets._StayIn.Scripts.Definitions;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour {
@@ -6,15 +7,10 @@ public class CharacterManager : MonoBehaviour {
 
     [Header("Data")]
     [SerializeField] private List<CharacterData> allCharacters = new List<CharacterData>();
-    private List<CharacterUI> allCharacterUIs = new List<CharacterUI>();
 
     [Header("Characters")]
     [SerializeField] private CharacterData mainCharacter;
     [SerializeField] private List<CharacterData> otherPool;
-
-    [Header("Settings")]
-    [SerializeField] private GameObject characterPrefab;
-    [SerializeField] private Transform container;
 
     public List<CharacterData> GetCharacterList()
     {
@@ -22,12 +18,23 @@ public class CharacterManager : MonoBehaviour {
     }
 
     private void Awake() {
-        Instance = this;
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
-    private void Start() {
+    private void OnEnable() {
+        GameManager.DayAction += ProcessDaySummary;
+    }
+
+    private void OnDisable() {
+        GameManager.DayAction -= ProcessDaySummary;
+    }
+
+    public void Init() {
         GenerateRandomTeam();
-        InitializeCharacters();
     }
 
     private void GenerateRandomTeam() {
@@ -52,59 +59,32 @@ public class CharacterManager : MonoBehaviour {
         }
     }
 
-    private void InitializeCharacters() {
-        if (container == null) {
-            return;
-        }
-
-        foreach (Transform child in container) {
-            Destroy(child.gameObject);
-        }
-        allCharacterUIs.Clear();
-
-        if (characterPrefab == null) {
-            return;
-        }
-
-        foreach (CharacterData data in allCharacters) {
-            if(data == null) {
+    public void ProcessDaySummary(List<DayActionData> actions) {
+        foreach(DayActionData action in actions) {
+            CharacterData character = action.character;
+            if(character == null || character.IsDead) {
                 continue;
             }
-            GameObject newSlot = Instantiate(characterPrefab, container);
-            CharacterUI slotUI = newSlot.GetComponent<CharacterUI>();
-            if(slotUI != null) {
-                slotUI.SetUp(data);
-                allCharacterUIs.Add(slotUI);
-            }
-        }
-    }
 
-    public void RefreshAllUIs() {
-        foreach(CharacterUI ui in allCharacterUIs) {
-            ui.UpdateUI();
-        }
-    }
+            if (!action.isFed && !character.IsDead && !character.IsExploring) {
+                character.Hunger -= 1;
+            }
 
-    public void ProcessNewDay() {
-        foreach(CharacterData character in allCharacters) {
-            if(character == null) {
-                continue;
+            if (!action.isWatered && !character.IsDead && !character.IsExploring) {
+                character.Thirsty -= 1;
             }
-            if (character.IsDead) {
-                continue;
+
+            if (!action.isHealed && !character.IsDead && !character.IsExploring && character.Health < 10) {
+                character.Health -= 1;
             }
-            character.Hunger -= 1;
-            character.Thirsty -= 1;
 
             character.Health = Mathf.Clamp(character.Health, 0, 10);
             character.Hunger = Mathf.Clamp(character.Hunger, 0, 10);
             character.Thirsty = Mathf.Clamp(character.Thirsty, 0, 5);
 
-            if (character.Health == 0 || character.Hunger == 0 || character.Thirsty == 0) {
+            if (character.Hunger <= 0 || character.Thirsty <= 0 || character.Health <= 0) {
                 character.IsDead = true;
             }
         }
-
-        RefreshAllUIs();
     }
 }

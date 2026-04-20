@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class DayUI : MonoBehaviour
 {
-    [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI dayText;
 
-    public void SetUp() {
-        UpdateUI(1);
+
+
+    private void OnEnable() {
+        DayManager.OnDayChanged += UpdateUI;
+    }
+
+    private void OnDisable() {
+        DayManager.OnDayChanged -= UpdateUI;
     }
 
     public void UpdateUI(int day) {
+        Debug.Log("DayUI worked!");
         dayText.text = "Day " + day + " from the outbreak";
     }
 }
