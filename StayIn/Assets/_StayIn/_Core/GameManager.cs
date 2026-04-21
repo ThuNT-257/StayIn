@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static event Action<List<DayActionData>> DayAction;
+    public static event Action OnGameStateChanged;
 
     private void Awake()
     {
@@ -42,14 +43,15 @@ public class GameManager : MonoBehaviour
         DayManager.Instance.Init();
         CharacterManager.Instance.Init();
         ResourceManager.Instance.Init();
+
         DistributionPanelUI.Instance.OpenPanel();
         RefreshAllUI();
     }
 
     public void RefreshAllUI() {
-        CharacterListUI.Instance.DisplayCharacterList();
-        DistributionPanelUI.Instance.DisplayDistributionList();
-        ResourcePanelUI.Instance.DisplayResourceList();
+        OnGameStateChanged?.Invoke();
+        //DistributionPanelUI.Instance.DisplayDistributionList();
+        //ResourcePanelUI.Instance.DisplayResourceList();
     }
 
     public void ProcessDaySummary(int nextDay) {

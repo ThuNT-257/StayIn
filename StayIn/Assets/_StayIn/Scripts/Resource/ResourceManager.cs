@@ -1,28 +1,32 @@
-﻿using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using Assets._StayIn.Scripts.Definitions;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
-    public static ResourceManager Instance;
+    private static ResourceManager instance;
 
-    [System.Serializable]
-    public class ResourceItem {
-        public ItemData itemData;
-        public int quantity;
+    public static ResourceManager Instance {
+        get {
+            if(instance == null) {
+                instance = FindAnyObjectByType<ResourceManager>();
+                if(instance == null) {
+                    Debug.Log("There is no ResourceManager in Scene.");
+                }
+            }
+            return instance;
+        }
     }
 
-    [Header("Datas")]
     [SerializeField] private List<ItemData> itemList;
 
-    [Header("Current Resource")]
     public List<ResourceItem> resource = new List<ResourceItem>();
 
     private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(gameObject);
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+            return;
         }
+        instance = this;
     }
 
     public void Init() {
@@ -49,15 +53,22 @@ public class ResourceManager : MonoBehaviour {
 
     public bool RemoveItem(string itemID, int amount) {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
-        if (slot != null) {
-            if (slot.itemData.IsStackable) {
-                slot.quantity -= amount;
-            } else {
-                slot.quantity = 0;
-            }
-            return true;
+        if (slot == null || slot.quantity < amount) {
+            Debug.Log("There are enough resource to remove");
+            return false;
         }
-        return false;
+
+        if (slot.itemData.IsStackable) {
+            slot.quantity -= amount;
+        } else {
+            slot.quantity = 0;
+        }
+
+        if (slot.quantity <= 0) {
+            resource.Remove(slot);
+        }
+
+        return true;
     }
 
     public int GetItemQuantity(string itemID) {

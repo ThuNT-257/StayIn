@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Assets._StayIn.Scripts.Definitions;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourcePanelUI : MonoBehaviour {
-    public static ResourcePanelUI Instance;
 
     [SerializeField] private GameObject panelObject;
     [SerializeField] private GameObject itemPrefab;
@@ -10,12 +10,12 @@ public class ResourcePanelUI : MonoBehaviour {
 
     private List<ResourceUI> resourcePool = new List<ResourceUI>();
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(gameObject);
-        }
+    private void OnEnable() {
+        GameManager.OnGameStateChanged += DisplayResourceList;
+    }
+
+    private void OnDisable() {
+        GameManager.OnGameStateChanged -= DisplayResourceList;
     }
 
     public void DisplayResourceList() {
@@ -28,10 +28,10 @@ public class ResourcePanelUI : MonoBehaviour {
             resourceItem.gameObject.SetActive(false);
         }
 
-        List<ResourceManager.ResourceItem> currentResource = ResourceManager.Instance.resource;
+        List<ResourceItem> currentResource = ResourceManager.Instance.resource;
 
         int uiIndex = 0;
-        foreach (ResourceManager.ResourceItem resItem in currentResource)
+        foreach (ResourceItem resItem in currentResource)
         {
             if (resItem.quantity > 0)
             {
@@ -49,7 +49,7 @@ public class ResourcePanelUI : MonoBehaviour {
                 }
 
                 uiInstance.gameObject.SetActive(true);
-                uiInstance.SetUp(resItem);
+                //uiInstance(resItem);
                 uiIndex++;
             }
         }
@@ -67,7 +67,7 @@ public class ResourcePanelUI : MonoBehaviour {
     public void UpdateResourcePreviews(string itemID, int count) {
         foreach (ResourceUI slot in resourcePool) {
             if (slot.gameObject.activeSelf) {
-                slot.RefreshPreviews(itemID, count);
+                //slot.RefreshPreviews(itemID, count);
             }
         }
     }

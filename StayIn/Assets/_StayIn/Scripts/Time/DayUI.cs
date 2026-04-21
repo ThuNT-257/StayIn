@@ -5,8 +5,6 @@ public class DayUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI dayText;
 
-
-
     private void OnEnable() {
         DayManager.OnDayChanged += UpdateUI;
     }
@@ -16,7 +14,6 @@ public class DayUI : MonoBehaviour
     }
 
     public void UpdateUI(int day) {
-        Debug.Log("DayUI worked!");
         dayText.text = "Day " + day + " from the outbreak";
     }
 }

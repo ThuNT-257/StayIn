@@ -3,20 +3,18 @@ using UnityEngine;
 
 public class CharacterListUI : MonoBehaviour
 {
-    public static CharacterListUI Instance;
-
     [Header("UI")]
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private Transform container;
 
     private List<CharacterUI> characterPool = new List<CharacterUI>();
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(gameObject);
-        }
+    private void OnEnable() {
+        GameManager.OnGameStateChanged += DisplayCharacterList;
+    }
+
+    private void OnDisable() {
+        GameManager.OnGameStateChanged -= DisplayCharacterList;
     }
 
     public void DisplayCharacterList() {
@@ -45,7 +43,6 @@ public class CharacterListUI : MonoBehaviour
             uiInstance.gameObject.SetActive(true);
             uiInstance.SetUp(character);
             uiIndex++;
-            Debug.Log(character.CharacterName + ": " + "Hunger: " + character.Hunger + "; Thirsty: " + character.Thirsty + "; Health: " + character.Health);
         }
 
     }

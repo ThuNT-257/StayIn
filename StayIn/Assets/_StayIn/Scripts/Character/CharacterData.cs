@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "StayIn/Character Data")]
@@ -66,7 +65,7 @@ public class CharacterData : ScriptableObject {
         if(isDead || isExploring) {
             return;
         }
-        Thirsty = Mathf.Clamp(Thirsty + amount, 0, 10);
+        Thirsty = Mathf.Clamp(Thirsty + amount, 0, 5);
     }
 
     public void Heal(int amount) {
@@ -74,5 +73,29 @@ public class CharacterData : ScriptableObject {
             return;
         }
         Health = Mathf.Clamp(Health + amount, 0, 10);
+    }
+
+    public void HandleDailyStatus(bool isFed, bool isWatered, bool isHealed) {
+        if(IsDead || IsExploring) {
+            return;
+        }
+
+        if (!isFed) {
+            Hunger -= 1;
+        }
+
+        if (!isWatered) {
+            Thirsty -= 1;
+        }
+
+        if (!isHealed && Health < 10) Health -= 1;
+
+        Hunger = Mathf.Clamp(Hunger, 0, 10);
+        Thirsty = Mathf.Clamp(Thirsty, 0, 5);
+        Health = Mathf.Clamp(Health, 0, 10);
+
+        if(Hunger <= 0 || Thirsty <= 0 || Health <= 0) {
+            IsDead = true;
+        }
     }
 }

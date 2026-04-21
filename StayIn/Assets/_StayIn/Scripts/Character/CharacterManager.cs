@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour {
-    public static CharacterManager Instance;
+    private static CharacterManager instance;
 
-    [Header("Data")]
-    [SerializeField] private List<CharacterData> allCharacters = new List<CharacterData>();
+    public static CharacterManager Instance {
+        get {
+            if(instance == null) {
+                instance = FindAnyObjectByType<CharacterManager>();
+                if(instance == null) {
+                    Debug.Log("There is no Character Manager in Scene.");
+                }
+            }
+            return instance;
+        }
+    }
 
-    [Header("Characters")]
     [SerializeField] private CharacterData mainCharacter;
     [SerializeField] private List<CharacterData> otherPool;
 
-    public List<CharacterData> GetCharacterList()
-    {
-        return allCharacters;
-    }
+    [SerializeField] private List<CharacterData> allCharacters = new List<CharacterData>();
 
     private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(gameObject);
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+            return;
         }
+        instance = this;
     }
 
     private void OnEnable() {
@@ -36,6 +41,9 @@ public class CharacterManager : MonoBehaviour {
     public void Init() {
         GenerateRandomTeam();
     }
+    public List<CharacterData> GetCharacterList() {
+        return allCharacters;
+    }
 
     private void GenerateRandomTeam() {
         allCharacters.Clear();
@@ -46,7 +54,10 @@ public class CharacterManager : MonoBehaviour {
             allCharacters.Add(mainInst);
         }
 
-        int extraMemberCount = Random.Range(0, otherPool.Count + 1);
+        int maxSlot = 3;
+        int availableCharacter = otherPool.Count;
+
+        int extraMemberCount = Random.Range(0, Mathf.Min(maxSlot, availableCharacter) + 1);
         List<CharacterData> tempPool = new List<CharacterData>(otherPool);
 
         for(int i = 0; i < extraMemberCount; i++) {
@@ -61,29 +72,8 @@ public class CharacterManager : MonoBehaviour {
 
     public void ProcessDaySummary(List<DayActionData> actions) {
         foreach(DayActionData action in actions) {
-            CharacterData character = action.character;
-            if(character == null || character.IsDead) {
-                continue;
-            }
-
-            if (!action.isFed && !character.IsDead && !character.IsExploring) {
-                character.Hunger -= 1;
-            }
-
-            if (!action.isWatered && !character.IsDead && !character.IsExploring) {
-                character.Thirsty -= 1;
-            }
-
-            if (!action.isHealed && !character.IsDead && !character.IsExploring && character.Health < 10) {
-                character.Health -= 1;
-            }
-
-            character.Health = Mathf.Clamp(character.Health, 0, 10);
-            character.Hunger = Mathf.Clamp(character.Hunger, 0, 10);
-            character.Thirsty = Mathf.Clamp(character.Thirsty, 0, 5);
-
-            if (character.Hunger <= 0 || character.Thirsty <= 0 || character.Health <= 0) {
-                character.IsDead = true;
+            if(action.character != null) {
+                action.character.HandleDailyStatus(action.isFed, action.isWatered, action.isHealed);
             }
         }
     }
