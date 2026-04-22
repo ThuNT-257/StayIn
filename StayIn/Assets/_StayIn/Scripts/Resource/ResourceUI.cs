@@ -19,6 +19,7 @@ public class ResourceUI : MonoBehaviour {
         currentItemID = item.itemData.ItemID;
         itemText.text = $"{item.itemData.ItemName} x {item.quantity}";
         plannedConsumptionText.gameObject.SetActive(false);
+        ResetPreviewText();
     }
 
     public void UpdateReviewText(int quantity) {
@@ -27,6 +28,12 @@ public class ResourceUI : MonoBehaviour {
             plannedConsumptionText.text = $"-{quantity}";
             plannedConsumptionText.color = Color.red;
         } else {
+            ResetPreviewText();
+        }
+    }
+
+    public void ResetPreviewText() {
+        if (plannedConsumptionText != null) {
             plannedConsumptionText.gameObject.SetActive(false);
         }
     }

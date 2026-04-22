@@ -3,15 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     private static GameManager instance;
 
     public static GameManager Instance {
         get {
-            if(instance == null) {
+            if (instance == null) {
                 instance = FindAnyObjectByType<GameManager>();
-                if(instance == null ) {
+                if (instance == null) {
                     Debug.Log("There is no GameManager in Scene.");
                 }
             }
@@ -21,10 +20,10 @@ public class GameManager : MonoBehaviour
 
     public static event Action<List<DayActionData>> DayAction;
     public static event Action OnGameStateChanged;
+    public static event Action OnNextDayConfirm;
 
-    private void Awake()
-    {
-        if(instance != null && instance != this) {
+    private void Awake() {
+        if (instance != null && instance != this) {
             Destroy(this.gameObject);
             return;
         }
@@ -32,11 +31,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnEnable() {
-        DayManager.OnDayChanged += ProcessDaySummary;
+        DistributionPanelUI.OnDistributionConfirmChanged += HandleDistributionConfirm;
     }
 
     private void OnDisable() {
-        DayManager.OnDayChanged -= ProcessDaySummary;
+        DistributionPanelUI.OnDistributionConfirmChanged -= HandleDistributionConfirm;
     }
 
     private void Start() {
@@ -44,57 +43,36 @@ public class GameManager : MonoBehaviour
         CharacterManager.Instance.Init();
         ResourceManager.Instance.Init();
 
-        DistributionPanelUI.Instance.OpenPanel();
         RefreshAllUI();
     }
 
     public void RefreshAllUI() {
         OnGameStateChanged?.Invoke();
-        //DistributionPanelUI.Instance.DisplayDistributionList();
-        //ResourcePanelUI.Instance.DisplayResourceList();
     }
 
-    public void ProcessDaySummary(int nextDay) {
-        if (nextDay == 1) return;
-        List<DistributedItemUi> distributionList = DistributionPanelUI.Instance.GetCurrenDistributionList();
-        List<DayActionData> actionPackets = new List<DayActionData>();
-
-        foreach(DistributedItemUi itemUI in distributionList) {
-            if (!itemUI.gameObject.activeSelf) {
-                continue;
-            }
-
-            bool fed = false;
-            bool watered = false;
-            bool healed = false;
-
-            if (itemUI.WillEat && ResourceManager.Instance.RemoveItem("item_01", 1)) {
-                itemUI.CurrentCharacter.Eat(5);
-                fed = true;
-            }
-
-            if (itemUI.WillDrink && ResourceManager.Instance.RemoveItem("item_02", 1)) {
-                itemUI.CurrentCharacter.Drink(10);
-                watered = true;
-            }
-            if (itemUI.WillHeal && ResourceManager.Instance.RemoveItem("item_03", 1)) {
-                itemUI.CurrentCharacter.Heal(10);
-                healed = true;
-            }
-
-            actionPackets.Add(new DayActionData {
-                character = itemUI.CurrentCharacter,
-                isFed = fed,
-                isWatered = watered,
-                isHealed = healed,
-            });
-        }
-
-        DayAction?.Invoke(actionPackets);
+    private void HandleDistributionConfirm(List<DayActionData> actions) {
+        ProcessDaySummary(actions);
+        DayManager.Instance.NextDay();
         RefreshAllUI();
     }
 
+    private void ProcessDaySummary(List<DayActionData> actionPackets) {
+        foreach (var packet in actionPackets) {
+            if (packet.isFed && ResourceManager.Instance.RemoveItem("item_01", 1)) {
+                packet.character.Eat(5);
+            }
+            if (packet.isWatered && ResourceManager.Instance.RemoveItem("item_02", 1)) {
+                packet.character.Drink(10);
+            }
+            if (packet.isHealed && ResourceManager.Instance.RemoveItem("item_03", 1)) {
+                packet.character.Heal(10);
+            }
+        }
+
+        DayAction?.Invoke(actionPackets);
+    }
+
     public void OnNextDayButtonClicked() {
-        StartCoroutine(FadeManager.Instance.StartFade(DayManager.Instance.NextDay));
+        StartCoroutine(FadeManager.Instance.StartFade(OnNextDayConfirm));
     }
 }

@@ -1,48 +1,42 @@
+using Assets._StayIn.Scripts.Definitions;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistributionPanelUI : MonoBehaviour
-{
-    public static DistributionPanelUI Instance;
-
+public class DistributionPanelUI : MonoBehaviour {
     [SerializeField] private GameObject distributedItemPrefab;
     [SerializeField] private Transform container;
 
     private List<DistributedItemUi> distributedItemPool = new List<DistributedItemUi>();
-    private ResourceUI resourceUI;
+    
+    public static event Action<Dictionary<string, int>> OnPlannedItemChanged;
+    public static event Action<List<DayActionData>> OnDistributionConfirmChanged;
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(gameObject);
-        }
+    private void OnEnable() {
+        GameManager.OnGameStateChanged += DisplayDistributionList;
+        GameManager.OnNextDayConfirm += OnConfirmNextDay;
     }
 
-    public void OpenPanel() {
-        gameObject.SetActive(true);
-        DisplayDistributionList();
+    private void OnDisable() {
+        GameManager.OnGameStateChanged -= DisplayDistributionList;
+        GameManager.OnNextDayConfirm -= OnConfirmNextDay;
     }
 
     public void DisplayDistributionList() {
-        if(container == null || distributedItemPrefab == null) {
+        if (container == null || distributedItemPrefab == null) {
             return;
         }
 
-        foreach(DistributedItemUi item in distributedItemPool) {
+        foreach (DistributedItemUi item in distributedItemPool) {
             item.gameObject.SetActive(false);
-        }
-
-        if(CharacterManager.Instance == null) {
-            return;
         }
 
         List<CharacterData> characters = CharacterManager.Instance.GetCharacterList();
 
-        for(int i = 0; i < characters.Count; i++) {
+        for (int i = 0; i < characters.Count; i++) {
             DistributedItemUi uiInstance;
 
-            if(i < distributedItemPool.Count) {
+            if (i < distributedItemPool.Count) {
                 uiInstance = distributedItemPool[i];
             } else {
                 GameObject newObject = Instantiate(distributedItemPrefab, container);
@@ -52,14 +46,17 @@ public class DistributionPanelUI : MonoBehaviour
 
             uiInstance.gameObject.SetActive(true);
             uiInstance.SetUp(characters[i]);
+            uiInstance.OnDistributionToggleChanged = ValidateToggles;
         }
-    }
 
-    public List<DistributedItemUi> GetCurrenDistributionList() {
-        return distributedItemPool;
+        ValidateToggles();
     }
 
     public void ValidateToggles() {
+        if (ResourceManager.Instance == null) {
+            return;
+        }
+
         int foodQuantity = ResourceManager.Instance.GetItemQuantity("item_01");
         int waterQuantity = ResourceManager.Instance.GetItemQuantity("item_02");
         int medicineQuantity = ResourceManager.Instance.GetItemQuantity("item_03");
@@ -86,10 +83,38 @@ public class DistributionPanelUI : MonoBehaviour
             bool canHeal = item.WillHeal || (!isFullHealth && (medicineQuantity - medicinePlanned > 0));
 
             item.FadeToggle(3, !canHeal);
+
+            UpdateResourcePreview(foodPlanned, waterPlanned, medicinePlanned);
         }
     }
 
-    public void OnToggleChanged() {
-        ValidateToggles();
+    private void UpdateResourcePreview(int food, int water, int medicine) {
+        Dictionary<string, int> planned = new Dictionary<string, int> {
+            { "item_01", food },
+            { "item_02", water },
+            { "item_03", medicine }
+        };
+
+        OnPlannedItemChanged?.Invoke(planned);
+    }
+
+    public List<DayActionData> GetSelectedActions() {
+        List<DayActionData> actions = new List<DayActionData>();
+        foreach (DistributedItemUi itemUI in distributedItemPool) {
+            if (!itemUI.gameObject.activeSelf) continue;
+
+            actions.Add(new DayActionData {
+                character = itemUI.CurrentCharacter,
+                isFed = itemUI.WillEat,
+                isWatered = itemUI.WillDrink,
+                isHealed = itemUI.WillHeal
+            });
+        }
+        return actions;
+    }
+
+    public void OnConfirmNextDay() {
+        List<DayActionData> actions = GetSelectedActions();
+        OnDistributionConfirmChanged?.Invoke(actions);
     }
 }

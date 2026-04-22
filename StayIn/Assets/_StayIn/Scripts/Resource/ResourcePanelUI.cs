@@ -9,13 +9,16 @@ public class ResourcePanelUI : MonoBehaviour {
     [SerializeField] private Transform container;
 
     private List<ResourceUI> resourcePool = new List<ResourceUI>();
+    private Dictionary<string, ResourceUI> uiMap = new Dictionary<string, ResourceUI>();
 
     private void OnEnable() {
         GameManager.OnGameStateChanged += DisplayResourceList;
+        DistributionPanelUI.OnPlannedItemChanged += UpdateAllPreviews;
     }
 
     private void OnDisable() {
         GameManager.OnGameStateChanged -= DisplayResourceList;
+        DistributionPanelUI.OnPlannedItemChanged -= UpdateAllPreviews;
     }
 
     public void DisplayResourceList() {
@@ -23,14 +26,16 @@ public class ResourcePanelUI : MonoBehaviour {
             return;
         }
 
+        uiMap.Clear();
+
         foreach(ResourceUI resourceItem in resourcePool)
         {
             resourceItem.gameObject.SetActive(false);
         }
 
         List<ResourceItem> currentResource = ResourceManager.Instance.resource;
-
         int uiIndex = 0;
+
         foreach (ResourceItem resItem in currentResource)
         {
             if (resItem.quantity > 0)
@@ -49,7 +54,13 @@ public class ResourcePanelUI : MonoBehaviour {
                 }
 
                 uiInstance.gameObject.SetActive(true);
-                //uiInstance(resItem);
+                uiInstance.UpdateItemText(resItem);
+
+                string id = resItem.itemData.ItemID;
+                if (!uiMap.ContainsKey(id)) {
+                    uiMap.Add(id, uiInstance);
+                }
+
                 uiIndex++;
             }
         }
@@ -65,9 +76,21 @@ public class ResourcePanelUI : MonoBehaviour {
     }
 
     public void UpdateResourcePreviews(string itemID, int count) {
-        foreach (ResourceUI slot in resourcePool) {
-            if (slot.gameObject.activeSelf) {
-                //slot.RefreshPreviews(itemID, count);
+        if(uiMap.TryGetValue(itemID, out ResourceUI uiInstance)) {
+            if(uiInstance.gameObject.activeSelf) {
+                uiInstance.UpdateReviewText(count);
+            }
+        }
+    }
+
+    public void UpdateAllPreviews(Dictionary<string, int> totalPlanned) {
+        foreach(ResourceUI ui in uiMap.Values) {
+            ui.ResetPreviewText();
+        }
+
+        foreach(KeyValuePair<string, int> plan in totalPlanned) {
+            if(uiMap.ContainsKey(plan.Key)) {
+                uiMap[plan.Key].UpdateReviewText(plan.Value);
             }
         }
     }

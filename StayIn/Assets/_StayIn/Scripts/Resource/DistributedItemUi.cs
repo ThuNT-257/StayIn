@@ -1,3 +1,4 @@
+using System;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
@@ -17,8 +18,14 @@ public class DistributedItemUi : MonoBehaviour {
 
     private CharacterData currentCharacter;
 
+    public Action OnDistributionToggleChanged;
+
     public void SetUp(CharacterData data) {
-        if (data == null) return;
+        if (data == null) {
+            return;
+        }
+
+        OnDistributionToggleChanged = null;
 
         currentCharacter = data;
         characterNameText.text = data.CharacterName;
@@ -31,11 +38,9 @@ public class DistributedItemUi : MonoBehaviour {
         waterToggle.onValueChanged.RemoveAllListeners();
         medicineToggle.onValueChanged.RemoveAllListeners();
 
-        foodToggle.onValueChanged.AddListener((_) => GetComponentInParent<DistributionPanelUI>().OnToggleChanged());
-        waterToggle.onValueChanged.AddListener((_) => GetComponentInParent<DistributionPanelUI>().OnToggleChanged());
-        medicineToggle.onValueChanged.AddListener((_) => GetComponentInParent<DistributionPanelUI>().OnToggleChanged());
-
-        GetComponentInParent<DistributionPanelUI>().OnToggleChanged();
+        foodToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
+        waterToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
+        medicineToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
     }
 
     public bool WillEat => foodToggle.isOn;
@@ -47,18 +52,25 @@ public class DistributedItemUi : MonoBehaviour {
         float targetAlpha = isFaded ? 0.3f : 1f;
         bool canInteract = !isFaded;
 
-        if (type == 1 && foodGroup != null) {
-            foodGroup.alpha = targetAlpha;
-            foodToggle.interactable = canInteract;
-            foodGroup.blocksRaycasts = canInteract;
-        } else if (type == 2 && waterGroup != null) {
-            waterGroup.alpha = targetAlpha;
-            waterToggle.interactable = canInteract;
-            waterGroup.blocksRaycasts = canInteract;
-        } else if (type == 3 && medicineGroup != null) {
-            medicineGroup.alpha = targetAlpha;
-            medicineToggle.interactable = canInteract;
-            medicineGroup.blocksRaycasts = canInteract;
+        switch (type) {
+            case 1:
+                UpdateGroup(foodGroup, foodToggle, targetAlpha, canInteract);
+                break;
+            case 2:
+                UpdateGroup(waterGroup, waterToggle, targetAlpha, canInteract);
+                break;
+            case 3:
+                UpdateGroup(medicineGroup, medicineToggle, targetAlpha, canInteract);
+                break;
         }
+    }
+
+    private void UpdateGroup(CanvasGroup group, Toggle toggle, float alpha, bool interactable) {
+        if(group == null) {
+            return;
+        }
+        group.alpha = alpha;
+        toggle.interactable = interactable;
+        group.blocksRaycasts = interactable;
     }
 }

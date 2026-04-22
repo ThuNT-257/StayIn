@@ -54,7 +54,7 @@ public class ResourceManager : MonoBehaviour {
     public bool RemoveItem(string itemID, int amount) {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
         if (slot == null || slot.quantity < amount) {
-            Debug.Log("There are enough resource to remove");
+            Debug.Log("There are not enough resource to remove");
             return false;
         }
 
