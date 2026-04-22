@@ -1104,8 +1104,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1995314673}
-        m_TargetAssemblyTypeName: DayManager, Assembly-CSharp
+      - m_Target: {fileID: 1995314676}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnNextDayButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -2126,12 +2126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9693c56408fffa444938801e66455960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allCharacters: []
   mainCharacter: {fileID: 11400000, guid: 84da90d2afad5284eac5acb9408e07c6, type: 2}
   otherPool:
   - {fileID: 11400000, guid: bc7a9ad019b7f13408b207afd8840ea3, type: 2}
   - {fileID: 11400000, guid: 34c54295a3921e24caf81da4d3fb2f83, type: 2}
   - {fileID: 11400000, guid: 696e50e70c674344698fc780b935d2e7, type: 2}
+  allCharacters: []
 --- !u!4 &1995314672
 Transform:
   m_ObjectHideFlags: 0
@@ -2159,7 +2159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1822e4e8aae3e2e4da2a140d233f636c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayUI: {fileID: 1756430673}
   currentDay: 1
 --- !u!114 &1995314674
 MonoBehaviour:
@@ -2206,9 +2205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74d9a8743937d54b913ef24b692d91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceUI: {fileID: 1717536463}
-  distributionUI: {fileID: 1017777330}
-  characterListUI: {fileID: 2090970861}
 --- !u!1 &2090970857
 GameObject:
   m_ObjectHideFlags: 0
