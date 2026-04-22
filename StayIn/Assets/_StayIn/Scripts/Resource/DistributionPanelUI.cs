@@ -82,10 +82,10 @@ public class DistributionPanelUI : MonoBehaviour {
 
             bool canHeal = item.WillHeal || (!isFullHealth && (medicineQuantity - medicinePlanned > 0));
 
-            item.FadeToggle(3, !canHeal);
-
-            UpdateResourcePreview(foodPlanned, waterPlanned, medicinePlanned);
+            item.FadeToggle(3, !canHeal);   
         }
+
+        UpdateResourcePreview(foodPlanned, waterPlanned, medicinePlanned);
     }
 
     private void UpdateResourcePreview(int food, int water, int medicine) {
