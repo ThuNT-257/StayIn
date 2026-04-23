@@ -1,4 +1,4 @@
-using Assets._StayIn.Scripts.Definitions;
+﻿using Assets._StayIn.Scripts.Definitions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,13 +13,22 @@ public class DistributionPanelUI : MonoBehaviour {
     public static event Action<List<DayActionData>> OnDistributionConfirmChanged;
 
     private void OnEnable() {
-        GameManager.OnGameStateChanged += DisplayDistributionList;
+        GameManager.OnGameStateChanged += HandleGameStateChanged;
         GameManager.OnNextDayConfirm += OnConfirmNextDay;
     }
 
     private void OnDisable() {
-        GameManager.OnGameStateChanged -= DisplayDistributionList;
+        GameManager.OnGameStateChanged -= HandleGameStateChanged;
         GameManager.OnNextDayConfirm -= OnConfirmNextDay;
+    }
+
+    private void HandleGameStateChanged() {
+        StartCoroutine(DelayDisplay());
+    }
+
+    private System.Collections.IEnumerator DelayDisplay() {
+        yield return null;
+        DisplayDistributionList();
     }
 
     public void DisplayDistributionList() {
@@ -67,21 +76,30 @@ public class DistributionPanelUI : MonoBehaviour {
 
         foreach (DistributedItemUi item in distributedItemPool) {
             if (!item.gameObject.activeSelf) continue;
-            if (item.WillEat) foodPlanned++;
-            if (item.WillDrink) waterPlanned++;
-            if (item.WillHeal) medicinePlanned++;
+            if(!item.CurrentCharacter.IsDead && !item.CurrentCharacter.IsExploring) {
+                if (item.WillEat) foodPlanned++;
+                if (item.WillDrink) waterPlanned++;
+                if (item.WillHeal) medicinePlanned++;
+            }
         }
 
         foreach (DistributedItemUi item in distributedItemPool) {
             if (!item.gameObject.activeSelf) continue;
+            CharacterData charData = item.CurrentCharacter;
+            bool forceDisable = charData.IsDead || charData.IsExploring;
+
+            if(forceDisable) {
+                item.FadeToggle(1, true);
+                item.FadeToggle(2, true);
+                item.FadeToggle(3, true);
+                continue;
+            }
 
             item.FadeToggle(1, !(item.WillEat || (foodQuantity - foodPlanned > 0)));
             item.FadeToggle(2, !(item.WillDrink || (waterQuantity - waterPlanned > 0)));
 
             bool isFullHealth = item.CurrentCharacter.Health >= 10;
-
             bool canHeal = item.WillHeal || (!isFullHealth && (medicineQuantity - medicinePlanned > 0));
-
             item.FadeToggle(3, !canHeal);   
         }
 
@@ -89,13 +107,20 @@ public class DistributionPanelUI : MonoBehaviour {
     }
 
     private void UpdateResourcePreview(int food, int water, int medicine) {
+
         Dictionary<string, int> planned = new Dictionary<string, int> {
             { "item_01", food },
             { "item_02", water },
             { "item_03", medicine }
         };
-
-        OnPlannedItemChanged?.Invoke(planned);
+        if (OnPlannedItemChanged == null) {
+            ResourcePanelUI resPanel = FindFirstObjectByType<ResourcePanelUI>();
+            if (resPanel != null) {
+                resPanel.UpdateAllPreviews(planned);
+            }
+        } else {
+            OnPlannedItemChanged.Invoke(planned);
+        }
     }
 
     public List<DayActionData> GetSelectedActions() {

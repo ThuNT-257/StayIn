@@ -38,7 +38,9 @@ public class DistributedItemUi : MonoBehaviour {
         waterToggle.onValueChanged.RemoveAllListeners();
         medicineToggle.onValueChanged.RemoveAllListeners();
 
-        foodToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
+        foodToggle.onValueChanged.AddListener((_) => {
+            OnDistributionToggleChanged?.Invoke();
+        });
         waterToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
         medicineToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
     }
@@ -66,11 +68,17 @@ public class DistributedItemUi : MonoBehaviour {
     }
 
     private void UpdateGroup(CanvasGroup group, Toggle toggle, float alpha, bool interactable) {
-        if(group == null) {
+        if (group == null) {
             return;
         }
         group.alpha = alpha;
         toggle.interactable = interactable;
         group.blocksRaycasts = interactable;
+
+        if (!interactable) {
+            if(toggle.isOn) {
+                toggle.isOn = false;
+            }
+        }
     }
 }

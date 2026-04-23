@@ -19,7 +19,8 @@ public class ResourceManager : MonoBehaviour {
 
     [SerializeField] private List<ItemData> itemList;
 
-    public List<ResourceItem> resource = new List<ResourceItem>();
+    private List<ResourceItem> resource = new List<ResourceItem>();
+    private Dictionary<string, int> plannedPreviewMap = new Dictionary<string, int>();
 
     private void Awake() {
         if (instance != null && instance != this) {
@@ -38,6 +39,10 @@ public class ResourceManager : MonoBehaviour {
             int amount = (item.ItemType == ItemType.Utility) ? 1 : 10;
             AddItem(item, amount);
         }
+    }
+
+    public List<ResourceItem> GetCurrenResource() {
+        return resource;
     }
 
     public void AddItem(ItemData item, int amount) {
@@ -74,5 +79,16 @@ public class ResourceManager : MonoBehaviour {
     public int GetItemQuantity(string itemID) {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
         return slot != null ? slot.quantity : 0;
+    }
+
+    public void UpdatePlannedPreview(Dictionary<string, int> totalPlanned) {
+        plannedPreviewMap = totalPlanned;
+    }
+
+    public int GetPlannedQuantity(string itemID) {
+        if (plannedPreviewMap.TryGetValue(itemID, out int amount)) {
+            return amount;
+        }
+        return 0;
     }
 }
