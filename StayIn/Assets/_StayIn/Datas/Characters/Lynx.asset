@@ -14,14 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: char_01
   characterName: Lynx
-  avatarNormal: {fileID: 21300000, guid: 5f7eeb502a653594c8b5eba5ee93d4d5, type: 3}
-  avatarHungryOrThirsty: {fileID: 21300000, guid: 0a703d4e4b111654ab7fb17fbf0eb706, type: 3}
-  avatarStarving: {fileID: 21300000, guid: b01fabb1443f6ed40a01e07a7ed4a0b0, type: 3}
-  avatarSick: {fileID: 21300000, guid: c67601dc6fc47384495e36d24be91eb1, type: 3}
-  avatarDead: {fileID: 21300000, guid: a60e0b1b32dd7574dab5106fbe499a65, type: 3}
   health: 10
   hunger: 10
   thirsty: 5
+  sanity: 10
+  visuals: {fileID: 11400000, guid: c3bd65bb3438a194baab0e3379d4e045, type: 2}
+  personality:
+    hungerLine:
+      lines: []
+    thirstyLine:
+      lines: []
+    healthLine:
+      lines: []
+    sanityLine:
+      lines: []
   isDead: 0
   isExploring: 0
-  daysToReturn: 0
+  deathLogged: 0

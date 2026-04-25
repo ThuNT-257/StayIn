@@ -2,14 +2,14 @@ using Assets._StayIn.Scripts.Definitions;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewEvent", menuName = "StayIn/Event")]
-public class EventData : ScriptableObject
-{
-    private string eventID;
-    private string eventTitle;
-    [TextArea]
-    private string eventDescription;
+[CreateAssetMenu(fileName = "NewEvent", menuName = "StayIn/Event Data")]
+public class EventData : ScriptableObject {
+    public string eventID;
+    public EventInteractionType interactionType;
+    public EventCategory category;
+    public int baseWeight = 10;
 
-    private List<EventChoice> choices;
-    private EventChoice defaultChoice;
+    [TextArea(5, 10)]
+    public List<string> descriptions;
+    public List<EventChoice> eventChoices;
 }

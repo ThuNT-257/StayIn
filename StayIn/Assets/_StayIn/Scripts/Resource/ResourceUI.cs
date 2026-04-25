@@ -17,18 +17,23 @@ public class ResourceUI : MonoBehaviour {
 
         itemText.text = $"{item.itemData.ItemName} x {item.quantity}";
 
-        int plannedAmount = ResourceManager.Instance.GetPlannedQuantity(currentItemID);
-
-        if (plannedAmount > 0) {
-            plannedConsumptionText.text = $"-{plannedAmount}";
-            plannedConsumptionText.color = Color.red;
-        } else {
-            plannedConsumptionText.text = "";
-        }
+        RefreshPlannedText();
     }
 
     public void UpdateReviewText(int quantity) {
         plannedConsumptionText.text = quantity > 0 ? $"-{quantity}" : "";
         plannedConsumptionText.color = Color.red;
+    }
+
+    public void RefreshPlannedText() {
+        if (string.IsNullOrEmpty(currentItemID)) return;
+
+        int plannedAmount = ResourceManager.Instance.GetPlannedQuantity(currentItemID);
+
+        if (plannedAmount > 0) {
+            UpdateReviewText(plannedAmount);
+        } else {
+            plannedConsumptionText.text = "";
+        }
     }
 }

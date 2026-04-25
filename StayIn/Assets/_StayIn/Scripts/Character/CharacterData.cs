@@ -1,101 +1,96 @@
+using Assets._StayIn.Scripts.Definitions;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "StayIn/Character Data")]
 public class CharacterData : ScriptableObject {
-    [Header("Basic Info")]
-    [SerializeField] private string characterID;
-    [SerializeField] private string characterName;
-    [SerializeField] private Sprite avatarNormal;
-    [SerializeField] private Sprite avatarHungryOrThirsty;
-    [SerializeField] private Sprite avatarStarving;
-    [SerializeField] private Sprite avatarSick;
-    [SerializeField] private Sprite avatarDead;
+    public string characterID;
+    public string characterName;
 
-    [Header("Stats")]
-    [SerializeField][Range(0, 10)] private int health = 10;
-    [SerializeField][Range(0, 10)] private int hunger = 10;
-    [SerializeField][Range(0, 5)] private int thirsty = 5;
+    [SerializeField] private int health = 10;
+    [SerializeField] private int hunger = 10;
+    [SerializeField] private int thirsty = 5;
+    [SerializeField] private int sanity = 10;
 
-    [Header("Status")]
-    [SerializeField] private bool isDead = false;
-    [SerializeField] private bool isExploring = false;
-    [SerializeField] private int daysToReturn = 0;
+    public CharacterVisualData visuals;
+    public CharacterPersonality personality;
 
-    public string CharacterName => characterName;
-    public int Health { get => health; set => health = Mathf.Clamp(value, 0, 10); }
-    public int Hunger { get => hunger; set => hunger = Mathf.Clamp(value, 0, 10); }
-    public int Thirsty { get => thirsty; set => thirsty = Mathf.Clamp(value, 0, 5); }
-    public bool IsDead { get => isDead; set => isDead = value; }
-    public bool IsExploring { get => isExploring; set => isExploring = value; }
-    public int DaysToReturn { get => daysToReturn; set => daysToReturn = value; }
+    public bool isDead;
+    public bool isExploring;
+    [SerializeField] private bool deathLogged;
+
+    public int Health => health;
+    public int Hunger => hunger;
+    public int Thirsty => thirsty;
+    public int Sanity => sanity;
+    public bool DeathLogged => deathLogged;
+
+    public void SetDeathLogged(bool check) {
+        deathLogged = check;
+    }
 
     public void ResetStats() {
-        health = 10;
-        hunger = 10;
-        thirsty = 5;
+        health = GameConfig.MAX_HEALTH;
+        hunger = GameConfig.MAX_HUNGER;
+        thirsty = GameConfig.MAX_THIRSTY;
+        sanity = GameConfig.MAX_SANITY;
         isDead = false;
         isExploring = false;
-        daysToReturn = 0;
+        deathLogged = false;
+    }
+
+    public void UpdateStats(int h, int hu, int t, int s) {
+        if (isDead) return;
+
+        health = Mathf.Clamp(health + h, 0, GameConfig.MAX_HEALTH);
+        hunger = Mathf.Clamp(hunger + hu, 0, GameConfig.MAX_HUNGER);
+        thirsty = Mathf.Clamp(thirsty + t, 0, GameConfig.MAX_THIRSTY);
+        sanity = Mathf.Clamp(sanity + s, 0, GameConfig.MAX_SANITY);
+
+        if (health <= 0 || hunger <= 0 || thirsty <= 0) {
+            isDead = true;
+        }
     }
 
     public Sprite GetCurrentAvatar() {
+        if (visuals == null) return null;
+
+        if (isDead) return visuals.dead;
+        if (isExploring) return visuals.exploring;
+
+        if (sanity <= GameConfig.SANITY_DANGER_LEVEL) return visuals.insane;
+        if (health <= 3) return visuals.sick;
+        if (hunger <= GameConfig.HUNGER_DANGER_LEVEL || thirsty <= GameConfig.THIRSTY_DANGER_LEVEL)
+            return visuals.starved;
+
+        return visuals.normal;
+    }
+
+    public string GetDailyStatusLine() {
+
         if (isDead) {
-            return avatarDead;
-        }
-        if (health < 10) {
-            return avatarSick;
-        }
-        if (hunger < 2 || thirsty < 2) {
-            return avatarStarving;
-        }
-        if(hunger < 6 || thirsty < 4) {
-            return avatarHungryOrThirsty;
-        }
-        return avatarNormal;
-    }
-
-    public void Eat(int amount) {
-        if(IsDead || isExploring) {
-            return;
-        }
-        Hunger = Mathf.Clamp(Hunger + amount, 0, 10);
-    }
-
-    public void Drink(int amount) {
-        if(isDead || isExploring) {
-            return;
-        }
-        Thirsty = Mathf.Clamp(Thirsty + amount, 0, 5);
-    }
-
-    public void Heal(int amount) {
-        if (IsDead || isExploring) {
-            return;
-        }
-        Health = Mathf.Clamp(Health + amount, 0, 10);
-    }
-
-    public void HandleDailyStatus(bool isFed, bool isWatered, bool isHealed) {
-        if(IsDead || IsExploring) {
-            return;
+            if (!deathLogged) {
+                deathLogged = true;
+                return $"{characterName} passed away last night.";
+            }
+            return null;
         }
 
-        if (!isFed) {
-            Hunger -= 1;
-        }
+        if (isExploring) return null;
 
-        if (!isWatered) {
-            Thirsty -= 1;
-        }
+        if (personality == null) return $"{characterName} is here.";
 
-        if (!isHealed && Health < 10) Health -= 1;
+        if (sanity <= GameConfig.SANITY_DANGER_LEVEL)
+            return personality.sanityLine.GetRandom().Replace("{n}", characterName);
 
-        Hunger = Mathf.Clamp(Hunger, 0, 10);
-        Thirsty = Mathf.Clamp(Thirsty, 0, 5);
-        Health = Mathf.Clamp(Health, 0, 10);
+        if (health <= 3)
+            return personality.healthLine.GetRandom().Replace("{n}", characterName);
 
-        if(Hunger <= 0 || Thirsty <= 0 || Health <= 0) {
-            IsDead = true;
-        }
+        if (thirsty <= GameConfig.THIRSTY_DANGER_LEVEL)
+            return personality.thirstyLine.GetRandom().Replace("{n}", characterName);
+
+        if (hunger <= GameConfig.HUNGER_DANGER_LEVEL)
+            return personality.hungerLine.GetRandom().Replace("{n}", characterName);
+
+        return $"{characterName} seems to be doing fine today.";
     }
 }

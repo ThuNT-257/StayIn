@@ -48,20 +48,13 @@ public class ResourcePanelUI : MonoBehaviour {
     }
 
     public void DisplayResourceList() {
-        if (container == null || itemPrefab == null || ResourceManager.Instance == null) {
-            return;
-        }
+        if (container == null || itemPrefab == null || ResourceManager.Instance == null) return;
 
+        List<ResourceItem> currentResources = ResourceManager.Instance.GetCurrenResource();
         uiMap.Clear();
 
-        foreach (ResourceUI resourceItem in resourcePool) {
-            resourceItem.gameObject.SetActive(false);
-        }
-
-        List<ResourceItem> currentResource = ResourceManager.Instance.GetCurrenResource();
         int uiIndex = 0;
-
-        foreach (ResourceItem resItem in currentResource) {
+        foreach (ResourceItem resItem in currentResources) {
             if (resItem.quantity > 0) {
                 ResourceUI uiInstance;
 
@@ -81,12 +74,14 @@ public class ResourcePanelUI : MonoBehaviour {
                 int plannedAmount = ResourceManager.Instance.GetPlannedQuantity(id);
                 uiInstance.UpdateReviewText(plannedAmount);
 
-                if (!uiMap.ContainsKey(id)) {
-                    uiMap.Add(id, uiInstance);
-                }
+                if (!uiMap.ContainsKey(id)) uiMap.Add(id, uiInstance);
 
                 uiIndex++;
             }
+        }
+
+        for (int i = uiIndex; i < resourcePool.Count; i++) {
+            resourcePool[i].gameObject.SetActive(false);
         }
     }
 
@@ -99,10 +94,10 @@ public class ResourcePanelUI : MonoBehaviour {
     public void UpdateAllPreviews(Dictionary<string, int> totalPlanned) {
         ResourceManager.Instance.UpdatePlannedPreview(totalPlanned);
 
-        if (canvasGroup.alpha > 0) {
-            foreach (var ui in uiMap.Values) {
-                int amount = ResourceManager.Instance.GetPlannedQuantity(ui.ItemID);
-                ui.UpdateReviewText(amount);
+        if (canvasGroup != null && canvasGroup.alpha > 0) {
+            foreach (var kvp in uiMap) {
+                int amount = ResourceManager.Instance.GetPlannedQuantity(kvp.Key);
+                kvp.Value.UpdateReviewText(amount);
             }
         }
     }

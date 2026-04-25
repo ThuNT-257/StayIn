@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc7b356baca30948940dc5a34779339, type: 3}
+  m_Name: Event_YesNo_01
+  m_EditorClassIdentifier: 
+  eventID: event_yesno_01
+  interactionType: 0
+  category: 0
+  baseWeight: 10
+  descriptions:
+  - "Dude, check this out \u2013 a whole bag of instant noodles and a bag of sausages
+    under the bed! But uh... looks like the rats got here first. Like, bite marks
+    everywhere. Should we still eat it?"
+  - Bro, we just found food under the corner of the bed. The bad news? Mouse poop
+    and teeth marks. The good news? We're starving and honestly? Kinda don't care
+    anymore. Should we risk it for the biscuit?
+  - "Okay so we're officially at that point \u2013 we found some sketchy-ass food
+    under the bed that's been clearly gnawed on by mice. Back in normal times we'd
+    throw this in the trash immediately. But right now? Should we just send it?"
+  eventChoices:
+  - choiceID: choice_01
+    config: {fileID: 11400000, guid: f86ddc3c38f569c4abac255963e3c34b, type: 2}
+    requiredItem: {fileID: 0}
+    requiresCharacter: 0
+    outcomes:
+    - outcomeID: outcome_01
+      isSuccess: 1
+      outcomeText: Bro, that was actually not bad. We were so scared we'd get sick
+        or something, but honestly? Stomach's fine, no weird noises, no fever. Guess
+        the mice left us the good parts. Lucky us, I guess?
+      rewards: []
+      penalties: []
+      weight: 0
+      statusEffects:
+      - stat: 0
+        target: 0
+        changeValue: 5
+    - outcomeID: outcome_02
+      isSuccess: 0
+      outcomeText: 'Turns out, mouse-chewed noodles come with a side of fever. Who
+        knew? Not us.
+
+'
+      rewards: []
+      penalties: []
+      weight: 0
+      statusEffects:
+      - stat: 2
+        target: 2
+        changeValue: -1
+  - choiceID: choice_02
+    config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
+    requiredItem: {fileID: 0}
+    requiresCharacter: 0
+    outcomes:
+    - outcomeID: outcome_01
+      isSuccess: 0
+      outcomeText: Call us picky, but if a rat got to it first, they can keep it.
+        We'll starve with dignity, thanks.
+      rewards: []
+      penalties: []
+      weight: 0
+      statusEffects:
+      - stat: 0
+        target: 0
+        changeValue: 5

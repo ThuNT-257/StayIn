@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour {
     private static CharacterManager instance;
-
     public static CharacterManager Instance {
         get {
-            if(instance == null) {
+            if (instance == null) {
                 instance = FindAnyObjectByType<CharacterManager>();
-                if(instance == null) {
-                    Debug.Log("There is no Character Manager in Scene.");
-                }
             }
             return instance;
         }
@@ -19,7 +15,6 @@ public class CharacterManager : MonoBehaviour {
 
     [SerializeField] private CharacterData mainCharacter;
     [SerializeField] private List<CharacterData> otherPool;
-
     [SerializeField] private List<CharacterData> allCharacters = new List<CharacterData>();
 
     private void Awake() {
@@ -30,38 +25,24 @@ public class CharacterManager : MonoBehaviour {
         instance = this;
     }
 
-    private void OnEnable() {
-        GameManager.DayAction += ProcessDaySummary;
-    }
+    private void OnEnable() => GameManager.DayAction += ProcessDaySummary;
+    private void OnDisable() => GameManager.DayAction -= ProcessDaySummary;
 
-    private void OnDisable() {
-        GameManager.DayAction -= ProcessDaySummary;
-    }
-
-    public void Init() {
-        GenerateRandomTeam();
-    }
-    public List<CharacterData> GetCharacterList() {
-        return allCharacters;
-    }
+    public void Init() => GenerateRandomTeam();
+    public List<CharacterData> GetCharacterList() => allCharacters;
 
     private void GenerateRandomTeam() {
         allCharacters.Clear();
-
-        if(mainCharacter != null ) {
+        if (mainCharacter != null) {
             CharacterData mainInst = Instantiate(mainCharacter);
             mainInst.ResetStats();
             allCharacters.Add(mainInst);
         }
 
-        int maxSlot = 3;
-        int availableCharacter = otherPool.Count;
-
-        int extraMemberCount = Random.Range(0, Mathf.Min(maxSlot, availableCharacter) + 1);
+        int extraMemberCount = Random.Range(0, Mathf.Min(3, otherPool.Count) + 1);
         List<CharacterData> tempPool = new List<CharacterData>(otherPool);
 
-        for(int i = 0; i < extraMemberCount; i++) {
-            if (tempPool.Count == 0) break;
+        for (int i = 0; i < extraMemberCount; i++) {
             int randomIndex = Random.Range(0, tempPool.Count);
             CharacterData memberInst = Instantiate(tempPool[randomIndex]);
             memberInst.ResetStats();
@@ -71,10 +52,53 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void ProcessDaySummary(List<DayActionData> actions) {
-        foreach(DayActionData action in actions) {
-            if(action.character != null) {
-                action.character.HandleDailyStatus(action.isFed, action.isWatered, action.isHealed);
+        int newDeathsToday = 0;
+
+        foreach (DayActionData action in actions) {
+            if (action.character == null || (action.character.isDead && action.character.DeathLogged)) continue;
+
+            int hungerChange = action.isFed ? 5 : -1;
+            int thirstChange = action.isWatered ? 5 : -1;
+
+            int healthChange = action.isHealed ?
+                (GameConfig.MAX_HEALTH - action.character.Health) :
+                (action.character.Health < GameConfig.MAX_HEALTH ? -1 : 0);
+
+            int sanityChange = action.isEntertained ? 2 : -1;
+
+            if (action.character.Health >= GameConfig.MAX_HEALTH &&
+                action.character.Hunger >= GameConfig.MAX_HUNGER &&
+                action.character.Thirsty >= GameConfig.MAX_THIRSTY) {
+                sanityChange += 1;
+            }
+
+            bool wasAliveBefore = !action.character.isDead;
+
+            action.character.UpdateStats(healthChange, hungerChange, thirstChange, sanityChange);
+
+            if (wasAliveBefore && action.character.isDead) {
+                newDeathsToday++;
+                action.character.SetDeathLogged(true);
             }
         }
+
+        if (newDeathsToday > 0) {
+            ApplyDeathTrauma(newDeathsToday);
+        }
+    }
+
+    private void ApplyDeathTrauma(int count) {
+        foreach (var character in allCharacters) {
+            if (!character.isDead) {
+                character.UpdateStats(0, 0, 0, -(3 * count));
+            }
+        }
+    }
+
+    public bool IsEveryoneInsane() {
+        foreach (var c in allCharacters) {
+            if (!c.isDead && c.Sanity > 0) return false;
+        }
+        return true;
     }
 }

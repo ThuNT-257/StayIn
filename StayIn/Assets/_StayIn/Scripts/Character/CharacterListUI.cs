@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterListUI : MonoBehaviour
-{
-    [Header("UI")]
+public class CharacterListUI : MonoBehaviour {
+    [Header("UI Configuration")]
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private Transform container;
 
@@ -18,32 +17,31 @@ public class CharacterListUI : MonoBehaviour
     }
 
     public void DisplayCharacterList() {
-        if(container == null || characterPrefab == null || CharacterManager.Instance == null) {
-            return;
+        Debug.Log("Here i come!");
+        if (container == null || characterPrefab == null || CharacterManager.Instance == null) return;
+
+        List<CharacterData> currentCharacters = CharacterManager.Instance.GetCharacterList();
+        if (currentCharacters == null) return;
+
+        for (int i = 0; i < characterPool.Count; i++) {
+            bool isNeeded = i < currentCharacters.Count;
+            characterPool[i].gameObject.SetActive(isNeeded);
         }
 
-        foreach(CharacterUI character in characterPool) {
-            character.gameObject.SetActive(false);
-        }
-
-        List<CharacterData> currenCharacters = CharacterManager.Instance.GetCharacterList();
-
-        int uiIndex = 0;
-        foreach (CharacterData character in currenCharacters) {
+        for (int i = 0; i < currentCharacters.Count; i++) {
             CharacterUI uiInstance;
 
-            if(uiIndex <  characterPool.Count) {
-                uiInstance = characterPool[uiIndex];
+            if (i < characterPool.Count) {
+                uiInstance = characterPool[i];
             } else {
                 GameObject newCharacter = Instantiate(characterPrefab, container);
+                newCharacter.transform.localScale = Vector3.one;
                 uiInstance = newCharacter.GetComponent<CharacterUI>();
                 characterPool.Add(uiInstance);
             }
 
             uiInstance.gameObject.SetActive(true);
-            uiInstance.SetUp(character);
-            uiIndex++;
+            uiInstance.SetUp(currentCharacters[i]);
         }
-
     }
 }

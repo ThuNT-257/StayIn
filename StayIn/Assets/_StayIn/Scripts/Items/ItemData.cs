@@ -18,6 +18,7 @@ public class ItemData : ScriptableObject {
 
     [Header("Effects")]
     [SerializeField] private int restoreValue;
+    [SerializeField] private int sanityRestoreValue;
 
     public string ItemID => itemID;
     public string ItemName => itemName;
@@ -25,6 +26,7 @@ public class ItemData : ScriptableObject {
     public Sprite ItemIcon => itemIcon;
     public string Description => description;
     public int RestoreValue => restoreValue;
+    public int SanityRestoreValue => sanityRestoreValue;
     public bool IsStackable => isStackable;
     public int MaxStack => isStackable ? maxStack : 1;
 }

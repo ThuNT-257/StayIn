@@ -1,5 +1,6 @@
 ﻿using Assets._StayIn.Scripts.Definitions;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
@@ -32,6 +33,7 @@ public class ResourceManager : MonoBehaviour {
 
     public void Init() {
         SetUpResources();
+        ApplyStoryBonus(DayManager.Instance.CurrentDay, LogManager.Instance.StoryDatabase);
     }
 
     private void SetUpResources() {
@@ -47,6 +49,7 @@ public class ResourceManager : MonoBehaviour {
 
     public void AddItem(ItemData item, int amount) {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == item.ItemID);
+
         if (slot != null) {
             if (item.IsStackable) {
                 slot.quantity = Mathf.Min(slot.quantity + amount, item.MaxStack);
@@ -90,5 +93,16 @@ public class ResourceManager : MonoBehaviour {
             return amount;
         }
         return 0;
+    }
+
+    public void ApplyStoryBonus(int dayNumber, List<DayStoryData> storyDatabase) {
+        DayStoryData todayStory = storyDatabase.Find(s => s.dayNumber == dayNumber);
+        if (todayStory != null && todayStory.bonusItem != null) {
+            foreach (ResourceItem bonus in todayStory.bonusItem) {
+                if (bonus.itemData != null && bonus.quantity > 0) {
+                    AddItem(bonus.itemData, bonus.quantity);
+                }
+            }
+        }
     }
 }
