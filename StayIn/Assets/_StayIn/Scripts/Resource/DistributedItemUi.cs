@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Assets._StayIn.Scripts.Definitions;
 
 public class DistributedItemUi : MonoBehaviour {
-    [Header("Identity")]
+
     [SerializeField] private TextMeshProUGUI characterNameText;
 
     [Header("Page 1: Survival (Food & Water)")]

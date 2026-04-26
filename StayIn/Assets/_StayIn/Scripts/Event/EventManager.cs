@@ -29,6 +29,8 @@ public class EventManager : MonoBehaviour
         instance = this;
     }
 
+
+
     public void DetermineDailyEvent(int day) {
         if (day == 2) {
             if (allEvents != null && allEvents.Count > 0) {

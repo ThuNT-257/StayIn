@@ -6,14 +6,15 @@ public class DayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayText;
 
     private void OnEnable() {
-        DayManager.OnDayChanged += UpdateUI;
+        GameManager.OnDayChanged += UpdateUI;
     }
 
     private void OnDisable() {
-        DayManager.OnDayChanged -= UpdateUI;
+        GameManager.OnDayChanged -= UpdateUI;
     }
 
-    public void UpdateUI(int day) {
+    public void UpdateUI() {
+        int day = DayManager.Instance.CurrentDay;
         dayText.text = "Day " + day + " from the outbreak";
     }
 }

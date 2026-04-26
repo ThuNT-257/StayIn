@@ -5,7 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewDayStory", menuName = "StayIn/Day Story Data")]
 public class DayStoryData : ScriptableObject
 {
-    public int dayNumber;
-    [TextArea(10, 20)] public string storyText;
-    public List<ResourceItem> bonusItem;
+    [SerializeField] private int dayNumber;
+    [SerializeField] [TextArea(10, 20)] private string storyText;
+
+    public int DayNumber => dayNumber;
+    public string StoryText => storyText;
 }

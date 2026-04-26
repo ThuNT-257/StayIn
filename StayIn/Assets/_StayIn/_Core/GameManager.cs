@@ -18,12 +18,15 @@ public class GameManager : MonoBehaviour {
     public static event Action OnGameStateChanged;
     public static event Action OnNextDayConfirm;
 
+    public static event Action OnDayChanged;
+
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(this.gameObject);
             return;
         }
         instance = this;
+        Debug.Log("[GameManager] Initialized");
     }
 
     private void OnEnable() {
@@ -37,11 +40,10 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         DayManager.Instance.Init();
         CharacterManager.Instance.Init();
-        LogManager.Instance.Init();
         ResourceManager.Instance.Init();
+        LogManager.Instance.Init();
 
-        Debug.Log("CharacterCount = " + CharacterManager.Instance.GetCharacterList().Count);
-
+        OnDayChanged?.Invoke();
         RefreshAllUI();
     }
 
@@ -55,7 +57,6 @@ public class GameManager : MonoBehaviour {
         DayManager.Instance.NextDay();
 
         EventManager.Instance.DetermineDailyEvent(DayManager.Instance.CurrentDay);
-        ResourceManager.Instance.ApplyStoryBonus(DayManager.Instance.CurrentDay, LogManager.Instance.StoryDatabase);
 
         LogManager.Instance.GenerateDailyReports();
 
@@ -84,14 +85,19 @@ public class GameManager : MonoBehaviour {
     }
 
     public void OnNextDayButtonClicked() {
-        DistributionPanelUI panel = FindFirstObjectByType<DistributionPanelUI>();
+        StartCoroutine(FadeManager.Instance.StartFade(() => {
+            DayManager.Instance.NextDay();
+            
+            OnDayChanged?.Invoke();
+        }));
+        //DistributionPanelUI panel = FindFirstObjectByType<DistributionPanelUI>();
 
-        if (panel != null) {
-            StartCoroutine(FadeManager.Instance.StartFade(() => {
-                panel.OnConfirmDistribution();
-            }));
-        } else {
-            Debug.LogError("Không tìm thấy DistributionPanelUI trong Scene!");
-        }
+        //if (panel != null) {
+        //    StartCoroutine(FadeManager.Instance.StartFade(() => {
+        //        panel.OnConfirmDistribution();
+        //    }));
+        //} else {
+        //    //Debug.LogError("Không tìm thấy DistributionPanelUI trong Scene!");
+        //}
     }
 }

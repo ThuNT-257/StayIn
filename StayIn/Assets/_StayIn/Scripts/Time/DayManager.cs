@@ -18,8 +18,6 @@ public class DayManager : MonoBehaviour {
 
     [SerializeField] private int currentDay = 1;
 
-    public static event Action<int> OnDayChanged;
-
     public int CurrentDay => currentDay;
 
     private void Awake() {
@@ -31,11 +29,12 @@ public class DayManager : MonoBehaviour {
     }
 
     public void Init() {
-        OnDayChanged?.Invoke(currentDay);
+        currentDay = 1;
+        Debug.Log($"[DayManager] Init - Day Start: {currentDay}");
     }
 
     public void NextDay() {
         currentDay++;
-        OnDayChanged?.Invoke(currentDay);
+        Debug.Log($"[DayManager] NextDay - Day: {currentDay}");
     }
 }

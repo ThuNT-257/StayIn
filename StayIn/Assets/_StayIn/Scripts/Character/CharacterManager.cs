@@ -28,7 +28,10 @@ public class CharacterManager : MonoBehaviour {
     private void OnEnable() => GameManager.DayAction += ProcessDaySummary;
     private void OnDisable() => GameManager.DayAction -= ProcessDaySummary;
 
-    public void Init() => GenerateRandomTeam();
+    public void Init() {
+        ClearExistingCharacters();
+        GenerateRandomTeam();
+    }
     public List<CharacterData> GetCharacterList() => allCharacters;
 
     private void GenerateRandomTeam() {
@@ -49,42 +52,55 @@ public class CharacterManager : MonoBehaviour {
             allCharacters.Add(memberInst);
             tempPool.RemoveAt(randomIndex);
         }
+        Debug.Log("[CharacterManager] Generate Random Team: " + (extraMemberCount + 1) + " characters");
+    }
+
+    public void ClearExistingCharacters() {
+        foreach(CharacterData character in allCharacters) {
+            if(character != null) {
+                Destroy(character);
+            }
+        }
+
+        allCharacters.Clear();
+        Debug.Log("[CharacterManager] Clear Existing Characters");
     }
 
     public void ProcessDaySummary(List<DayActionData> actions) {
-        int newDeathsToday = 0;
 
-        foreach (DayActionData action in actions) {
-            if (action.character == null || (action.character.isDead && action.character.DeathLogged)) continue;
+        //int newDeathsToday = 0;
 
-            int hungerChange = action.isFed ? 5 : -1;
-            int thirstChange = action.isWatered ? 5 : -1;
+        //foreach (DayActionData action in actions) {
+        //    if (action.character == null || (action.character.isDead && action.character.DeathLogged)) continue;
 
-            int healthChange = action.isHealed ?
-                (GameConfig.MAX_HEALTH - action.character.Health) :
-                (action.character.Health < GameConfig.MAX_HEALTH ? -1 : 0);
+        //    int hungerChange = action.isFed ? 5 : -1;
+        //    int thirstChange = action.isWatered ? 5 : -1;
 
-            int sanityChange = action.isEntertained ? 2 : -1;
+        //    int healthChange = action.isHealed ?
+        //        (GameConfig.MAX_HEALTH - action.character.Health) :
+        //        (action.character.Health < GameConfig.MAX_HEALTH ? -1 : 0);
 
-            if (action.character.Health >= GameConfig.MAX_HEALTH &&
-                action.character.Hunger >= GameConfig.MAX_HUNGER &&
-                action.character.Thirsty >= GameConfig.MAX_THIRSTY) {
-                sanityChange += 1;
-            }
+        //    int sanityChange = action.isEntertained ? 2 : -1;
 
-            bool wasAliveBefore = !action.character.isDead;
+        //    if (action.character.Health >= GameConfig.MAX_HEALTH &&
+        //        action.character.Hunger >= GameConfig.MAX_HUNGER &&
+        //        action.character.Thirsty >= GameConfig.MAX_THIRSTY) {
+        //        sanityChange += 1;
+        //    }
 
-            action.character.UpdateStats(healthChange, hungerChange, thirstChange, sanityChange);
+        //    bool wasAliveBefore = !action.character.isDead;
 
-            if (wasAliveBefore && action.character.isDead) {
-                newDeathsToday++;
-                action.character.SetDeathLogged(true);
-            }
-        }
+        //    action.character.UpdateStats(healthChange, hungerChange, thirstChange, sanityChange);
 
-        if (newDeathsToday > 0) {
-            ApplyDeathTrauma(newDeathsToday);
-        }
+        //    if (wasAliveBefore && action.character.isDead) {
+        //        newDeathsToday++;
+        //        action.character.SetDeathLogged(true);
+        //    }
+        //}
+
+        //if (newDeathsToday > 0) {
+        //    ApplyDeathTrauma(newDeathsToday);
+        //}
     }
 
     private void ApplyDeathTrauma(int count) {

@@ -21,11 +21,11 @@ public class DistributionPanelUI : MonoBehaviour {
     public static event Action<List<DayActionData>> OnDistributionConfirmChanged;
 
     private void OnEnable() {
-        GameManager.OnGameStateChanged += HandleGameStateChanged;
+        GameManager.OnDayChanged += HandleGameStateChanged;
     }
 
     private void OnDisable() {
-        GameManager.OnGameStateChanged -= HandleGameStateChanged;
+        GameManager.OnDayChanged -= HandleGameStateChanged;
     }
 
     private void HandleGameStateChanged() {

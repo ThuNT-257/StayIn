@@ -21,6 +21,7 @@ public class ResourceManager : MonoBehaviour {
     [SerializeField] private List<ItemData> itemList;
 
     private List<ResourceItem> resource = new List<ResourceItem>();
+    private List<ResourceItem> startingBonusItem = new List<ResourceItem>();
     private Dictionary<string, int> plannedPreviewMap = new Dictionary<string, int>();
 
     private void Awake() {
@@ -31,20 +32,12 @@ public class ResourceManager : MonoBehaviour {
         instance = this;
     }
 
+    public List<ResourceItem> GetStartingBonusItem() => startingBonusItem;
+    public List<ResourceItem> GetCurrenResource() => resource;
+
     public void Init() {
         SetUpResources();
-        ApplyStoryBonus(DayManager.Instance.CurrentDay, LogManager.Instance.StoryDatabase);
-    }
-
-    private void SetUpResources() {
-        foreach (var item in itemList) {
-            int amount = (item.ItemType == ItemType.Utility) ? 1 : 10;
-            AddItem(item, amount);
-        }
-    }
-
-    public List<ResourceItem> GetCurrenResource() {
-        return resource;
+        GiveStartUpBonus();
     }
 
     public void AddItem(ItemData item, int amount) {
@@ -56,6 +49,44 @@ public class ResourceManager : MonoBehaviour {
             }
         } else {
             resource.Add(new ResourceItem { itemData = item, quantity = amount });
+        }
+    }
+
+    private void SetUpResources() {
+        foreach (var item in itemList) {
+            int amount = (item.ItemType == ItemType.Utility) ? 1 : 10;
+            AddItem(item, amount);
+        }
+    }
+
+    private void GiveStartUpBonus() {
+        List<ItemData> missingUtilities = new List<ItemData>();
+
+        foreach(ItemData item in itemList) {
+            if(item.ItemType == ItemType.Utility) {
+                bool hasItem = resource.Exists(x => x.itemData.ItemID == item.ItemID);
+                if(!hasItem) {
+                    missingUtilities.Add(item);
+                }
+            }
+        }
+
+        if (missingUtilities.Count > 0) {
+            ItemData randomMissing = missingUtilities[UnityEngine.Random.Range(0, missingUtilities.Count)];
+            AddItem(randomMissing, 1);
+            startingBonusItem.Add(new ResourceItem { itemData = randomMissing, quantity = 1 });
+        } else {
+            ItemData foodData = itemList.Find(x => x.ItemID.Equals("item_01"));
+            ItemData waterData = itemList.Find(x => x.ItemID.Equals("item_02"));
+
+            if (foodData != null) {
+                AddItem(foodData, 2);
+                startingBonusItem.Add(new ResourceItem { itemData = foodData, quantity = 2 });
+            }
+            if (waterData != null) {
+                AddItem(waterData, 2);
+                startingBonusItem.Add(new ResourceItem { itemData = waterData, quantity = 2 });
+            }
         }
     }
 
@@ -93,16 +124,5 @@ public class ResourceManager : MonoBehaviour {
             return amount;
         }
         return 0;
-    }
-
-    public void ApplyStoryBonus(int dayNumber, List<DayStoryData> storyDatabase) {
-        DayStoryData todayStory = storyDatabase.Find(s => s.dayNumber == dayNumber);
-        if (todayStory != null && todayStory.bonusItem != null) {
-            foreach (ResourceItem bonus in todayStory.bonusItem) {
-                if (bonus.itemData != null && bonus.quantity > 0) {
-                    AddItem(bonus.itemData, bonus.quantity);
-                }
-            }
-        }
     }
 }

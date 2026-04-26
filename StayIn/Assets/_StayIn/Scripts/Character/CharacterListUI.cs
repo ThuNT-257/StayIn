@@ -2,22 +2,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterListUI : MonoBehaviour {
-    [Header("UI Configuration")]
+
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private Transform container;
 
     private List<CharacterUI> characterPool = new List<CharacterUI>();
 
     private void OnEnable() {
-        GameManager.OnGameStateChanged += DisplayCharacterList;
+        GameManager.OnDayChanged += DisplayCharacterList;
     }
 
     private void OnDisable() {
-        GameManager.OnGameStateChanged -= DisplayCharacterList;
+        GameManager.OnDayChanged -= DisplayCharacterList;
     }
 
     public void DisplayCharacterList() {
-        Debug.Log("Here i come!");
         if (container == null || characterPrefab == null || CharacterManager.Instance == null) return;
 
         List<CharacterData> currentCharacters = CharacterManager.Instance.GetCharacterList();

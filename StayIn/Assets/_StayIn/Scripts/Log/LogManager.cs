@@ -1,5 +1,7 @@
 ﻿using Assets._StayIn.Scripts.Definitions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,44 +55,35 @@ public class LogManager : MonoBehaviour
             return;
         }
         instance = this;
-        //InitMockData();
     }
 
     public void Init() {
-        EventManager.Instance.DetermineDailyEvent(DayManager.Instance.CurrentDay);
         GenerateDailyReports();
     }
 
-    private void InitMockData() {
+    public void GenerateDailyReports() {
+        //Day Story Part
         dailySummaryLogs.Clear();
-        dailySummaryLogs.Add("Another sleepless night in the shelter. The distant groans of the undead still echo through the ventilation shafts, keeping everyone on edge.");
-        dailySummaryLogs.Add("Our food supplies are dwindling faster than anticipated. If we don't find a stable source of nutrients soon, the hunger will become as dangerous as the monsters outside.");
-        dailySummaryLogs.Add("Ted is showing signs of severe exhaustion. He spent most of the morning staring at a rusty pipe, claiming he could hear it whispering the coordinates to a secret stash.");
-        dailySummaryLogs.Add("Dolores managed to patch up the leak in the water tank, but we lost nearly three liters of clean water during the process. Every drop is precious now.");
-        dailySummaryLogs.Add("Around midnight, someone—or something—started pounding on the heavy steel door. We stayed silent, holding our breath in the dark.");
-        dailySummaryLogs.Add("We found deep scratch marks on the outer hull this morning. Whatever was out there has long, sharp claws.");
-        dailySummaryLogs.Add("Mary Jane returned from the abandoned pharmacy nearby. She looks pale and hasn't spoken a word since she crawled back through the hatch.");
-        dailySummaryLogs.Add("She managed to bring back a small medical kit and some painkillers, but she lost her flashlight in the struggle.");
+        int day = DayManager.Instance.CurrentDay;
+        dailySummaryLogs.Add(GenerateStoryPart(day));
     }
 
-    public void GenerateDailyReports() {
-        dailySummaryLogs.Clear();
+    private string GenerateStoryPart(int day) {
+        StringBuilder sb = new StringBuilder();
 
-        //Day Story Part
-        DayStoryData todayStory = storyDatabase.Find(s => s.dayNumber == DayManager.Instance.CurrentDay);
-        if (todayStory != null) {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(todayStory.storyText);
-            if(todayStory.bonusItem != null && todayStory.bonusItem.Count > 0) {
-                foreach(ResourceItem item in todayStory.bonusItem) {
-                    sb.Append($"\n+ {item.quantity} {item.itemData.ItemName}");
-                }
-            }
-            dailySummaryLogs.Add(sb.ToString());
+        DayStoryData todayStory = storyDatabase.Find(s => s.DayNumber == day);
+        if(todayStory != null) {
+            sb.Append(todayStory.StoryText);
+        } else {
+            sb.Append("Everything is weirdly peaceful!\nToo peaceful, honestly. Feels like the calm before something awful.");
         }
 
-        //Event Part
-
-
+        if (day == 1) {
+            List<ResourceItem> bonusItem = ResourceManager.Instance.GetStartingBonusItem();
+            foreach (ResourceItem item in bonusItem) {
+                sb.Append($"\n+ {item.quantity} {item.itemData.ItemName}");
+            }
+        }
+        return sb.ToString();
     }
 }

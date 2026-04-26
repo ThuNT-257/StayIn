@@ -18,8 +18,4 @@ MonoBehaviour:
     dorm room and slammed the door shut as the first wave of infected flooded the
     hallway. \n- While catching our breath, I checked the shelves and found some
     leftover supplies from last week.'
-  bonusItem:
-  - itemData: {fileID: 11400000, guid: 09dff62b327cc344c867c6291129f9d7, type: 2}
-    quantity: 1
-  - itemData: {fileID: 11400000, guid: 2097e84559a484249949f02092ea0e4d, type: 2}
-    quantity: 1
+  bonusItem: []
