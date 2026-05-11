@@ -30,17 +30,16 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnEnable() {
-        DistributionPanelUI.OnDistributionConfirmChanged += HandleDistributionConfirm;
     }
 
     private void OnDisable() {
-        DistributionPanelUI.OnDistributionConfirmChanged -= HandleDistributionConfirm;
     }
 
     private void Start() {
         DayManager.Instance.Init();
         CharacterManager.Instance.Init();
         ResourceManager.Instance.Init();
+        DistributionManager.Instance.Init();
         LogManager.Instance.Init();
 
         OnDayChanged?.Invoke();

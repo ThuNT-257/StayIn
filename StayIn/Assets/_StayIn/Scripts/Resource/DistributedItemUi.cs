@@ -6,126 +6,139 @@ using UnityEngine.UI;
 using Assets._StayIn.Scripts.Definitions;
 
 public class DistributedItemUi : MonoBehaviour {
-
     [SerializeField] private TextMeshProUGUI characterNameText;
 
-    [Header("Page 1: Survival (Food & Water)")]
+    [Header("Page 1: Survival")]
     [SerializeField] private GameObject survivalPageObj;
     [SerializeField] private Toggle foodToggle;
     [SerializeField] private Toggle waterToggle;
     [SerializeField] private CanvasGroup foodGroup;
     [SerializeField] private CanvasGroup waterGroup;
+    [SerializeField] private CanvasGroup santityGroup;
 
-    [Header("Page 2: Mental & Health (Med & Sanity)")]
+    [Header("Page 2: Mental & Health")]
     [SerializeField] private GameObject mentalHealthPageObj;
     [SerializeField] private Toggle medicineToggle;
     [SerializeField] private CanvasGroup medicineGroup;
-    [SerializeField] private Image sanityIconImage;      
-    [SerializeField] private Sprite defaultNoneSprite;   
+    [SerializeField] private Button sanityButton;
+    [SerializeField] private Image sanityIconImage;
+    [SerializeField] private Sprite defaultNoneSprite;
 
-    private CharacterData currentCharacter;
-    private List<ResourceItem> availableSanityItems = new List<ResourceItem>();
-    private int currentCycleIndex = -1;
 
-    public Action OnDistributionToggleChanged;
+    public Action OnDistributedItemChanged;
 
-    public void SetUp(CharacterData data) {
-        if (data == null) return;
+    public TextMeshProUGUI CharacterNameText => characterNameText;
+    public GameObject SurvivalPageObj => survivalPageObj;
+    public Toggle FoodToggle => foodToggle;
+    public Toggle WaterToggle => waterToggle;
+    public CanvasGroup FoodGroup => foodGroup;
+    public CanvasGroup WaterGroup => waterGroup;
 
-        currentCharacter = data;
-        characterNameText.text = data.characterName;
-        OnDistributionToggleChanged = null;
-        ResetInputs();
+    public GameObject MentalHealthPageObj => mentalHealthPageObj;
+    public Toggle MedicineToggle => medicineToggle;
+    public CanvasGroup MedicineGroup => medicineGroup;
+    public Image SanityIconImage => sanityIconImage;
+    public Sprite DefaultNoneSprite => defaultNoneSprite;
 
-        RefreshSanityItems();
-        UpdateSanityUI();
+    public void UpdateDistributedItem(CharacterData character, ActionPlan plan, List<ResourceItem> availableSanityItems) {
+        characterNameText.text = character.characterName;
 
-        foodToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
-        waterToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
-        medicineToggle.onValueChanged.AddListener((_) => OnDistributionToggleChanged?.Invoke());
+        foodToggle.SetIsOnWithoutNotify(plan.WillEat);
+        waterToggle.SetIsOnWithoutNotify(plan.WillDrink);
+        medicineToggle.SetIsOnWithoutNotify(plan.WillHeal);
 
-        SwitchPage(0);
+        UpdateGroupState(foodGroup, foodToggle, plan.IsFoodLocked);
+        UpdateGroupState(waterGroup, waterToggle, plan.IsWaterLocked);
+        UpdateGroupState(medicineGroup, medicineToggle, plan.IsMedLocked);
+        UpdateGroupState(santityGroup, plan.IsSanityLocked);
+
+        UpdateSanityDisplay(plan.SelectedSanityItemID, availableSanityItems, plan.IsSanityLocked);
+
+        foodToggle.onValueChanged.RemoveAllListeners();
+        foodToggle.onValueChanged.AddListener((val) => {
+            plan.WillEat = val;
+            OnDistributedItemChanged?.Invoke();
+        });
+
+        waterToggle.onValueChanged.RemoveAllListeners();
+        waterToggle.onValueChanged.AddListener((val) => {
+            plan.WillDrink = val;
+            OnDistributedItemChanged?.Invoke();
+        });
+
+        medicineToggle.onValueChanged.RemoveAllListeners();
+        medicineToggle.onValueChanged.AddListener((val) => {
+            plan.WillHeal = val;
+            OnDistributedItemChanged?.Invoke();
+        });
+
+        sanityButton.onClick.RemoveAllListeners();
+        sanityButton.onClick.AddListener(() => {
+            OnSanityClicked(plan, availableSanityItems);
+        });
+
+        if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
+            var sanityItem = DistributionManager.Instance.GetCachedSanityItems()
+                             .Find(x => x.itemData.ItemID == plan.SelectedSanityItemID);
+
+            if (sanityItem != null) {
+                sanityIconImage.sprite = sanityItem.itemData.ItemIcon;
+            }
+        } else {
+            sanityIconImage.sprite = defaultNoneSprite;
+        }
+
+        santityGroup.alpha = plan.IsSanityLocked ? 0.5f : 1f;
+        sanityButton.interactable = !plan.IsSanityLocked;
     }
 
-    private void ResetInputs() {
-        foodToggle.onValueChanged.RemoveAllListeners();
-        waterToggle.onValueChanged.RemoveAllListeners();
-        medicineToggle.onValueChanged.RemoveAllListeners();
+    private void UpdateGroupState(CanvasGroup group, Toggle toggle, bool isLocked) {
+        group.alpha = isLocked ? 0.5f : 1.0f;
+        toggle.interactable = !isLocked;
+    }
 
-        foodToggle.isOn = false;
-        waterToggle.isOn = false;
-        medicineToggle.isOn = false;
-        currentCycleIndex = -1;
+    private void UpdateGroupState(CanvasGroup group, bool isLocked) {
+        group.alpha = isLocked ? 0.5f : 1.0f;
+        group.blocksRaycasts = !isLocked;
+    }
+
+    private void UpdateSanityDisplay(string selectedID, List<ResourceItem> availableItems, bool isLocked) {
+        if (isLocked || string.IsNullOrEmpty(selectedID)) {
+            sanityIconImage.sprite = defaultNoneSprite;
+            sanityIconImage.color = isLocked ? new Color(1, 1, 1, 0.5f) : Color.white;
+            return;
+        }
+
+        var selectedItem = availableItems.Find(x => x.itemData.ItemID == selectedID);
+        if (selectedItem != null) {
+            sanityIconImage.sprite = selectedItem.itemData.ItemIcon;
+            sanityIconImage.color = Color.white;
+        } else {
+            sanityIconImage.sprite = defaultNoneSprite;
+        }
+    }
+
+    public void OnSanityClicked(ActionPlan plan, List<ResourceItem> availableSanityItems) {
+        if (plan.IsSanityLocked) return;
+
+        int index = -1;
+        if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
+            index = availableSanityItems.FindIndex(x => x.itemData.ItemID == plan.SelectedSanityItemID);
+        }
+
+        index++;
+
+        if (index >= availableSanityItems.Count) {
+            index = -1;
+        }
+
+        plan.SelectedSanityItemID = (index == -1) ? "" : availableSanityItems[index].itemData.ItemID;
+
+        OnDistributedItemChanged?.Invoke();
     }
 
     public void SwitchPage(int pageIndex) {
-        if (survivalPageObj != null) survivalPageObj.SetActive(pageIndex == 0);
-        if (mentalHealthPageObj != null) mentalHealthPageObj.SetActive(pageIndex == 1);
-    }
-
-    public void RefreshSanityItems() {
-        availableSanityItems.Clear();
-        var allResources = ResourceManager.Instance.GetCurrenResource();
-
-        foreach (var res in allResources) {
-            if (res.quantity > 0 &&
-                res.itemData.ItemType == ItemType.Utility &&
-                res.itemData.SanityRestoreValue > 0) {
-                availableSanityItems.Add(res);
-            }
-        }
-    }
-
-    public int SelectedSanityValue => (currentCycleIndex == -1) ? 0 : availableSanityItems[currentCycleIndex].itemData.SanityRestoreValue;
-
-    public void OnSanityIconClicked() {
-        if (availableSanityItems.Count == 0) {
-            currentCycleIndex = -1;
-        } else {
-            currentCycleIndex++;
-            if (currentCycleIndex >= availableSanityItems.Count) {
-                currentCycleIndex = -1; 
-            }
-        }
-
-        UpdateSanityUI();
-        OnDistributionToggleChanged?.Invoke(); 
-    }
-
-    private void UpdateSanityUI() {
-        if (currentCycleIndex == -1) {
-            sanityIconImage.sprite = defaultNoneSprite;
-            sanityIconImage.color = new Color(1, 1, 1, 0.4f);
-        } else {
-            sanityIconImage.sprite = availableSanityItems[currentCycleIndex].itemData.ItemIcon;
-            sanityIconImage.color = Color.white;
-        }
-    }
-
-    public bool WillEat => foodToggle.isOn;
-    public bool WillDrink => waterToggle.isOn;
-    public bool WillHeal => medicineToggle.isOn;
-    public bool WillEntertain => currentCycleIndex != -1;
-    public string SelectedSanityItemID => (currentCycleIndex == -1) ? "" : availableSanityItems[currentCycleIndex].itemData.ItemID;
-    public CharacterData CurrentCharacter => currentCharacter;
-
-    public void FadeToggle(int type, bool isFaded) {
-        float alpha = isFaded ? 0.3f : 1f;
-        bool interactable = !isFaded;
-
-        switch (type) {
-            case 1: UpdateGroup(foodGroup, foodToggle, alpha, interactable); break;
-            case 2: UpdateGroup(waterGroup, waterToggle, alpha, interactable); break;
-            case 3: UpdateGroup(medicineGroup, medicineToggle, alpha, interactable); break;
-        }
-    }
-
-    private void UpdateGroup(CanvasGroup group, Toggle toggle, float alpha, bool interactable) {
-        if (group == null) return;
-        group.alpha = alpha;
-        toggle.interactable = interactable;
-        group.blocksRaycasts = interactable;
-
-        if (!interactable && toggle.isOn) toggle.isOn = false;
+        survivalPageObj.SetActive(pageIndex == 0);
+        mentalHealthPageObj.SetActive(pageIndex == 1);
     }
 }

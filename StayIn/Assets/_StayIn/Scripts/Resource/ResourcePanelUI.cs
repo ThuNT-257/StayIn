@@ -13,12 +13,12 @@ public class ResourcePanelUI : MonoBehaviour {
     private Dictionary<string, ResourceUI> resourceMap = new Dictionary<string, ResourceUI>();
 
     private void OnEnable() {
-        DistributionPanelUI.OnPlannedItemChanged += UpdateAllPreviews;
+        DistributionManager.OnTempStockChanged += UpdateAllPreviews;
         GameManager.OnDayChanged += DisplayResourceList;
     }
 
     private void OnDisable() {
-        DistributionPanelUI.OnPlannedItemChanged -= UpdateAllPreviews;
+        DistributionManager.OnTempStockChanged -= UpdateAllPreviews;
         GameManager.OnDayChanged -= DisplayResourceList;
     }
 
@@ -74,13 +74,22 @@ public class ResourcePanelUI : MonoBehaviour {
         if (panelObject != null) panelObject.SetActive(publicIsVisible);
     }
 
-    public void UpdateAllPreviews(Dictionary<string, int> totalPlanned) {
-        ResourceManager.Instance.UpdatePlannedPreview(totalPlanned);
+    public void UpdateAllPreviews(List<ResourceItem> tempResources) {
+        if (resourceMap.Count == 0) return;
 
-        if (canvasGroup != null && canvasGroup.alpha > 0) {
-            foreach (var kvp in resourceMap) {
-                int amount = ResourceManager.Instance.GetPlannedQuantity(kvp.Key);
-                kvp.Value.UpdateReviewText(amount);
+        List<ResourceItem> realResources = ResourceManager.Instance.GetCurrenResource();
+
+        foreach (var kvp in resourceMap) {
+            string itemID = kvp.Key;
+            var uiItem = kvp.Value;
+
+            var realItem = realResources.Find(x => x.itemData.ItemID == itemID);
+            var tempItem = tempResources.Find(x => x.itemData.ItemID == itemID);
+
+            if (realItem != null && tempItem != null) {
+                int plannedConsumption = realItem.quantity - tempItem.quantity;
+
+                uiItem.UpdateReviewText(plannedConsumption);
             }
         }
     }

@@ -53,8 +53,8 @@ public class ResourceManager : MonoBehaviour {
     }
 
     private void SetUpResources() {
-        foreach (var item in itemList) {
-            int amount = (item.ItemType == ItemType.Utility) ? 1 : 10;
+        foreach (ItemData item in itemList) {
+            int amount = (item.ItemType == ItemType.Utility) ? 1 : 0;
             AddItem(item, amount);
         }
     }

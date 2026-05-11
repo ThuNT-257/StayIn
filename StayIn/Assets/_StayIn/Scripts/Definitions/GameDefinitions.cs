@@ -24,6 +24,32 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
     //END CHARACTER ZONE
 
+    //DISTRIBUTION ZONE
+    [Serializable]
+    public class ActionPlan {
+        public bool WillEat = false;
+        public bool WillDrink = false;
+        public bool WillHeal = false;
+        public string SelectedSanityItemID = "";
+
+        public bool IsFoodLocked = false;
+        public bool IsWaterLocked = false;
+        public bool IsMedLocked = false;
+        public bool IsSanityLocked = false;
+
+        public void Reset() {
+            WillEat = false;
+            WillDrink = false;
+            WillHeal = false;
+            SelectedSanityItemID = "";
+            IsFoodLocked = false;
+            IsWaterLocked = false;
+            IsMedLocked = false;
+            IsSanityLocked = false;
+        }
+    }
+    //END DISTRIBUTION ZONE
+
     [Serializable]
     public class CharacterPersonality {
         public StatusSpeechGroup hungerLine;

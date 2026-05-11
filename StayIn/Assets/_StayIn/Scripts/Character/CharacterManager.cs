@@ -42,7 +42,8 @@ public class CharacterManager : MonoBehaviour {
             allCharacters.Add(mainInst);
         }
 
-        int extraMemberCount = Random.Range(0, Mathf.Min(3, otherPool.Count) + 1);
+        //int extraMemberCount = Random.Range(0, Mathf.Min(3, otherPool.Count) + 1);
+        int extraMemberCount = 3;
         List<CharacterData> tempPool = new List<CharacterData>(otherPool);
 
         for (int i = 0; i < extraMemberCount; i++) {

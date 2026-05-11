@@ -14,24 +14,15 @@ public class ResourceUI : MonoBehaviour {
     public void UpdateItemText(ResourceItem item) {
         if (item == null || item.itemData == null) return;
         currentItemID = item.itemData.ItemID;
-
         itemText.text = $"{item.itemData.ItemName} x {item.quantity}";
 
-        RefreshPlannedText();
+        plannedConsumptionText.text = "";
     }
 
-    public void UpdateReviewText(int quantity) {
-        plannedConsumptionText.text = quantity > 0 ? $"-{quantity}" : "";
-        plannedConsumptionText.color = Color.red;
-    }
-
-    public void RefreshPlannedText() {
-        if (string.IsNullOrEmpty(currentItemID)) return;
-
-        int plannedAmount = ResourceManager.Instance.GetPlannedQuantity(currentItemID);
-
+    public void UpdateReviewText(int plannedAmount) {
         if (plannedAmount > 0) {
-            UpdateReviewText(plannedAmount);
+            plannedConsumptionText.text = $"-{plannedAmount}";
+            plannedConsumptionText.color = Color.red;
         } else {
             plannedConsumptionText.text = "";
         }
