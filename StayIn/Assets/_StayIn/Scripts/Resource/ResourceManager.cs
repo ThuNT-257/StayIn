@@ -1,6 +1,5 @@
 ﻿using Assets._StayIn.Scripts.Definitions;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
@@ -22,7 +21,6 @@ public class ResourceManager : MonoBehaviour {
 
     private List<ResourceItem> resource = new List<ResourceItem>();
     private List<ResourceItem> startingBonusItem = new List<ResourceItem>();
-    private Dictionary<string, int> plannedPreviewMap = new Dictionary<string, int>();
 
     private void Awake() {
         if (instance != null && instance != this) {
@@ -113,16 +111,5 @@ public class ResourceManager : MonoBehaviour {
     public int GetItemQuantity(string itemID) {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
         return slot != null ? slot.quantity : 0;
-    }
-
-    public void UpdatePlannedPreview(Dictionary<string, int> totalPlanned) {
-        plannedPreviewMap = totalPlanned;
-    }
-
-    public int GetPlannedQuantity(string itemID) {
-        if (plannedPreviewMap.TryGetValue(itemID, out int amount)) {
-            return amount;
-        }
-        return 0;
     }
 }

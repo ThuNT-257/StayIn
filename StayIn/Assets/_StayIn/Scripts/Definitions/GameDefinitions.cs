@@ -13,6 +13,16 @@ namespace Assets._StayIn.Scripts.Definitions {
         public const int HUNGER_DANGER_LEVEL = 2;
         public const int THIRSTY_DANGER_LEVEL = 1;
         public const int SANITY_DANGER_LEVEL = 0;
+
+        public const int FOOD_RECOVERY = 5;
+        public const int WATER_RECOVERY = 5;
+        public const int HEALTH_RECOVERY = MAX_HEALTH;
+        public const int SANITY_RECOVERY = 2;
+
+        public const int HUNGER_PENALTY = -1;
+        public const int THIRSTY_PENALTY = -1;
+        public const int HEALTH_PENALTY = -1;
+        public const int SANITY_PENALTY = -1;
     }
 
     [Serializable]
@@ -49,6 +59,13 @@ namespace Assets._StayIn.Scripts.Definitions {
         }
     }
     //END DISTRIBUTION ZONE
+
+    //SAVE ZONE
+    [System.Serializable]
+    public class GameSaveData {
+        public int daysSurvived;
+    }
+    //END SAVE ZONE
 
     [Serializable]
     public class CharacterPersonality {

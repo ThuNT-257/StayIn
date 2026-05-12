@@ -17,9 +17,6 @@ public class EventManager : MonoBehaviour
     }
 
     [SerializeField] private List<EventData> allEvents;
-    private EventData currentDayEvent;
-
-    public EventData GetCurrentEvent() => currentDayEvent;
 
     private void Awake() {
         if( instance != null && instance != this) {
@@ -27,18 +24,5 @@ public class EventManager : MonoBehaviour
             return;
         }
         instance = this;
-    }
-
-
-
-    public void DetermineDailyEvent(int day) {
-        if (day == 2) {
-            if (allEvents != null && allEvents.Count > 0) {
-                currentDayEvent = allEvents[0]; // Lấy event đầu tiên làm mẫu
-                Debug.Log("Event for Day 2 assigned: " + currentDayEvent.eventID);
-            }
-        } else {
-            currentDayEvent = null;
-        }
     }
 }

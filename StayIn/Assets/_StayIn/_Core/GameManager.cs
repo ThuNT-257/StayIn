@@ -55,8 +55,6 @@ public class GameManager : MonoBehaviour {
 
         DayManager.Instance.NextDay();
 
-        EventManager.Instance.DetermineDailyEvent(DayManager.Instance.CurrentDay);
-
         LogManager.Instance.GenerateDailyReports();
 
         RefreshAllUI();
@@ -84,19 +82,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void OnNextDayButtonClicked() {
-        StartCoroutine(FadeManager.Instance.StartFade(() => {
+        StartCoroutine(FadeManager.Instance.StartFade((Action)(() => {
+            DistributionManager.Instance.EndDayConfirm();
             DayManager.Instance.NextDay();
-            
             OnDayChanged?.Invoke();
-        }));
-        //DistributionPanelUI panel = FindFirstObjectByType<DistributionPanelUI>();
-
-        //if (panel != null) {
-        //    StartCoroutine(FadeManager.Instance.StartFade(() => {
-        //        panel.OnConfirmDistribution();
-        //    }));
-        //} else {
-        //    //Debug.LogError("Không tìm thấy DistributionPanelUI trong Scene!");
-        //}
+        })));
     }
 }

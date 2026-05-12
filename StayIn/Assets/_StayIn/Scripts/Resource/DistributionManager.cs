@@ -151,11 +151,39 @@ public class DistributionManager : MonoBehaviour
         ActionPlan plan = characterPlans[character];
 
         if (plan.SelectedSanityItemID == itemID) {
-            plan.SelectedSanityItemID = null;
+            plan.SelectedSanityItemID = "";
         } else {
             plan.SelectedSanityItemID = itemID;
         }
 
         ValidatePlannedDistribution();
+    }
+
+    public void EndDayConfirm() {
+        foreach(var entry in characterPlans) {
+            CharacterData character = entry.Key;
+            ActionPlan plan = entry.Value;
+
+            if (character == null || character.isDead) continue;
+
+            //Resource Check
+            if (plan.WillEat) {
+                ResourceManager.Instance.RemoveItem("item_01", 1);
+            }
+            if (plan.WillDrink) {
+                ResourceManager.Instance.RemoveItem("item_02", 1);
+            }
+            if (plan.WillHeal) {
+                ResourceManager.Instance.RemoveItem("item_03", 1);
+            }
+            if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
+                ResourceManager.Instance.RemoveItem(plan.SelectedSanityItemID, 1);
+            }
+
+            //Character Check
+            CharacterManager.Instance.ApplySurvivalStats(character, plan.WillEat, plan.WillDrink, plan.WillHeal, plan.SelectedSanityItemID ?? "");
+
+        }
+        Init();
     }
 }

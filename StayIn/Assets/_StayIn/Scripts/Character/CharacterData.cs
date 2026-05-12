@@ -29,7 +29,7 @@ public class CharacterData : ScriptableObject {
     }
 
     public void ResetStats() {
-        health = GameConfig.MAX_HEALTH;
+        health = 5;
         hunger = GameConfig.MAX_HUNGER;
         thirsty = GameConfig.MAX_THIRSTY;
         sanity = GameConfig.MAX_SANITY;
@@ -57,10 +57,12 @@ public class CharacterData : ScriptableObject {
         if (isDead) return visuals.dead;
         if (isExploring) return visuals.exploring;
 
-        if (sanity <= GameConfig.SANITY_DANGER_LEVEL) return visuals.insane;
         if (health <= 3) return visuals.sick;
+
         if (hunger <= GameConfig.HUNGER_DANGER_LEVEL || thirsty <= GameConfig.THIRSTY_DANGER_LEVEL)
             return visuals.starved;
+
+        if (sanity <= GameConfig.SANITY_DANGER_LEVEL) return visuals.insane;
 
         return visuals.normal;
     }

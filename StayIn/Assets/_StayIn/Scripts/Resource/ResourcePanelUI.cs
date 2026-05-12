@@ -46,8 +46,7 @@ public class ResourcePanelUI : MonoBehaviour {
                 uiInstance.gameObject.SetActive(true);
                 uiInstance.UpdateItemText(resItem);
                 string id = resItem.itemData.ItemID;
-                int plannedAmount = ResourceManager.Instance.GetPlannedQuantity(id);
-                uiInstance.UpdateReviewText(plannedAmount);
+                uiInstance.UpdateReviewText(0);
                 if (!resourceMap.ContainsKey(id)) resourceMap.Add(id, uiInstance);
 
                 uiIndex++;

@@ -77,19 +77,17 @@ public class DistributedItemUi : MonoBehaviour {
             OnSanityClicked(plan, availableSanityItems);
         });
 
-        if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
-            var sanityItem = DistributionManager.Instance.GetCachedSanityItems()
-                             .Find(x => x.itemData.ItemID == plan.SelectedSanityItemID);
-
-            if (sanityItem != null) {
-                sanityIconImage.sprite = sanityItem.itemData.ItemIcon;
-            }
-        } else {
-            sanityIconImage.sprite = defaultNoneSprite;
-        }
-
         santityGroup.alpha = plan.IsSanityLocked ? 0.5f : 1f;
         sanityButton.interactable = !plan.IsSanityLocked;
+    }
+
+    public void UpdateCharacterLockState(CharacterData character, ActionPlan plan) {
+        bool isDead = character.isDead;
+
+        UpdateGroupState(foodGroup, foodToggle, isDead || plan.IsFoodLocked);
+        UpdateGroupState(waterGroup, waterToggle, isDead || plan.IsWaterLocked);
+        UpdateGroupState(medicineGroup, medicineToggle, isDead || plan.IsMedLocked);
+        UpdateGroupState(santityGroup, isDead || plan.IsSanityLocked);
     }
 
     private void UpdateGroupState(CanvasGroup group, Toggle toggle, bool isLocked) {
@@ -109,30 +107,38 @@ public class DistributedItemUi : MonoBehaviour {
             return;
         }
 
-        var selectedItem = availableItems.Find(x => x.itemData.ItemID == selectedID);
+        var allSanityItems = DistributionManager.Instance.GetCachedSanityItems();
+        var selectedItem = allSanityItems.Find(x => x.itemData.ItemID == selectedID);
+
         if (selectedItem != null) {
             sanityIconImage.sprite = selectedItem.itemData.ItemIcon;
             sanityIconImage.color = Color.white;
         } else {
             sanityIconImage.sprite = defaultNoneSprite;
+            sanityIconImage.color = Color.white;
         }
     }
-
     public void OnSanityClicked(ActionPlan plan, List<ResourceItem> availableSanityItems) {
         if (plan.IsSanityLocked) return;
 
-        int index = -1;
-        if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
-            index = availableSanityItems.FindIndex(x => x.itemData.ItemID == plan.SelectedSanityItemID);
+        if (availableSanityItems == null || availableSanityItems.Count == 0) {
+            plan.SelectedSanityItemID = "";
+        } else {
+            int currentIndex = -1;
+            if (!string.IsNullOrEmpty(plan.SelectedSanityItemID)) {
+                currentIndex = availableSanityItems.FindIndex(x => x.itemData.ItemID == plan.SelectedSanityItemID);
+            }
+
+            currentIndex++;
+
+            if (currentIndex >= availableSanityItems.Count) {
+                plan.SelectedSanityItemID = "";
+            } else {
+                plan.SelectedSanityItemID = availableSanityItems[currentIndex].itemData.ItemID;
+            }
         }
 
-        index++;
-
-        if (index >= availableSanityItems.Count) {
-            index = -1;
-        }
-
-        plan.SelectedSanityItemID = (index == -1) ? "" : availableSanityItems[index].itemData.ItemID;
+        UpdateSanityDisplay(plan.SelectedSanityItemID, availableSanityItems, plan.IsSanityLocked);
 
         OnDistributedItemChanged?.Invoke();
     }

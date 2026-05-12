@@ -118,4 +118,16 @@ public class CharacterManager : MonoBehaviour {
         }
         return true;
     }
+
+    public void ApplySurvivalStats(CharacterData character, bool fed, bool watered, bool healed, string sanityID) {
+        if (character == null || character.isDead) return;
+
+        int hungerChange = fed ? GameConfig.FOOD_RECOVERY : GameConfig.HUNGER_PENALTY;
+        int thirstChange = watered ? GameConfig.WATER_RECOVERY : GameConfig.THIRSTY_PENALTY;
+        int sanityChange = (sanityID != "") ? GameConfig.SANITY_RECOVERY : (character.Sanity < GameConfig.MAX_SANITY ? GameConfig.SANITY_PENALTY : 0);
+
+        int healthChange = healed ? GameConfig.HEALTH_RECOVERY : (character.Health < GameConfig.MAX_HEALTH ? GameConfig.HEALTH_PENALTY : 0);
+
+        character.UpdateStats(healthChange, hungerChange, thirstChange, sanityChange);
+    }
 }

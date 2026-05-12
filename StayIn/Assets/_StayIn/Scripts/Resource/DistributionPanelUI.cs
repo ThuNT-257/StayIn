@@ -39,26 +39,34 @@ public class DistributionPanelUI : MonoBehaviour {
         List<ResourceItem> sanityItems = DistributionManager.Instance.GetAvailableSanityItems();
 
         foreach (var item in distributedItemPool) item.gameObject.SetActive(false);
+
         int index = 0;
         foreach (KeyValuePair<CharacterData, ActionPlan> planItem in plans) {
-            DistributedItemUi uiInstance;
+            if (planItem.Key == null) continue;
 
-            if(index < distributedItemPool.Count) {
+            DistributedItemUi uiInstance;
+            if (index < distributedItemPool.Count) {
                 uiInstance = distributedItemPool[index];
             } else {
-                uiInstance = Instantiate(DistributedItemPrefab, container).GetComponent<DistributedItemUi>();
+                uiInstance = Instantiate(distributedItemPrefab, container).GetComponent<DistributedItemUi>();
                 distributedItemPool.Add(uiInstance);
             }
+
             uiInstance.gameObject.SetActive(true);
-
             uiInstance.OnDistributedItemChanged = null;
-            uiInstance.OnDistributedItemChanged += HandleResourceChanged;
 
-            uiInstance.UpdateDistributedItem(planItem.Key,  planItem.Value, sanityItems);
+            if (!planItem.Key.isDead) {
+                uiInstance.OnDistributedItemChanged += HandleResourceChanged;
+            }
+
+            uiInstance.UpdateDistributedItem(planItem.Key, planItem.Value, sanityItems);
             uiInstance.SwitchPage(currentPage);
-            UpdateAllItemsPage();
+
+            uiInstance.UpdateCharacterLockState(planItem.Key, planItem.Value);
             index++;
         }
+
+        UpdateAllItemsPage();
     }
 
     public void OnClickNext() {
@@ -94,15 +102,28 @@ public class DistributionPanelUI : MonoBehaviour {
     }
 
     private void UpdatePlannedPage() {
-        Dictionary<CharacterData, ActionPlan> plans = DistributionManager.Instance.GetCharacterPlans();
-        List<ResourceItem> sanityItems = DistributionManager.Instance.GetAvailableSanityItems();
+        var plans = DistributionManager.Instance.GetCharacterPlans();
+        var sanityItems = DistributionManager.Instance.GetAvailableSanityItems();
 
-        int i = 0;
+        int poolIndex = 0;
         foreach (var planItem in plans) {
-            if (i < distributedItemPool.Count && distributedItemPool[i].gameObject.activeSelf) {
-                distributedItemPool[i].UpdateDistributedItem(planItem.Key, planItem.Value, sanityItems);
+            if (planItem.Key == null) continue;
+
+            if (poolIndex < distributedItemPool.Count) {
+                DistributedItemUi uiInstance = distributedItemPool[poolIndex];
+
+                if (uiInstance.gameObject.activeSelf) {
+                    uiInstance.OnDistributedItemChanged = null;
+                    if (!planItem.Key.isDead) {
+                        uiInstance.OnDistributedItemChanged += HandleResourceChanged;
+                    }
+
+                    uiInstance.UpdateDistributedItem(planItem.Key, planItem.Value, sanityItems);
+
+                    uiInstance.UpdateCharacterLockState(planItem.Key, planItem.Value);
+                }
             }
-            i++;
+            poolIndex++;
         }
     }
 }
