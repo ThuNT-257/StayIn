@@ -29,7 +29,7 @@ public class CharacterData : ScriptableObject {
     }
 
     public void ResetStats() {
-        health = 5;
+        health = GameConfig.MAX_HEALTH;
         hunger = GameConfig.MAX_HUNGER;
         thirsty = GameConfig.MAX_THIRSTY;
         sanity = GameConfig.MAX_SANITY;
