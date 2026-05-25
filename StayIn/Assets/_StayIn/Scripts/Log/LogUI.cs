@@ -15,6 +15,7 @@ public class LogUI : MonoBehaviour {
 
     private void OnEnable() {
         GameManager.OnGameStateChanged += UpdateLogContent;
+        GameManager.OnDayChanged += UpdateLogContent;
     }
 
     private void Start() {
@@ -28,6 +29,7 @@ public class LogUI : MonoBehaviour {
 
     private void OnDisable() {
         GameManager.OnGameStateChanged -= UpdateLogContent;
+        GameManager.OnDayChanged -= UpdateLogContent;
     }
 
     private void UpdateLogContent() {

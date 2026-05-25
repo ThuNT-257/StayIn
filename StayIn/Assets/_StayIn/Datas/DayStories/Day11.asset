@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day11
+  m_EditorClassIdentifier: 
+  dayNumber: 11
+  storyText: "The sky is gray again. Heavy clouds hanging low like they're trying
+    to touch the ground. The ducks are still here, though. Waddling around the courtyard
+    like nothing has changed. We watched them for a while this morning. Counting
+    them. Nine. Ten. Eleven. The same number as always. No ducks missing. No ducks
+    bitten. No ducks turned into zombies. We're not sure why. Maybe zombies don't
+    like duck meat. Maybe the ducks are just faster than they look. Or maybe \u2014
+    and this is the funny thought \u2014 maybe the ducks are the only ones who figured
+    it out. Stay low. Stay together. Don't make noise. We're taking notes. Not that
+    it's helping.\r"

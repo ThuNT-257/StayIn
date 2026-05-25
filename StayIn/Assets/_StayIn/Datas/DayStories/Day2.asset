@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Day2
   m_EditorClassIdentifier: 
   dayNumber: 2
-  storyText: "- This morning, the university loudspeakers crackled to life for the
-    first time since everything went down. \\n- An emergency evacuation notice was
-    broadcasted \u2014 all students must leave the dorms and head to the stadium
-    for pickup. But after what we saw yesterday, leaving our room feels like a death
-    sentence. \\n - So we decided to stay put, barricade the door, and pray they
-    don't come breaking down our floor next.\r"
-  bonusItem: []
+  storyText: "Last night was endless screaming. By dawn, everything went eerily quiet.
+    Blue sky, sunny, beautiful \u2014 totally wrong for the blood stains on the courtyard.
+    The ducks are still waddling around looking for worms. Zombies don't care about
+    ducks, apparently. Lucky ducks. Power's still on. Social media is exploding \u2014
+    half the people are joking about no more work or school, the other half are crying.
+    The army posted an announcement: hide, stay quiet, run if you see zombies, save
+    food. They'll find a solution. We're supposed to feel better now. We don't.\r\n\r\n"

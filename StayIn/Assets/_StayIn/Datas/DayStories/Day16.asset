@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day16
+  m_EditorClassIdentifier: 
+  dayNumber: 16
+  storyText: "The air feels different today. Thicker. Heavier. We don't know if it's
+    in our heads or real. Some people on social media are saying the zombies are
+    toxic now. That the air near them is bad. That you shouldn't get close. Not just
+    because they'll bite you \u2014 but because breathing near them might be enough.
+    We don't know if it's true. But we closed the window anyway. Taped the gaps with
+    whatever we could find. Duct tape. Old clothes. A poster from the wall. The room
+    smells like sweat and fear now. Better than the alternative. Outside, the ducks
+    are still fine. Of course they are.\r"

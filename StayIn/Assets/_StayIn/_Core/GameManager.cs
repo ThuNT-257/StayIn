@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(FadeManager.Instance.StartFade((Action)(() => {
             DistributionManager.Instance.EndDayConfirm();
             DayManager.Instance.NextDay();
+            LogManager.Instance.GenerateDailyReports();
             OnDayChanged?.Invoke();
         })));
     }

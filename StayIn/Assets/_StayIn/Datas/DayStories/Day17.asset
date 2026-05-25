@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day17
+  m_EditorClassIdentifier: 
+  dayNumber: 17
+  storyText: "A small storm rolled in last night. Rain hammering the roof, wind howling
+    through the cracks in the windows. We haven't seen the cats in a while. Not the
+    fat orange one. Not the others. They're not on the canteen roof. Not under the
+    trees. Not anywhere we can see. Maybe they found shelter. Maybe they didn't.
+    The storm passed by morning, leaving everything wet and grey. The ducks are back,
+    though. Shaking off water like nothing happened. We keep looking for the cats.
+    Still nothing. We pretend it doesn't worry us. It does.\r"

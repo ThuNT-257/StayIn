@@ -123,7 +123,8 @@ public class DistributionManager : MonoBehaviour
             bool isHealthFull = character.Health == 10;
             plan.IsMedLocked = (!plan.WillHeal && GetTempItem("item_03").quantity <= 0) || isHealthFull;
 
-            plan.IsSanityLocked = string.IsNullOrEmpty(plan.SelectedSanityItemID) && !HasAnySanityLeftInTemp();
+            bool IsSanityFull = character.Sanity >= GameConfig.MAX_SANITY;
+            plan.IsSanityLocked = IsSanityFull || string.IsNullOrEmpty(plan.SelectedSanityItemID) && !HasAnySanityLeftInTemp();
         }
 
         OnTempStockChanged?.Invoke(tempResources);

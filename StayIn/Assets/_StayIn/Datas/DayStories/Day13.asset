@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day13
+  m_EditorClassIdentifier: 
+  dayNumber: 13
+  storyText: "Something happened today. Not big. Not like the first day. But something.
+    Around noon, we heard a loud crash from below. Glass breaking. Then a car alarm
+    started screaming. It went on for minutes. Maybe hours. Time is blurry now. We
+    looked out the window \u2014 a car had slammed into the canteen wall. The driver
+    was gone. Or maybe never there. Zombies gathered around the sound, bumping into
+    each other like confused shoppers. One of them tripped over a duck. The duck
+    quacked. Loud. We held our breath. The zombies turned. The duck ran. The zombies
+    followed. For a few seconds, we forgot we were scared. Then the alarm stopped.
+    Silence came back. The duck made it, by the way. We saw it waddling away like
+    nothing happened. Legend.\r"

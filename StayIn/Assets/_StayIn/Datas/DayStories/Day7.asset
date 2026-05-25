@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day7
+  m_EditorClassIdentifier: 
+  dayNumber: 7
+  storyText: "Scrolling through social media today was a mistake. Bad news everywhere
+    \u2014 cities falling, supply lines cut, people saying goodbye. Nothing official.
+    Just panic wearing a text font. We're still holed up in our room, listening to
+    the hallway like it's a living thing. Wondering when someone will come. If someone
+    will come. The army said they'd find a solution. That was days ago. Funny thing
+    \u2014 I used to complain about deadlines. Ten deadlines at once and I'd lose
+    my mind. Now? Give me all ten. Give me finals. Give me group projects with the
+    worst teammates imaginable. I'd do them all, back to back, just to trade this
+    silence for a due date.\r\n\n"

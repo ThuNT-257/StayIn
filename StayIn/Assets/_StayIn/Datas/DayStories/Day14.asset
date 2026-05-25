@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d21438f07bf2e8446b0a1da7bf64f675, type: 3}
+  m_Name: Day14
+  m_EditorClassIdentifier: 
+  dayNumber: 14
+  storyText: "Last night we heard scratching at the door. Not loud. Not urgent. Just...
+    slow. Deliberate. Like something knew we were in here. We didn't move. Didn't
+    breathe. The scratching stopped. Then started again. Closer to the floor this
+    time. We looked at each other in the dark. No one spoke. After an hour, it stopped.
+    This morning, we checked the door from the window \u2014 couldn't see anything.
+    But the smell. There's a smell now. Sweet. Rotten. Wrong. It's coming from the
+    hallway. We don't open the door anymore. Not for anything.\r"

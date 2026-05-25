@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Day1
   m_EditorClassIdentifier: 
   dayNumber: 1
-  storyText: '- On the first day, we thought it was just a hoax until we saw our
-    classmate getting dragged into the stairwell. \n- We barely made it back to the
-    dorm room and slammed the door shut as the first wave of infected flooded the
-    hallway. \n- While catching our breath, I checked the shelves and found some
-    leftover supplies from last week.'
-  bonusItem: []
+  storyText: "We used to joke about the apocalypse. We're not laughing anymore. The
+    canteen was boringly normal at first \u2014 people eating, ducks hunting crumbs
+    like little dinosaurs. Then we went into the mini-mart. Five minutes later, screaming.
+    We looked through the glass and saw someone getting chased. Thought it was a
+    fight. Then the red sprayed. Yeah, not a fight. The bitten got back up. Of course
+    they did. The mini-mart went insane. We ran to the 5th floor. Made it. Campus
+    is chaos now. Screams everywhere. Worse than the movies. We still have a class
+    today, though. Guess we're skipping. The ducks? No idea. They probably ran faster
+    than us."
