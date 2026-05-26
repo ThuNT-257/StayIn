@@ -4873,25 +4873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995952867dc169a4eb240bb12a3a67fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storyDatabase:
-  - {fileID: 11400000, guid: d41c3d15895223d43be9e813fff52a12, type: 2}
-  - {fileID: 11400000, guid: a2cbde419a321b0418ada0aa0d7b2903, type: 2}
-  - {fileID: 11400000, guid: d1054056e3805924f9c7f7bf1edac589, type: 2}
-  - {fileID: 11400000, guid: 8c1e1cc82b0a2e74eab68cc919aa3f8c, type: 2}
-  - {fileID: 11400000, guid: a45862453bc39e2418eb8bd2c1a0fead, type: 2}
-  - {fileID: 11400000, guid: a97cded924f8a2241a5f238ca31df0ac, type: 2}
-  - {fileID: 11400000, guid: 69e942bb7ec00414ca074ccb3aad883a, type: 2}
-  - {fileID: 11400000, guid: df33f760dfae47f49bdb9dc4b5961eed, type: 2}
-  - {fileID: 11400000, guid: 177fe05e12860934f892d3ea6337f16f, type: 2}
-  - {fileID: 11400000, guid: c80c263f8d95dcd4bb63273efd06cf2a, type: 2}
-  - {fileID: 11400000, guid: 758fbec51d45e8f4e8063f67ee3ea712, type: 2}
-  - {fileID: 11400000, guid: 29269acb8e77c8a43978aa2776c58057, type: 2}
-  - {fileID: 11400000, guid: 9f9fc2115c2de5148a29baec70dd40e4, type: 2}
-  - {fileID: 11400000, guid: 1a5e917ea33a15f44bf03ef80e66c280, type: 2}
-  - {fileID: 11400000, guid: ff36d05532dbf4b4c828a291ae3d4bef, type: 2}
-  - {fileID: 11400000, guid: 5c600880b4ee0fb4280c152a89674c2c, type: 2}
-  - {fileID: 11400000, guid: 04a0036af06acbd459812c5f745cf2ea, type: 2}
-  - {fileID: 11400000, guid: cbe0a5370630dda499b4cab74942d986, type: 2}
+  storyDatabase: {fileID: 11400000, guid: c1abb7e20168b044da5de3c75a699fea, type: 2}
 --- !u!114 &1995314678
 MonoBehaviour:
   m_ObjectHideFlags: 0

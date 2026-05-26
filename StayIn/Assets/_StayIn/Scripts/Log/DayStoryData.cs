@@ -1,13 +1,14 @@
 using Assets._StayIn.Scripts.Definitions;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
-[CreateAssetMenu(fileName = "NewDayStory", menuName = "StayIn/Day Story Data")]
-public class DayStoryData : ScriptableObject
+[System.Serializable]
+public class DayStoryData
 {
     [SerializeField] private int dayNumber;
-    [SerializeField] [TextArea(10, 20)] private string storyText;
+    [SerializeField] private LocalizedString storyText;
 
     public int DayNumber => dayNumber;
-    public string StoryText => storyText;
+    public LocalizedString StoryText => storyText;
 }

@@ -14,7 +14,275 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: StayInGameText
   m_TableCollectionNameGuidString: cc57f5139c87a1343bea2fdf258dd1bf
-  m_Entries: []
+  m_Entries:
+  - m_Id: 16938021700976640
+    m_Key: story_day_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16939959825940480
+    m_Key: story_day_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16940414241030144
+    m_Key: story_day_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16940756185858048
+    m_Key: story_day_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16941067063476224
+    m_Key: story_day_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16941399168466944
+    m_Key: story_day_06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16941727293063168
+    m_Key: story_day_07
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16941929722757120
+    m_Key: story_day_08
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16942100074414080
+    m_Key: story_day_09
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16942351090925568
+    m_Key: story_day_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16942564023156736
+    m_Key: story_day_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16942768130572288
+    m_Key: story_day_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16942897986224128
+    m_Key: story_day_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16943140479909888
+    m_Key: story_day_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16943457598652416
+    m_Key: story_day_15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16943820917653504
+    m_Key: story_day_16
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16944155614724096
+    m_Key: story_day_17
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16944381268279296
+    m_Key: story_day_18
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16944646780305408
+    m_Key: story_day_19
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16947266936848384
+    m_Key: story_day_20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16948312274845696
+    m_Key: story_day_21
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16949406677811200
+    m_Key: story_day_22
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16950869101592576
+    m_Key: story_day_23
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16951945443885056
+    m_Key: story_day_24
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16964717477052416
+    m_Key: story_day_25
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16968342676914176
+    m_Key: story_day_26
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16969522211667968
+    m_Key: story_day_27
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16971826625200128
+    m_Key: story_day_28
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16973811097223168
+    m_Key: story_day_29
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16981242560856064
+    m_Key: story_day_30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16982939374927872
+    m_Key: story_day_31
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16986773501460480
+    m_Key: story_day_32
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17029210672414720
+    m_Key: story_day_33
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17030520339644416
+    m_Key: story_day_34
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17031071206948864
+    m_Key: story_day_35
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17031777032814592
+    m_Key: story_day_36
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17032680225849344
+    m_Key: story_day_37
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17033540402102272
+    m_Key: story_day_38
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17034553146163200
+    m_Key: story_day_39
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17035949656457216
+    m_Key: story_day_40
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17037122425798656
+    m_Key: story_day_41
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17038672481173504
+    m_Key: story_day_42
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17039376998416384
+    m_Key: story_day_43
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17042726284378112
+    m_Key: story_day_44
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17043873380384768
+    m_Key: story_day_45
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17044983067394048
+    m_Key: story_day_46
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17048466940182528
+    m_Key: story_day_47
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17049198263222272
+    m_Key: story_day_48
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17050447100461056
+    m_Key: story_day_49
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17051610134822912
+    m_Key: story_day_50
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17052569925795840
+    m_Key: story_day_51
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17054413288849408
+    m_Key: story_day_52
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17055232415449088
+    m_Key: story_day_53
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17056515440459776
+    m_Key: story_day_54
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17057436421537792
+    m_Key: story_day_55
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17058595156738048
+    m_Key: story_day_56
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17059989490188288
+    m_Key: story_day_57
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17062383200452608
+    m_Key: story_day_58
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17061652716273664
+    m_Key: story_day_59
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17063163479408640
+    m_Key: story_day_60
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17064395803672576
+    m_Key: story_day_61
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17066298042171392
+    m_Key: story_day_62
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17068905175400448
+    m_Key: story_day_63
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17070198082191360
+    m_Key: story_day_64
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17070372003201024
+    m_Key: story_day_65
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17071525948506112
+    m_Key: story_day_66
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17072048684613632
+    m_Key: story_day_67
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

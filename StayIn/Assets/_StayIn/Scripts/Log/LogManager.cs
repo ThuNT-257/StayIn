@@ -25,7 +25,7 @@ public class LogManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private List<DayStoryData> storyDatabase;
+    [SerializeField] private AllDaysStoryDatabase storyDatabase;
 
     //Page_1_Summary
     private List<string> dailySummaryLogs = new List<string>();
@@ -45,7 +45,7 @@ public class LogManager : MonoBehaviour
     //Page_4_Status
     private Dictionary<string, List<string>> characterStatuses = new Dictionary<string, List<string>>();
 
-    public List<DayStoryData> StoryDatabase => storyDatabase;
+    public AllDaysStoryDatabase StoryDatabase => storyDatabase;
     public List<string> DailySummaryLogs => dailySummaryLogs;
     public bool IsExpeditionLocked => isExpeditionLocked;
 
@@ -71,10 +71,12 @@ public class LogManager : MonoBehaviour
     private string GenerateStoryPart(int day) {
         StringBuilder sb = new StringBuilder();
 
-        DayStoryData todayStory = storyDatabase.Find(s => s.DayNumber == day);
-        if(todayStory != null) {
-            sb.Append(todayStory.StoryText);
+        DayStoryData todayStory = storyDatabase.GetStoryData(day);
+        if (todayStory != null) {
+            sb.Append(todayStory.StoryText.GetLocalizedString());
         } else {
+            // Chỗ này nếu bạn hardcode tiếng Anh, khi người chơi chọn tiếng Việt nó vẫn ra tiếng Anh.
+            // Tốt nhất là ném câu này vào Localization Table luôn (ví dụ đặt key là "story_default_peaceful")
             sb.Append("Everything is weirdly peaceful!\nToo peaceful, honestly. Feels like the calm before something awful.");
         }
 
