@@ -40,12 +40,12 @@ public class LogUI : MonoBehaviour {
         }
 
         //Page2_Event
-        //var currentEvent = EventManager.Instance.GetCurrentEvent();
-        //hasEventToday = (currentEvent != null);
+        EventData currentEvent = LogManager.Instance.CurrentEvent;
+        hasEventToday = (currentEvent != null);
 
-        //if (hasEventToday && pages.Length > 1) {
-        //    pages[1].GetComponent<LogPageEventUI>()?.SetUp(currentEvent);
-        //}
+        if (hasEventToday && pages.Length > 1) {
+            pages[1].GetComponent<LogPageEventUI>().SetUp(currentEvent);
+        }
 
         int currentDay = DayManager.Instance.CurrentDay;
         isExpeditionOpen = (currentDay > 1) && !LogManager.Instance.IsExpeditionLocked;

@@ -34,6 +34,7 @@ public class LogManager : MonoBehaviour
     private EventData currentEvent;
     private string selectedChoiceID;
     private Dictionary<string, bool> choiceResults = new Dictionary<string, bool>();
+    private EventOutcome currentOutcome;
 
     //Page_3_Expedition
     private List<CharacterData> availableCharacters = new List<CharacterData>();
@@ -48,6 +49,9 @@ public class LogManager : MonoBehaviour
     public AllDaysStoryDatabase StoryDatabase => storyDatabase;
     public List<string> DailySummaryLogs => dailySummaryLogs;
     public bool IsExpeditionLocked => isExpeditionLocked;
+
+    //Getters
+    public EventData CurrentEvent => currentEvent;
 
     private void Awake() {
         if (instance != null && instance != this) {
@@ -66,17 +70,25 @@ public class LogManager : MonoBehaviour
         dailySummaryLogs.Clear();
         int day = DayManager.Instance.CurrentDay;
         dailySummaryLogs.Add(GenerateStoryPart(day));
+
+        //Event Part
+        if (day == 1) {
+            currentEvent = null;
+        } else {
+            currentEvent = EventManager.Instance.GetEventForToday();
+        }
+
     }
 
     private string GenerateStoryPart(int day) {
         StringBuilder sb = new StringBuilder();
 
+        //day story part
         DayStoryData todayStory = storyDatabase.GetStoryData(day);
         if (todayStory != null) {
             sb.Append(todayStory.StoryText.GetLocalizedString());
         } else {
-            // Chỗ này nếu bạn hardcode tiếng Anh, khi người chơi chọn tiếng Việt nó vẫn ra tiếng Anh.
-            // Tốt nhất là ném câu này vào Localization Table luôn (ví dụ đặt key là "story_default_peaceful")
+            //need to be localized later
             sb.Append("Everything is weirdly peaceful!\nToo peaceful, honestly. Feels like the calm before something awful.");
         }
 
@@ -86,6 +98,41 @@ public class LogManager : MonoBehaviour
                 sb.Append($"\n+ {item.quantity} {item.itemData.ItemName}");
             }
         }
+
+        //Event outcome part
+        if(currentOutcome != null) {
+            sb.Append("\n\nAbout yesterday...");
+            sb.Append("\n" + currentOutcome.outcomeText.GetLocalizedString());
+            currentOutcome = null;
+        }
+
         return sb.ToString();
+    }
+
+    public void SaveEventChoice(EventChoice chosenOption) {
+        if(currentEvent == null || chosenOption == null) {
+            return;
+        }
+
+        selectedChoiceID = chosenOption.choiceID;
+        Debug.Log("Chose: " + selectedChoiceID);
+        currentOutcome = RollOutcome(chosenOption);
+    }
+
+    private EventOutcome RollOutcome(EventChoice choice) {
+        int totalWeight = 0;
+        foreach(EventOutcome outcome in choice.outcomes) {
+            totalWeight += outcome.weight;
+        }
+
+        int roll = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+        foreach(EventOutcome outcome in choice.outcomes) {
+            currentWeight += outcome.weight;
+            if(roll < currentWeight) {
+                return outcome;
+            }
+        }
+        return choice.outcomes[0];
     }
 }

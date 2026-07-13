@@ -668,17 +668,17 @@ MonoBehaviour:
 
       - Supplies: OK
 
-      -
-      Room: OK
+      - Room:
+      OK
 
       - Weather: Clear sky
 
       - News: None
 
-      Nothing
-      else. Not hungry. Not full. Just... fine. Fine is fine. Tomorrow will be the
-      same. Why write anymore? I don''t know. But I''m still writing. That''s something.
-      I guess.'
+      Nothing else. Not
+      hungry. Not full. Just... fine. Fine is fine. Tomorrow will be the same. Why
+      write anymore? I don''t know. But I''m still writing. That''s something. I
+      guess.'
     m_Metadata:
       m_Items: []
   - m_Id: 17058595156738048
@@ -692,11 +692,10 @@ MonoBehaviour:
       - Travel somewhere far. Anywhere.
       Just not here.
 
-      - Learn survival stuff. Real survival. Not watching
-      videos.
+      - Learn survival stuff. Real survival. Not watching videos.
 
-      - Live without worrying. What''s the point? Tomorrow might
-      not come anyway.'
+      -
+      Live without worrying. What''s the point? Tomorrow might not come anyway.'
     m_Metadata:
       m_Items: []
   - m_Id: 17059989490188288
@@ -820,6 +819,40 @@ MonoBehaviour:
       hand. The ones who joined other groups, thinking they'd be safer together?
       Most of them didn't make it. We were the lucky ones. We don't feel lucky. But
       we're alive. After 67 days. We're alive."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30515385299058688
+    m_Localized: "We crept out to the balcony today. And guess what \u2014 there's
+      a bit of green growing in the corner of the wall. Normally, we'd be too lazy
+      to clean it, and it just looked... green. But today, it looks strangely edible.
+      Hmm. Should we get some vegetable vitamins?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30516114797576192
+    m_Localized: We found a little green plant growing in the corner of the balcony
+      wall. Normally we'd ignore it. But now... it looks kinda tasty. Should we eat
+      it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30516805293260800
+    m_Localized: We used to ignore the little plant in the corner. Now we're dating
+      it. Should we eat it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30518344602828800
+    m_Localized: Tastes amazing. Or maybe we're just so hungry that anything tastes
+      good? Either way, our energy is back up. At least we can hold on... for a while,
+      right?! Hope we don't get sick haha.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30874314264756224
+    m_Localized: 'Lesson learned: don''t eat weird things unless you''re ready to
+      meet your maker =))'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30878239592235008
+    m_Localized: "No matter how hungry we get, we must stay righteous. No eating
+      random stuff =))\r"
     m_Metadata:
       m_Items: []
   references:

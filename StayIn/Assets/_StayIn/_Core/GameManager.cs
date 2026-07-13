@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
         ResourceManager.Instance.Init();
         DistributionManager.Instance.Init();
         LogManager.Instance.Init();
+        EventManager.Instance.Init();
 
         OnDayChanged?.Invoke();
         RefreshAllUI();
@@ -48,16 +49,6 @@ public class GameManager : MonoBehaviour {
 
     public void RefreshAllUI() {
         OnGameStateChanged?.Invoke();
-    }
-
-    private void HandleDistributionConfirm(List<DayActionData> actions) {
-        ProcessDaySummary(actions);
-
-        DayManager.Instance.NextDay();
-
-        LogManager.Instance.GenerateDailyReports();
-
-        RefreshAllUI();
     }
 
     private void ProcessDaySummary(List<DayActionData> actionPackets) {
@@ -86,6 +77,7 @@ public class GameManager : MonoBehaviour {
             DistributionManager.Instance.EndDayConfirm();
             DayManager.Instance.NextDay();
             LogManager.Instance.GenerateDailyReports();
+            EventManager.Instance.GetEventForToday();
             OnDayChanged?.Invoke();
         })));
     }

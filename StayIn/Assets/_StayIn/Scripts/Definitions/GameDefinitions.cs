@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Assets._StayIn.Scripts.Definitions {
     //CHARACTER ZONE
@@ -31,6 +32,17 @@ namespace Assets._StayIn.Scripts.Definitions {
         public string GetRandom() {
             return lines.Count > 0 ? lines[UnityEngine.Random.Range(0, lines.Count)] : "";
         }
+    }
+
+    [Flags]
+    public enum CharacterRequirement {
+        None = 0,
+        Lynx = 1 << 0,
+        TrungBienHinh = 1 << 1,
+        MadLunaticz = 1 << 2,
+        Plinkcanfly = 1 << 3,
+
+        AllCharacters = Lynx | TrungBienHinh | MadLunaticz | Plinkcanfly,
     }
     //END CHARACTER ZONE
 
@@ -63,7 +75,26 @@ namespace Assets._StayIn.Scripts.Definitions {
     //SAVE ZONE
     [System.Serializable]
     public class GameSaveData {
-        public int daysSurvived;
+        public int currentDay;
+        public List<CharacterSaveData> currentCharacters;
+        public List<ResourceItemSaveData> currentResourceItems;
+        public string mainCharacterId;
+    }
+
+    [Serializable]
+    public class CharacterSaveData {
+        public string characterId;
+        public int currentHealth;
+        public int currentHunger;
+        public int currentThirsty;
+        public int currentSanity;
+        public bool isDead;
+    }
+
+    [Serializable]
+    public class ResourceItemSaveData {
+        public string itemId;
+        public int quantity;
     }
     //END SAVE ZONE
 
@@ -112,7 +143,8 @@ namespace Assets._StayIn.Scripts.Definitions {
         Food,
         Water,
         Health,
-        Raid
+        Raid,
+        Special
     }
 
     public enum StatType { Hunger, Thirst, Health }
@@ -130,8 +162,7 @@ namespace Assets._StayIn.Scripts.Definitions {
         public string outcomeID;
         public bool isSuccess;
 
-        [TextArea(3, 5)]
-        public string outcomeText;
+        public LocalizedString outcomeText;
 
         public List<ResourceItem> rewards;
         public List<ResourceItem> penalties;

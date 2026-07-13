@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MadzLunatic
   m_EditorClassIdentifier: 
   characterID: char_02
-  characterName: MadzLunatic
+  characterName: MadLunaticz
   health: 10
   hunger: 10
   thirsty: 5
