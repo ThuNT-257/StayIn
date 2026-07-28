@@ -87,7 +87,7 @@ MonoBehaviour:
       statusEffects:
       - stat: 2
         target: 2
-        changeValue: -3
+        changeValue: -1
   - choiceID: choice_02
     config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
     requiredItem: {fileID: 0}

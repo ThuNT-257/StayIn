@@ -78,18 +78,45 @@ public class ResourceManager : MonoBehaviour {
             ItemData waterData = itemList.Find(x => x.ItemID.Equals("item_02"));
 
             if (foodData != null) {
-                AddItem(foodData, 2);
-                startingBonusItem.Add(new ResourceItem { itemData = foodData, quantity = 2 });
+                AddItem(foodData, 100);
+                startingBonusItem.Add(new ResourceItem { itemData = foodData, quantity = 100 });
             }
             if (waterData != null) {
-                AddItem(waterData, 2);
-                startingBonusItem.Add(new ResourceItem { itemData = waterData, quantity = 2 });
+                AddItem(waterData, 100);
+                startingBonusItem.Add(new ResourceItem { itemData = waterData, quantity = 100 });
             }
         }
     }
 
-    public bool RemoveItem(string itemID, int amount) {
+    public bool RemoveItem(string itemID, int amount)
+    {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
+        if (slot == null || slot.quantity < amount)
+        {
+            Debug.Log("There are not enough resource to remove");
+            return false;
+        }
+
+        if (slot.itemData.IsStackable)
+        {
+            slot.quantity -= amount;
+        }
+        else
+        {
+            slot.quantity = 0;
+        }
+
+        if (slot.quantity <= 0)
+        {
+            resource.Remove(slot);
+        }
+
+        return true;
+    }
+
+
+    public bool RemoveItem(ItemData item, int amount) {
+        ResourceItem slot = resource.Find(x => x.itemData.ItemID == item.ItemID);
         if (slot == null || slot.quantity < amount) {
             Debug.Log("There are not enough resource to remove");
             return false;

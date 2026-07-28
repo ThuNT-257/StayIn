@@ -13,10 +13,10 @@ public class LogManager : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = FindAnyObjectByType<LogManager>();
-                if(instance == null)
+                if (instance == null)
                 {
                     Debug.Log("There is no LogManager in Scene.");
                 }
@@ -32,8 +32,7 @@ public class LogManager : MonoBehaviour
 
     //Page_2_Event
     private EventData currentEvent;
-    private string selectedChoiceID;
-    private Dictionary<string, bool> choiceResults = new Dictionary<string, bool>();
+    private EventChoice currentChoice;
     private EventOutcome currentOutcome;
 
     //Page_3_Expedition
@@ -52,6 +51,7 @@ public class LogManager : MonoBehaviour
 
     //Getters
     public EventData CurrentEvent => currentEvent;
+    public EventChoice CurrentChoice => currentChoice;
 
     private void Awake() {
         if (instance != null && instance != this) {
@@ -65,7 +65,12 @@ public class LogManager : MonoBehaviour
         GenerateDailyReports();
     }
 
-    public void GenerateDailyReports() {
+    public void GenerateDailyReports(EventOutcome outcome = null) {
+        if(outcome != null)
+        {
+            currentOutcome = outcome;
+        }
+
         //Day Story Part
         dailySummaryLogs.Clear();
         int day = DayManager.Instance.CurrentDay;
@@ -100,7 +105,7 @@ public class LogManager : MonoBehaviour
         }
 
         //Event outcome part
-        if(currentOutcome != null) {
+        if (currentOutcome != null) {
             sb.Append("\n\nAbout yesterday...");
             sb.Append("\n" + currentOutcome.outcomeText.GetLocalizedString());
             currentOutcome = null;
@@ -110,29 +115,12 @@ public class LogManager : MonoBehaviour
     }
 
     public void SaveEventChoice(EventChoice chosenOption) {
-        if(currentEvent == null || chosenOption == null) {
+        if (currentEvent == null || chosenOption == null) {
             return;
         }
 
-        selectedChoiceID = chosenOption.choiceID;
-        Debug.Log("Chose: " + selectedChoiceID);
-        currentOutcome = RollOutcome(chosenOption);
+        currentChoice = chosenOption;
     }
 
-    private EventOutcome RollOutcome(EventChoice choice) {
-        int totalWeight = 0;
-        foreach(EventOutcome outcome in choice.outcomes) {
-            totalWeight += outcome.weight;
-        }
 
-        int roll = UnityEngine.Random.Range(0, totalWeight);
-        int currentWeight = 0;
-        foreach(EventOutcome outcome in choice.outcomes) {
-            currentWeight += outcome.weight;
-            if(roll < currentWeight) {
-                return outcome;
-            }
-        }
-        return choice.outcomes[0];
-    }
 }

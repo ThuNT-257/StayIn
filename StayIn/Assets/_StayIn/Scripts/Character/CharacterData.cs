@@ -18,6 +18,7 @@ public class CharacterData : ScriptableObject {
     public bool isExploring;
     [SerializeField] private bool deathLogged;
 
+    public string Name => characterName;
     public int Health => health;
     public int Hunger => hunger;
     public int Thirsty => thirsty;
@@ -38,13 +39,13 @@ public class CharacterData : ScriptableObject {
         deathLogged = false;
     }
 
-    public void UpdateStats(int h, int hu, int t, int s) {
+    public void UpdateStats(int health1 = 0, int hunger1 = 0, int thirsty1 = 0, int sanity1 = 0) {
         if (isDead) return;
 
-        health = Mathf.Clamp(health + h, 0, GameConfig.MAX_HEALTH);
-        hunger = Mathf.Clamp(hunger + hu, 0, GameConfig.MAX_HUNGER);
-        thirsty = Mathf.Clamp(thirsty + t, 0, GameConfig.MAX_THIRSTY);
-        sanity = Mathf.Clamp(sanity + s, 0, GameConfig.MAX_SANITY);
+        health = Mathf.Clamp(health + health1, 0, GameConfig.MAX_HEALTH);
+        hunger = Mathf.Clamp(hunger + hunger1, 0, GameConfig.MAX_HUNGER);
+        thirsty = Mathf.Clamp(thirsty + thirsty1, 0, GameConfig.MAX_THIRSTY);
+        sanity = Mathf.Clamp(sanity + sanity1, 0, GameConfig.MAX_SANITY);
 
         if (health <= 0 || hunger <= 0 || thirsty <= 0) {
             isDead = true;

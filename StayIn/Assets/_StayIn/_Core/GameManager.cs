@@ -75,9 +75,14 @@ public class GameManager : MonoBehaviour {
     public void OnNextDayButtonClicked() {
         StartCoroutine(FadeManager.Instance.StartFade((Action)(() => {
             DistributionManager.Instance.EndDayConfirm();
+            EventOutcome outcome = EventManager.Instance.RollOutcome(LogManager.Instance.CurrentChoice);
+            if (outcome != null)
+            {
+                EventManager.Instance.ApplyOutcome(outcome);
+            }
             DayManager.Instance.NextDay();
-            LogManager.Instance.GenerateDailyReports();
-            EventManager.Instance.GetEventForToday();
+            LogManager.Instance.GenerateDailyReports(outcome);
+            CharacterManager.Instance.DisplayData();
             OnDayChanged?.Invoke();
         })));
     }

@@ -1,5 +1,7 @@
 ﻿using Assets._StayIn.Scripts.Definitions;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
@@ -121,5 +123,129 @@ public class EventManager : MonoBehaviour
         }
 
         return validEvents[validEvents.Count - 1];
+    }
+
+    public EventOutcome RollOutcome(EventChoice choice = null)
+    {
+        if(choice == null)
+        {
+            Debug.Log("No choice chosen");
+            return null;
+        }
+
+        if (choice.outcomes == null || choice.outcomes.Count == 0)
+        {
+            return null;
+        }
+
+        int totalWeight = 0;
+        foreach (EventOutcome outcome in choice.outcomes)
+        {
+            totalWeight += outcome.weight;
+        }
+
+        if (totalWeight <= 0)
+        {
+            int randomNum = UnityEngine.Random.Range(0, choice.outcomes.Count);
+            return choice.outcomes[randomNum];
+        }
+
+        int roll = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+        foreach (EventOutcome outcome in choice.outcomes)
+        {
+            currentWeight += outcome.weight;
+            if (roll < currentWeight)
+            {
+                return outcome;
+            }
+        }
+
+        return choice.outcomes[choice.outcomes.Count - 1];
+    }
+
+    public void ApplyOutcome(EventOutcome outcome)
+    {
+        if(outcome == null)
+        {
+            Debug.Log("[EventManager] No outcome today");
+            return;
+        }
+
+        if(outcome.rewards != null && outcome.rewards.Count > 0)
+        {
+            foreach(ResourceItem reward in outcome.rewards)
+            {
+                if(reward != null && reward.itemData != null && reward.quantity > 0)
+                {
+                    ResourceManager.Instance.AddItem(reward.itemData, reward.quantity);
+                }
+            } 
+        }
+
+        if(outcome.penalties != null && outcome.penalties.Count > 0)
+        {
+            foreach(ResourceItem penalty in outcome.penalties)
+            {
+                if(penalty != null && penalty.itemData != null && penalty.quantity > 0)
+                {
+                    ResourceManager.Instance.RemoveItem(penalty.itemData, penalty.quantity);
+                }
+            }
+        }
+
+        if(outcome.statusEffects != null && outcome.statusEffects.Count > 0)
+        {
+            List<CharacterData> allCharacters = CharacterManager.Instance.GetCharacterList();
+
+            if (allCharacters == null)
+            {
+                Debug.Log("[EventManager] - ApplyOutcome - Character list not found");
+                return;
+            }
+
+            foreach (StatusEffect effect in outcome.statusEffects)
+            {
+                if(effect == null)
+                {
+                    continue;
+                }
+
+                if (effect.target == TargetGroup.All)
+                {
+                    foreach(CharacterData character in allCharacters)
+                    {
+                        if (character == null || character.isDead) continue;
+                        ApplyStatChange(character, effect);
+                    }
+                } else if(effect.target == TargetGroup.Random){
+                    List<CharacterData> aliveCharacters = allCharacters.Where(x => x!= null && !x.isDead).ToList();
+                    if(aliveCharacters.Count > 0)
+                    {
+                        int randomCount = Random.Range(1, aliveCharacters.Count + 1);
+                        Debug.Log("Event Outcome - Apply on " + randomCount + " people");
+                        List<CharacterData> randomCharacters = aliveCharacters;//need to take random
+                        Debug.Log("Event Outcome - Check apply count again: " + randomCharacters.Count);
+                        foreach (CharacterData character in randomCharacters)
+                        {
+                            ApplyStatChange(character, effect);
+                        }
+                    } else
+                    {
+                        Debug.Log("Event Outcome - No one alive");
+                    }
+                } else
+                {
+                    Debug.Log("Another target need to be update later");
+                }
+            }
+        }
+    }
+
+    private void ApplyStatChange(CharacterData character, StatusEffect effect)
+    {
+        character.UpdateStats(effect.stat == StatType.Health ? effect.changeValue : 0,
+        effect.stat == StatType.Hunger ? effect.changeValue : 0,
+        effect.stat == StatType.Thirst ? effect.changeValue : 0);
     }
 }

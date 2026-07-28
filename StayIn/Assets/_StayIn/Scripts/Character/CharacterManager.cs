@@ -130,4 +130,12 @@ public class CharacterManager : MonoBehaviour {
 
         character.UpdateStats(healthChange, hungerChange, thirstChange, sanityChange);
     }
+
+    public void DisplayData()
+    {
+        foreach(CharacterData character in allCharacters)
+        {
+            Debug.Log($"Character: {character.Name}, health: {character.Health}, hunger: {character.Hunger}, thirsty: {character.Thirsty}, sanity: {character.Sanity}");
+        }
+    }
 }

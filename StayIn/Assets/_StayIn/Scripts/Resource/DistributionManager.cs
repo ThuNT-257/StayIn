@@ -183,7 +183,6 @@ public class DistributionManager : MonoBehaviour
 
             //Character Check
             CharacterManager.Instance.ApplySurvivalStats(character, plan.WillEat, plan.WillDrink, plan.WillHeal, plan.SelectedSanityItemID ?? "");
-
         }
         Init();
     }
