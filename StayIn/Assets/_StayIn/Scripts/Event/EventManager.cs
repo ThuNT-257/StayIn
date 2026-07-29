@@ -224,7 +224,7 @@ public class EventManager : MonoBehaviour
                     {
                         int randomCount = Random.Range(1, aliveCharacters.Count + 1);
                         Debug.Log("Event Outcome - Apply on " + randomCount + " people");
-                        List<CharacterData> randomCharacters = aliveCharacters;//need to take random
+                        List<CharacterData> randomCharacters = ListExtensions.TakeRandomByCount(aliveCharacters, randomCount);
                         Debug.Log("Event Outcome - Check apply count again: " + randomCharacters.Count);
                         foreach (CharacterData character in randomCharacters)
                         {
