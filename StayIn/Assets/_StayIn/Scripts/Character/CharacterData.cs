@@ -18,12 +18,15 @@ public class CharacterData : ScriptableObject {
     public bool isExploring;
     [SerializeField] private bool deathLogged;
 
+    [SerializeField] private CharacterRequirement requirementType;
+
     public string Name => characterName;
     public int Health => health;
     public int Hunger => hunger;
     public int Thirsty => thirsty;
     public int Sanity => sanity;
     public bool DeathLogged => deathLogged;
+    public CharacterRequirement RequirementType => requirementType;
 
     public void SetDeathLogged(bool check) {
         deathLogged = check;

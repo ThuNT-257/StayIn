@@ -1663,46 +1663,118 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30515385299058688
-    m_Localized: "H\xF4m nay ch\xFAng t\xF4i m\xF2 ra ban c\xF4ng, v\xE0 \u0111o\xE1n
-      xem, c\xF3 m\u1ED9t ch\xFAt c\xE2y xanh m\u1ECDc \u1EDF g\xF3c t\u01B0\u1EDDng,
-      b\xECnh th\u01B0\u1EDDng th\xEC ch\xFAng t\xF4i l\u01B0\u1EDDi d\u1ECDn v\xE0
-      tr\xF4ng n\xF3 c\u0169ng xanh xanh, nh\u01B0ng nay, tr\xF4ng n\xF3 ngon l\xE0nh
-      \u0111\u1EBFn l\u1EA1, hmm c\xF3 n\xEAn l\xE0m ch\xFAt vitamin rau kh\xF4ng?"
+    m_Localized: "Ch\xFAng t\xF4i \u0111ang ng\u1ED3i trong im l\u1EB7ng th\xEC nghe
+      th\u1EA5y ti\u1EBFng \u0111\u1ED9ng \u0111\xF3 \u2014 c\u1ED1c. C\u1ED1c. C\u1ED1c.
+      Ba ti\u1EBFng g\xF5 ch\u1EADm r\xE3i vang l\xEAn ngo\xE0i c\u1EEDa. Ch\xFAng
+      t\xF4i l\u1EB7ng ng\u01B0\u1EDDi \u0111i. Ai c\xF3 th\u1EC3 l\xE0 ng\u01B0\u1EDDi
+      \u1EDF ngo\xE0i \u0111\xF3 c\u01A1 ch\u1EE9? Nh\u1EEFng ng\u01B0\u1EDDi c\xF2n
+      s\u1ED1ng s\xF3t? X\xE1c s\u1ED1ng? Hay t\u1EC7 h\u01A1n... m\u1ED9t ai \u0111\xF3
+      bi\u1EBFt ch\xFAng t\xF4i \u0111ang \u1EDF \u0111\xE2y?\nTi\u1EBFng g\xF5 c\u1EEDa
+      d\u1EEBng l\u1EA1i, nh\u01B0ng ch\xFAng t\xF4i v\u1EABn c\xF3 th\u1EC3 nghe
+      th\u1EA5y ti\u1EBFng th\u1EDF \u1EDF ph\xEDa b\xEAn kia. Ch\xFAng t\xF4i c\xF3
+      n\xEAn m\u1EDF c\u1EEDa kh\xF4ng?"
     m_Metadata:
       m_Items: []
   - m_Id: 30516114797576192
-    m_Localized: "Ch\xFAng t\xF4i t\xECm th\u1EA5y m\u1ED9t c\xE2y non m\xE0u xanh
-      nh\u1ECF x\xEDu \u0111ang m\u1ECDc l\xEAn \u1EDF g\xF3c t\u01B0\u1EDDng ban
-      c\xF4ng. B\xECnh th\u01B0\u1EDDng th\xEC ch\u1EAFc c\u1EA3 l\u0169 s\u1EBD
-      l\u1EDD n\xF3 \u0111i th\xF4i. Nh\u01B0ng b\xE2y gi\u1EDD... nh\xECn n\xF3
-      tr\xF4ng c\xF3 v\u1EBB kh\xE1 l\xE0 ngon m\u1EAFt. C\xF3 n\xEAn \u0103n lu\xF4n
-      kh\xF4ng nh\u1EC9?"
+    m_Localized: "Ch\xFAng t\xF4i chu\u1EA9n b\u1ECB \u0103n th\xEC c\xF3 ai \u0111\xF3
+      g\xF5 c\u1EEDa. Kh\xF4ng qu\xE1 to, c\u0169ng ch\u1EB3ng h\u1EC1 v\u1ED9i v\xE3
+      \u2014 ch\u1EC9 l\xE0 ba ti\u1EBFng g\xF5 b\xECnh th\u1EA3n. Nh\u01B0 th\u1EC3
+      m\u1ED9t ng\u01B0\u1EDDi ph\xF2ng b\xEAn sang m\u01B0\u1EE3n \u0111\u1ED3.
+      Nh\u01B0ng l\xE0m g\xEC c\xF2n ai ph\xF2ng b\xEAn n\u1EEFa ch\u1EE9. Ch\u1EC9
+      c\xF2n l\u1EA1i ch\xFAng t\xF4i. Ch\u1EC9 c\xF3 c\u0103n ph\xF2ng n\xE0y. V\xE0
+      b\u1EA5t k\u1EF3 ai... hay b\u1EA5t c\u1EE9 th\u1EE9 g\xEC... \u0111ang \u1EDF
+      b\xEAn ngo\xE0i. Ch\xFAng t\xF4i c\xF3 n\xEAn xem \u0111\xF3 l\xE0 ai kh\xF4ng?"
     m_Metadata:
       m_Items: []
   - m_Id: 30516805293260800
-    m_Localized: "Tr\u01B0\u1EDBc to\xE0n ng\xF3 l\u01A1 c\xE1i c\xE2y \u1EDF g\xF3c
-      t\u01B0\u1EDDng. Gi\u1EDD \u0111\xF3i qu\xE1 h\xF3a qu\u1EA9n, c\u1EA3 l\u0169
-      coi n\xF3 nh\u01B0 b\xE1u v\u1EADt lu\xF4n r\u1ED3i. C\xF3 n\xEAn \u0103n lu\xF4n
-      kh\xF4ng ta?"
+    m_Localized: "C\u1EA3 ng\xE0y h\xF4m nay y\xEAn t\u0129nh m\u1ED9t c\xE1ch l\u1EA1
+      th\u01B0\u1EDDng. Qu\xE1 \u0111\u1ED7i y\xEAn t\u0129nh. R\u1ED3i \u0111\u1ED9t
+      nhi\xEAn \u2014 c\u1ED1c, c\u1ED1c, c\u1ED1c. T\u1EA5t c\u1EA3 ch\xFAng t\xF4i
+      \u0111\u1EC1u nh\xECn nhau. Ch\u1EB3ng c\xF3 ai \u0111i th\u0103m ph\xF2ng
+      nhau trong th\u1EDDi k\u1EF3 t\u1EADn th\u1EBF c\u1EA3. Tr\u1EEB khi... h\u1ECD
+      c\u1EA7n gi\xFAp \u0111\u1EE1. Ho\u1EB7c \u0111\xF3 l\xE0 m\u1ED3i nh\u1EED.
+      Ho\u1EB7c \u0111\xF3 kh\xF4ng ph\u1EA3i l\xE0 ng\u01B0\u1EDDi.\nTi\u1EBFng
+      g\xF5 c\u1EEDa \u0111\xE3 d\u1EEBng l\u1EA1i, nh\u01B0ng ch\xFAng t\xF4i v\u1EABn
+      c\xF3 th\u1EC3 nghe th\u1EA5y ti\u1EBFng ai \u0111\xF3 \u0111ang d\u1ED3n tr\u1ECDng
+      l\u01B0\u1EE3ng thay \u0111\u1ED5i t\u01B0 th\u1EBF \u1EDF b\xEAn ngo\xE0i.
+      Ch\xFAng t\xF4i c\xF3 n\xEAn m\u1EDF c\u1EEDa kh\xF4ng?"
     m_Metadata:
       m_Items: []
   - m_Id: 30518344602828800
-    m_Localized: "Ngon qu\xE1 \u0111i, hay do \u0111\xF3i qu\xE1 n\xEAn \u0103n c\xE1i
-      g\xEC c\u0169ng ngon nh\u1EC9? Nh\u01B0ng kh\xF4ng sao, n\u0103ng l\u01B0\u1EE3ng
-      c\u1EE7a ch\xFAng t\xF4i l\u1EA1i \u0111\u1EA7y r\u1ED3i, \xEDt nh\u1EA5t c\xF9ng
-      ph\u1EA3i c\u1EA7m c\u1EF1 \u0111\u01B0\u1EE3c... m\u1ED9t l\xFAc \u0111\u1EA5y
-      nh\u1EC9 ?! Mong l\xE0 kh\xF4ng b\u1ECB \u1EA9y ch\u1EC9a haha"
+    m_Localized: "Ch\xFAng t\xF4i h\xEDt m\u1ED9t h\u01A1i th\u1EADt s\xE2u r\u1ED3i
+      m\u1EDF c\u1EEDa. \u0110\xF3 l\xE0 m\u1ED9t v\xE0i ng\u01B0\u1EDDi s\u1ED1ng
+      s\xF3t \u2014 ki\u1EC7t s\u1EE9c, s\u1EE3 h\xE3i, nh\u01B0ng v\u1EABn c\xF2n
+      s\u1ED1ng. Ch\xFAng t\xF4i cho h\u1ECD n\u01B0\u1EDBc u\u1ED1ng c\xF9ng \u0111\u1ED3
+      \u0103n, v\xE0 h\u1ECD \u0111\xE3 k\u1EC3 cho ch\xFAng t\xF4i nghe nh\u1EEFng
+      g\xEC \u0111ang di\u1EC5n ra b\xEAn ngo\xE0i. H\xF3a ra, c\xF3 m\u1ED9t khu
+      v\u1EF1c an to\xE0n ch\u1EC9 c\xE1ch \u0111\xE2y v\xE0i d\xE3y nh\xE0. Bi\u1EBFt
+      \u0111\u01B0\u1EE3c tin n\xE0y th\u1EADt t\u1ED1t.\nH\u1ECD \u0111i sau khi
+      \u0111\xE3 ngh\u1EC9 ng\u01A1i. Ch\xFAng t\xF4i hy v\u1ECDng h\u1ECD \u0111\xE3
+      \u0111\u1EBFn n\u01A1i an to\xE0n."
     m_Metadata:
       m_Items: []
   - m_Id: 30874314264756224
-    m_Localized: "B\xE0i h\u1ECDc x\u01B0\u01A1ng m\xE1u: \u0110\u1EEBng c\xF3 \u0103n
-      m\u1EA5y th\u1EE9 linh tinh tr\u1EEB khi b\u1EA1n \u0111\xE3 s\u1EB5n s\xE0ng
-      \u0111i g\u1EB7p c\xE1c c\u1EE5 =))"
+    m_Localized: "Ch\xFAng t\xF4i \u0111\xE3 m\u1EDF c\u1EEDa. M\u1ED9t sai l\u1EA7m
+      l\u1EDBn. \u0110\xF3 ch\u1EB3ng ph\u1EA3i l\xE0 m\u1ED9t ng\u01B0\u1EDDi s\u1ED1ng
+      s\xF3t \u2014 m\xE0 l\xE0 m\u1ED9t c\xE1i b\u1EABy. M\u1ED9t con x\xE1c s\u1ED1ng
+      lao th\u1EB3ng v\u1EC1 ph\xEDa ch\xFAng t\xF4i, v\xE0 ch\xFAng t\xF4i ch\u1EC9
+      v\u1EEBa k\u1ECBp d\u1EADp m\u1EA1nh c\u1EEDa l\u1EA1i trong t\xEDch t\u1EAFc.
+      Nh\u01B0ng tr\u01B0\u1EDBc \u0111\xF3, n\xF3 \u0111\xE3 k\u1ECBp \u0111\u1EC3
+      l\u1EA1i m\u1ED9t v\u1EBFt c\xE0o.\nB\xE2y gi\u1EDD ch\xFAng t\xF4i \u0111ang
+      xoa d\u1ECBu v\u1EBFt th\u01B0\u01A1ng v\xE0 t\u1EF1 h\u1ECFi li\u1EC7u c\xF3
+      ph\u1EA3i ch\xEDnh m\xECnh v\u1EEBa \u0111i t\xECm c\xE1i ch\u1EBFt kh\xF4ng."
     m_Metadata:
       m_Items: []
   - m_Id: 30878239592235008
-    m_Localized: "\u0110\xF3i cho s\u1EA1ch, r\xE1ch cho th\u01A1m, quy\u1EBFt gi\u1EEF
-      v\u1EEFng kh\xED ti\u1EBFt. Kh\xF4ng \u0103n b\u1EADy b\u1EA1 =))"
+    m_Localized: "Ch\xFAng t\xF4i gi\u1EEF y\xEAn l\u1EB7ng. Ti\u1EBFng g\xF5 c\u1EEDa
+      d\u1EEBng l\u1EA1i sau v\xE0i ph\xFAt. Ti\u1EBFng b\u01B0\u1EDBc ch\xE2n d\u1EA7n
+      ch\xECm v\xE0o xa x\u0103m ph\xEDa cu\u1ED1i h\xE0nh lang. Ch\xFAng t\xF4i
+      s\u1EBD ch\u1EB3ng bao gi\u1EDD bi\u1EBFt \u0111\u01B0\u1EE3c ai \u2014 hay
+      th\u1EE9 g\xEC \u2014 \u0111\xE3 \u1EDF ngo\xE0i \u0111\xF3. Nh\u01B0ng \xEDt
+      nh\u1EA5t th\xEC ch\xFAng t\xF4i v\u1EABn c\xF2n s\u1ED1ng. \u0110\xFAng kh\xF4ng?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40517413513203712
+    m_Localized: "Ch\xFAng t\xF4i \u0111\xE3 m\u1EB7c \u0111\u1ED1ng qu\u1EA7n \xE1o
+      n\xE0y c\u1EA3 tu\u1EA7n r\u1ED3i. V\xE0 n\xF3 h\u01A1i... b\u1ED1c m\xF9i.
+      Th\u01B0\u1EDDng th\xEC ch\xFAng t\xF4i s\u1EBD mang qu\u1EA7n \xE1o b\u1EA9n
+      xu\u1ED1ng qu\u1EA7y gi\u1EB7t d\u01B0\u1EDBi t\u1EA7ng 1 \u0111\u1EC3 gi\u1EB7t
+      v\xE0 l\u1EA5y v\xE0o c\xF9ng ng\xE0y (v\xEC gi\u1EB7t si\xEAu nhanh l\u1EA1i
+      si\xEAu th\u01A1m tho). Nh\u01B0ng t\u1EEB l\xFAc \u0111\u1EA1i d\u1ECBch th\xEC
+      \u0111\u01B0\u01A1ng nhi\xEAn l\xE0 kh\xF4ng c\xF2n ai tr\xF4ng qu\u1EA7y n\u1EEFa.
+      H\xF4m nay, ch\xFAng t\xF4i \u0111\xE3 \u0111\xE1nh li\u1EC1u \u0111i xu\u1ED1ng
+      d\u01B0\u1EDBi. Ch\xFAng t\xF4i th\u1EA5y c\xF3 QU\u1EA6N \xC1O S\u1EA0CH (\u01A1n
+      gi\u1EDDi), v\xE0 b\xEAn c\u1EA1nh l\xE0 m\u1ED9t th\xF9ng th\u1EE9c \u0103n
+      v\xE0 n\u01B0\u1EDBc u\u1ED1ng, c\xF3 ai b\u1ECF qu\xEAn kh\xF4ng v\u1EADy?
+      Hay l\xE0 c\xF3 ai b\u1EABy ch\xFAng t\xF4i \xE0??? N\xEAn l\u1EA5y kh\xF4ng
+      ta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40518727009832960
+    m_Localized: "\u0110\xE3 h\u01A1n m\u1ED9t tu\u1EA7n m\u1EB7c \u0111\xFAng m\u1ED9t
+      b\u1ED9 \u0111\u1ED3 r\u1ED3i. M\xF9i th\xEC... \u1EEB \u0111\u1EA5y. Ch\xFAng
+      t\xF4i t\u1EEBng ch\u1EC9 c\u1EA7n mang h\u1EBFt \u0111\u1ED3 xu\u1ED1ng qu\u1EA7y
+      t\u1EA7ng m\u1ED9t r\u1ED3i quay l\u1EA1i l\u1EA5y sau \u2014 nhanh g\u1ECDn
+      l\u1EB9. Nh\u01B0ng kh\xF4ng c\xF3 nh\xE2n vi\xEAn ngh\u0129a l\xE0 ch\u1EB3ng
+      c\xF3 d\u1ECBch v\u1EE5 g\xEC c\u1EA3. H\xF4m nay ch\xFAng t\xF4i \u0111i xu\u1ED1ng
+      d\u01B0\u1EDBi. T\xECm th\u1EA5y QU\u1EA6N \xC1O S\u1EA0CH (cu\u1ED1i c\xF9ng
+      th\xEC). V\xE0 ngay b\xEAn c\u1EA1nh ch\xFAng? \u0110\u1ED3 \u0103n v\xE0 n\u01B0\u1EDBc
+      u\u1ED1ng. B\u1ECB b\u1ECF l\u1EA1i? Hay l\xE0 m\u1ED9t c\xE1i b\u1EABy? Ch\xFAng
+      t\xF4i c\xF3 n\xEAn l\u1EA5y kh\xF4ng?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40593665389498368
+    m_Localized: "Ch\xFAng t\xF4i b\u1EAFt \u0111\u1EA7u quen d\u1EA7n v\u1EDBi c\xE1i
+      m\xF9i n\xE0y r\u1ED3i. M\u1EB7c \u0111\xFAng m\u1ED9t chi\u1EBFc \xE1o su\u1ED1t
+      c\u1EA3 tu\u1EA7n li\u1EC1n th\xEC s\u1EBD th\xE0nh ra nh\u01B0 v\u1EADy \u0111\u1EA5y.
+      Qu\u1EA7y gi\u1EB7t \u1EE7i \u1EDF t\u1EA7ng m\u1ED9t t\u1EEBng l\xE0 c\u1EE9u
+      tinh c\u1EE7a Ch\xFAng t\xF4i \u2014 mang \u0111\u1ED3 b\u1EA9n xu\u1ED1ng,
+      l\u1EA5y \u0111\u1ED3 s\u1EA1ch v\u1EC1. B\xE2y gi\u1EDD th\xEC kh\xF4ng c\xF2n
+      nh\u01B0 th\u1EBF n\u1EEFa. H\xF4m nay ch\xFAng t\xF4i \u0111\xE3 \u0111i xu\u1ED1ng
+      ki\u1EC3m tra. Qu\u1EA7n \xE1o s\u1EA1ch. \u0110\u1ED3 \u0103n. N\u01B0\u1EDBc
+      u\u1ED1ng. Ch\u1EC9 n\u1EB1m ngay \u1EDF \u0111\xF3. Qu\xE1 t\u1ED1t \u0111\u1EC3
+      c\xF3 th\u1EC3 l\xE0 s\u1EF1 th\u1EADt... hay \u0111\xFAng l\xE0 may m\u1EAFn
+      th\u1EADt? Ch\xFAng t\xF4i c\xF3 n\xEAn m\u1EA1o hi\u1EC3m kh\xF4ng?"
     m_Metadata:
       m_Items: []
   references:

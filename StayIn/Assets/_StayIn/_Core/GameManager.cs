@@ -51,27 +51,6 @@ public class GameManager : MonoBehaviour {
         OnGameStateChanged?.Invoke();
     }
 
-    private void ProcessDaySummary(List<DayActionData> actionPackets) {
-        foreach (var packet in actionPackets) {
-            if (packet.character == null || packet.character.isDead) continue;
-
-            if (packet.isFed && ResourceManager.Instance.RemoveItem("item_01", 1)) {
-            }
-
-            if (packet.isWatered && ResourceManager.Instance.RemoveItem("item_02", 1)) {
-            }
-
-            if (packet.isHealed && ResourceManager.Instance.RemoveItem("item_03", 1)) {
-            }
-
-            if (packet.isEntertained && !string.IsNullOrEmpty(packet.sanityItemID)) {
-                ResourceManager.Instance.RemoveItem(packet.sanityItemID, 1);
-            }
-        }
-
-        DayAction?.Invoke(actionPackets);
-    }
-
     public void OnNextDayButtonClicked() {
         StartCoroutine(FadeManager.Instance.StartFade((Action)(() => {
             DistributionManager.Instance.EndDayConfirm();
@@ -79,6 +58,7 @@ public class GameManager : MonoBehaviour {
             if (outcome != null)
             {
                 EventManager.Instance.ApplyOutcome(outcome);
+                LogManager.Instance.ResetChoice();
             }
             DayManager.Instance.NextDay();
             LogManager.Instance.GenerateDailyReports(outcome);

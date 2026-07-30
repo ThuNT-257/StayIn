@@ -122,5 +122,10 @@ public class LogManager : MonoBehaviour
         currentChoice = chosenOption;
     }
 
+    public void ResetChoice()
+    {
+        currentChoice = null;
+    }
+
 
 }

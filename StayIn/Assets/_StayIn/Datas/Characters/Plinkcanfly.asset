@@ -31,3 +31,4 @@ MonoBehaviour:
   isDead: 0
   isExploring: 0
   deathLogged: 0
+  requirementType: 8

@@ -23,8 +23,6 @@ public class EventManager : MonoBehaviour
     private List<EventData> currentRunEvents = new List<EventData>();
     private List<EventData> specialEvents = new List<EventData>();
 
-    
-
     private void Awake() {
         if( instance != null && instance != this) {
             Destroy(gameObject);
@@ -37,16 +35,21 @@ public class EventManager : MonoBehaviour
         GenerateFilteredEvents();
     }
 
+    /// <summary>
+    /// Filters all YesNo events based on alive character requirements. 
+    /// Clones valid events; Special events are separated, normal events have base weight set to 0.
+    /// </summary>
     public void GenerateFilteredEvents() {
         currentRunEvents.Clear();
         specialEvents.Clear();
 
         CharacterRequirement currentAliveMask = CharacterRequirement.None;
-        foreach (var c in CharacterManager.Instance.GetCharacterList()) {
-            if (c.characterName == "Lynx") currentAliveMask |= CharacterRequirement.Lynx;
-            if (c.characterName == "TrungBienHinh") currentAliveMask |= CharacterRequirement.TrungBienHinh;
-            if (c.characterName == "MadLunaticz") currentAliveMask |= CharacterRequirement.MadLunaticz;
-            if (c.characterName == "Plinkcanfly") currentAliveMask |= CharacterRequirement.Plinkcanfly;
+        foreach (var c in CharacterManager.Instance.GetCharacterList())
+        {
+            if (c != null && !c.isDead)
+            {
+                currentAliveMask |= c.RequirementType;
+            }
         }
 
         foreach (var evt in allEvents) {
@@ -58,7 +61,6 @@ public class EventManager : MonoBehaviour
             if (clonedEvent.Category == EventCategory.Special) {
                 specialEvents.Add(clonedEvent);
             } else {
-                clonedEvent.SetBaseWeight(0);
                 currentRunEvents.Add(clonedEvent);
             }
         }
@@ -74,7 +76,7 @@ public class EventManager : MonoBehaviour
 
         foreach(var evt in currentRunEvents) {
             if (evt.Category != EventCategory.Special) {
-                evt.SetBaseWeight(0);
+                evt.SetBaseWeight(1);
             }
 
             if (evt.InteractionType == EventInteractionType.YesNo) {
@@ -96,28 +98,34 @@ public class EventManager : MonoBehaviour
 
     public EventData GetEventForToday() {
         UpdateDynamicWeights();
+
         return GetWeightedRandomEvent(currentRunEvents);
     }
 
-    public EventData GetWeightedRandomEvent(List<EventData> validEvents) {
+    public EventData GetWeightedRandomEvent(List<EventData> validEvents)
+    {
         if (validEvents == null || validEvents.Count == 0) return null;
 
-        int totalWeight = 0;
-        foreach (var evt in validEvents) {
+        float totalWeight = 0;
+        foreach (var evt in validEvents)
+        {
             totalWeight += evt.BaseWeight;
         }
 
-        if (totalWeight <= 0) {
+        if (totalWeight <= 0)
+        {
             int randomIndex = Random.Range(0, validEvents.Count);
             return validEvents[randomIndex];
         }
 
-        int randomValue = Random.Range(0, totalWeight);
-        int currentWeightSum = 0;
+        float randomValue = Random.Range(0f, totalWeight);
+        float currentWeightSum = 0f;
 
-        foreach (var evt in validEvents) {
+        foreach (var evt in validEvents)
+        {
             currentWeightSum += evt.BaseWeight;
-            if (randomValue < currentWeightSum) {
+            if (randomValue <= currentWeightSum)
+            {
                 return evt;
             }
         }
@@ -197,12 +205,14 @@ public class EventManager : MonoBehaviour
         if(outcome.statusEffects != null && outcome.statusEffects.Count > 0)
         {
             List<CharacterData> allCharacters = CharacterManager.Instance.GetCharacterList();
-
             if (allCharacters == null)
             {
                 Debug.Log("[EventManager] - ApplyOutcome - Character list not found");
                 return;
             }
+
+            List<CharacterData> aliveCharacters = allCharacters.Where(x => x != null && !x.isDead).ToList();
+
 
             foreach (StatusEffect effect in outcome.statusEffects)
             {
@@ -211,32 +221,47 @@ public class EventManager : MonoBehaviour
                     continue;
                 }
 
-                if (effect.target == TargetGroup.All)
+                if (effect.target == TargetType.All)
                 {
-                    foreach(CharacterData character in allCharacters)
+                    Debug.Log("Apply effect target All");
+                    foreach (CharacterData character in aliveCharacters)
                     {
-                        if (character == null || character.isDead) continue;
                         ApplyStatChange(character, effect);
                     }
-                } else if(effect.target == TargetGroup.Random){
-                    List<CharacterData> aliveCharacters = allCharacters.Where(x => x!= null && !x.isDead).ToList();
-                    if(aliveCharacters.Count > 0)
+                }
+                else if (effect.target == TargetType.Random)
+                {
+                    Debug.Log("Apply effect target Random 1");
+                    if (aliveCharacters.Count > 0)
                     {
-                        int randomCount = Random.Range(1, aliveCharacters.Count + 1);
-                        Debug.Log("Event Outcome - Apply on " + randomCount + " people");
-                        List<CharacterData> randomCharacters = ListExtensions.TakeRandomByCount(aliveCharacters, randomCount);
-                        Debug.Log("Event Outcome - Check apply count again: " + randomCharacters.Count);
+                        CharacterData randomChar = aliveCharacters[Random.Range(0, aliveCharacters.Count)];
+                        ApplyStatChange(randomChar, effect);
+                    }
+                }
+                else if (effect.target == TargetType.RandomMultiple)
+                {
+                    Debug.Log("Apply effect target Random " + effect.targetCount);
+                    if (aliveCharacters.Count > 0)
+                    {
+                        int countToTake = Mathf.Clamp(effect.targetCount, 1, aliveCharacters.Count);
+                        List<CharacterData> randomCharacters = ListExtensions.TakeRandomByCount(aliveCharacters, countToTake);
+
                         foreach (CharacterData character in randomCharacters)
                         {
                             ApplyStatChange(character, effect);
                         }
-                    } else
-                    {
-                        Debug.Log("Event Outcome - No one alive");
                     }
-                } else
+                }
+                else if (effect.target == TargetType.Specific)
                 {
-                    Debug.Log("Another target need to be update later");
+
+                    CharacterData targetChar = aliveCharacters.FirstOrDefault(x => (x.RequirementType & effect.specificCharacter) != CharacterRequirement.None);
+                    Debug.Log("Apply effect target Specific " + targetChar.characterName);
+
+                    if (targetChar != null)
+                    {
+                        ApplyStatChange(targetChar, effect);
+                    }
                 }
             }
         }
@@ -244,8 +269,9 @@ public class EventManager : MonoBehaviour
 
     private void ApplyStatChange(CharacterData character, StatusEffect effect)
     {
-        character.UpdateStats(effect.stat == StatType.Health ? effect.changeValue : 0,
-        effect.stat == StatType.Hunger ? effect.changeValue : 0,
-        effect.stat == StatType.Thirst ? effect.changeValue : 0);
+        character.UpdateStats(effect.stat == CharacterStatType.Health ? effect.changeValue : 0,
+        effect.stat == CharacterStatType.Hunger ? effect.changeValue : 0,
+        effect.stat == CharacterStatType.Thirst ? effect.changeValue : 0,
+        effect.stat == CharacterStatType.Sanity ? effect.changeValue : 0);
     }
 }

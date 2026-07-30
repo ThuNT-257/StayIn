@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc7b356baca30948940dc5a34779339, type: 3}
   m_Name: Event_YesNo_01
   m_EditorClassIdentifier: 
-  eventID: event_yesno_01
+  eventID: evt_yesno_01
   interactionType: 0
-  category: 1
-  baseWeight: 0
+  category: 0
+  baseWeight: 1
   requiredCharacters: 0
+  minimumDay: 0
+  maximumDay: 999
+  cooldownDays: 0
+  canTriggerMultipleTimes: 1
+  triggerConditions: []
   descriptions:
   - m_TableReference:
       m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
@@ -43,10 +48,7 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   eventChoices:
-  - choiceID: choice_01
-    config: {fileID: 11400000, guid: f86ddc3c38f569c4abac255963e3c34b, type: 2}
-    requiredItem: {fileID: 0}
-    requiresCharacter: 0
+  - config: {fileID: 11400000, guid: f86ddc3c38f569c4abac255963e3c34b, type: 2}
     outcomes:
     - outcomeID: outcome_01
       isSuccess: 1
@@ -59,15 +61,19 @@ MonoBehaviour:
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
-      rewards:
-      - itemData: {fileID: 0}
-        quantity: 0
-      penalties: []
-      weight: 0
+      rewards: []
+      penalties:
+      - itemData: {fileID: 11400000, guid: 09dff62b327cc344c867c6291129f9d7, type: 2}
+        quantity: 1
+      - itemData: {fileID: 11400000, guid: 2097e84559a484249949f02092ea0e4d, type: 2}
+        quantity: 1
+      weight: 70
       statusEffects:
-      - stat: 0
+      - stat: 3
         target: 0
-        changeValue: 3
+        specificCharacter: 0
+        targetCount: 1
+        changeValue: 2
     - outcomeID: outcome_02
       isSuccess: 0
       outcomeText:
@@ -79,22 +85,24 @@ MonoBehaviour:
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
-      rewards:
-      - itemData: {fileID: 0}
-        quantity: 0
+      rewards: []
       penalties: []
-      weight: 0
+      weight: 30
       statusEffects:
-      - stat: 2
-        target: 2
-        changeValue: -1
-  - choiceID: choice_02
-    config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
-    requiredItem: {fileID: 0}
-    requiresCharacter: 0
+      - stat: 0
+        target: 1
+        specificCharacter: 0
+        targetCount: 1
+        changeValue: -2
+      - stat: 3
+        target: 0
+        specificCharacter: 0
+        targetCount: 1
+        changeValue: -2
+  - config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
     outcomes:
     - outcomeID: outcome_04
-      isSuccess: 1
+      isSuccess: 0
       outcomeText:
         m_TableReference:
           m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
@@ -108,11 +116,13 @@ MonoBehaviour:
       - itemData: {fileID: 0}
         quantity: 0
       penalties: []
-      weight: 0
+      weight: 100
       statusEffects:
-      - stat: 0
+      - stat: 3
         target: 0
-        changeValue: 3
+        specificCharacter: 0
+        targetCount: 1
+        changeValue: -1
   references:
     version: 2
     RefIds: []

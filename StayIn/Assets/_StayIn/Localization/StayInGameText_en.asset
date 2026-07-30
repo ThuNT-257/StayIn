@@ -822,37 +822,70 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30515385299058688
-    m_Localized: "We crept out to the balcony today. And guess what \u2014 there's
-      a bit of green growing in the corner of the wall. Normally, we'd be too lazy
-      to clean it, and it just looked... green. But today, it looks strangely edible.
-      Hmm. Should we get some vegetable vitamins?"
+    m_Localized: "We were sitting in silence when we heard it \u2014 knock. Knock.
+      Knock. Three slow knocks at the door. We froze. Who could it be? Survivors?
+      Zombies? Or worse... someone who knows we're here? The knocking stopped, but
+      we can hear breathing on the other side. Do we open the door?"
     m_Metadata:
       m_Items: []
   - m_Id: 30516114797576192
-    m_Localized: We found a little green plant growing in the corner of the balcony
-      wall. Normally we'd ignore it. But now... it looks kinda tasty. Should we eat
-      it?
+    m_Localized: "We were just about to eat when someone knocked. Not loud, not urgent
+      \u2014 just three calm knocks. Like a neighbor asking for stuffs. But there
+      are no neighbors anymore. Just us. Just this room. And whoever... or whatever...
+      is outside. Should we see who it is?"
     m_Metadata:
       m_Items: []
   - m_Id: 30516805293260800
-    m_Localized: We used to ignore the little plant in the corner. Now we're dating
-      it. Should we eat it?
+    m_Localized: "It's been quiet all day. Too quiet. Then \u2014 knock, knock, knock.
+      We all looked at each other. No one makes house calls in the apocalypse. Unless...
+      they need help. Or they're bait. Or they're not human. The knocking stopped,
+      but we can hear someone shifting their weight outside. Should we open the door? "
     m_Metadata:
       m_Items: []
   - m_Id: 30518344602828800
-    m_Localized: Tastes amazing. Or maybe we're just so hungry that anything tastes
-      good? Either way, our energy is back up. At least we can hold on... for a while,
-      right?! Hope we don't get sick haha.
+    m_Localized: "We took a deep breath and opened the door. It was some survivors
+      \u2014 exhausted, scared, but alive. We gave them water and food, and they
+      told us what's happening outside. Turns out, there's a safe zone a few blocks
+      away. Good to know. They left after resting. We hope they made it."
     m_Metadata:
       m_Items: []
   - m_Id: 30874314264756224
-    m_Localized: 'Lesson learned: don''t eat weird things unless you''re ready to
-      meet your maker =))'
+    m_Localized: "We opened the door. Big mistake. It wasn't a survivor \u2014 it
+      was a trap. A zombie lunged at us, and we barely slammed the door in time.
+      But not before it got a scratch in. Now we're nursing a wound and wondering
+      if we just doomed ourselves."
     m_Metadata:
       m_Items: []
   - m_Id: 30878239592235008
-    m_Localized: "No matter how hungry we get, we must stay righteous. No eating
-      random stuff =))\r"
+    m_Localized: "We stayed silent. The knocking stopped after a few minutes. Footsteps
+      faded away down the hall. We'll never know who \u2014 or what \u2014 was out
+      there. But at least we're still alive. Right?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40517413513203712
+    m_Localized: "We've been wearing these clothes for over a week now. And they're
+      starting to... smell. Normally, we'd just drop our dirty laundry at the service
+      counter on the first floor and pick it up the same day (super fast, super fresh).
+      But ever since the outbreak, obviously no one's been manning the counter. Today,
+      we finally risked going downstairs. We spotted some CLEAN CLOTHES (thank god),
+      and next to them \u2014 a box of food and water. Did someone just leave them
+      behind? Or is this a trap??? Should we take it or not?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40518727009832960
+    m_Localized: "It's been over a week in the same clothes. The smell is... yeah.
+      We used to just drop everything at the first floor counter and pick it up later
+      \u2014 quick and easy. But no staff means no service. Today we went down. Found
+      CLEAN CLOTHES (finally). And next to them? Food and water. Left behind? Or
+      a setup? Should we take it?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40593665389498368
+    m_Localized: "We're starting to get used to the smell. A week of wearing the
+      same shirt will do that to you. The laundry counter on the first floor used
+      to be our savior \u2014 drop off dirty, pick up clean. Not anymore. Today we
+      went down to check. Clean clothes. Food. Water. Just sitting there. Too good
+      to be true... or just lucky? Should we risk it?"
     m_Metadata:
       m_Items: []
   references:

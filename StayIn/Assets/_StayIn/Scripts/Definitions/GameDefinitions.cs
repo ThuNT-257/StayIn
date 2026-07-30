@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
-namespace Assets._StayIn.Scripts.Definitions {
+namespace Assets._StayIn.Scripts.Definitions
+{
     //CHARACTER ZONE
-    public static class GameConfig {
+    public static class GameConfig
+    {
         public const int MAX_HUNGER = 10;
         public const int MAX_THIRSTY = 5;
         public const int MAX_HEALTH = 10;
@@ -27,15 +29,18 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
 
     [Serializable]
-    public class StatusSpeechGroup {
+    public class StatusSpeechGroup
+    {
         [TextArea(2, 4)] public List<string> lines;
-        public string GetRandom() {
+        public string GetRandom()
+        {
             return lines.Count > 0 ? lines[UnityEngine.Random.Range(0, lines.Count)] : "";
         }
     }
 
     [Flags]
-    public enum CharacterRequirement {
+    public enum CharacterRequirement
+    {
         None = 0,
         Lynx = 1 << 0,
         TrungBienHinh = 1 << 1,
@@ -48,7 +53,8 @@ namespace Assets._StayIn.Scripts.Definitions {
 
     //DISTRIBUTION ZONE
     [Serializable]
-    public class ActionPlan {
+    public class ActionPlan
+    {
         public bool WillEat = false;
         public bool WillDrink = false;
         public bool WillHeal = false;
@@ -59,7 +65,8 @@ namespace Assets._StayIn.Scripts.Definitions {
         public bool IsMedLocked = false;
         public bool IsSanityLocked = false;
 
-        public void Reset() {
+        public void Reset()
+        {
             WillEat = false;
             WillDrink = false;
             WillHeal = false;
@@ -74,7 +81,8 @@ namespace Assets._StayIn.Scripts.Definitions {
 
     //SAVE ZONE
     [System.Serializable]
-    public class GameSaveData {
+    public class GameSaveData
+    {
         public int currentDay;
         public List<CharacterSaveData> currentCharacters;
         public List<ResourceItemSaveData> currentResourceItems;
@@ -82,7 +90,8 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
 
     [Serializable]
-    public class CharacterSaveData {
+    public class CharacterSaveData
+    {
         public string characterId;
         public int currentHealth;
         public int currentHunger;
@@ -92,14 +101,16 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
 
     [Serializable]
-    public class ResourceItemSaveData {
+    public class ResourceItemSaveData
+    {
         public string itemId;
         public int quantity;
     }
     //END SAVE ZONE
 
     [Serializable]
-    public class CharacterPersonality {
+    public class CharacterPersonality
+    {
         public StatusSpeechGroup hungerLine;
         public StatusSpeechGroup thirstyLine;
         public StatusSpeechGroup healthLine;
@@ -109,13 +120,15 @@ namespace Assets._StayIn.Scripts.Definitions {
 
 
     [Serializable]
-    public class ResourceItem {
+    public class ResourceItem
+    {
         public ItemData itemData;
         public int quantity;
     }
 
     [Serializable]
-    public struct DayActionData {
+    public struct DayActionData
+    {
         public CharacterData character;
         public bool isFed;
         public bool isWatered;
@@ -125,40 +138,51 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
 
     [Serializable]
-    public class ResourceChange {
+    public class ResourceChange
+    {
         public string itemID;
         public int amount;
     }
 
-    public enum EventInteractionType {
-        YesNo,
-        SendSomeone,
-        Items,
-        ChooseSomeone,
-        TradeItem
+    public enum StatComparison
+    {
+        LessThan,           // <
+        LessThanOrEqual,    // <=
+        Equal,              // ==
+        GreaterThanOrEqual, // >=
+        GreaterThan         // >
     }
 
-    public enum EventCategory {
-        General,
-        Food,
-        Water,
-        Health,
-        Raid,
-        Special
+    public enum TargetGroup
+    {
+        All,
+        Selected,
+        Random
     }
-
-    public enum StatType { Hunger, Thirst, Health }
-    public enum TargetGroup { All, Selected, Random }
 
     [Serializable]
-    public class StatusEffect {
-        public StatType stat;
-        public TargetGroup target;
+    public class StatConditionRule
+    {
+        public CharacterStatType statType;
+        public StatComparison comparison = StatComparison.LessThan;
+        public int threshold = 4;
+    }
+
+    [Serializable]
+    public class StatusEffect
+    {
+        public CharacterStatType stat;
+        public TargetType target;
+
+        public CharacterRequirement specificCharacter;
+        public int targetCount = 1;
+
         public int changeValue;
     }
 
     [Serializable]
-    public class EventOutcome {
+    public class EventOutcome
+    {
         public string outcomeID;
         public bool isSuccess;
 
@@ -173,13 +197,57 @@ namespace Assets._StayIn.Scripts.Definitions {
     }
 
     [Serializable]
-    public class EventChoice {
-        public string choiceID;
+    public class EventChoice
+    {
         public ChoiceConfig config;
-
-        public ItemData requiredItem;
-        public bool requiresCharacter;
-
         public List<EventOutcome> outcomes;
+    }
+
+    [Serializable]
+    public class EventTriggerCondition
+    {
+        public enum ConditionType
+        {
+            HungerLessThan,
+            HungerGreaterThan,
+            HealthLessThan,
+            HealthGreaterThan,
+            SanityLessThan,
+            SanityGreaterThan,
+            ThirstLessThan,
+            ThirstGreaterThan,
+
+            HasFood,
+            HasWater,
+            HasMedicine,
+            HasNoFood,
+            HasNoWater,
+            HasNoMedicine,
+
+            CharacterHasExpeditionToday,
+            CharacterHasNotExpeditionToday,
+            CharacterIsAlive,
+            CharacterIsDead,
+
+            EventHappenedBefore,
+            EventNotHappenedBefore,
+            DaysSinceLastEvent,
+
+            DayIsEven,
+            DayIsOdd,
+            RandomCheck,
+        }
+
+        public ConditionType type;
+
+        [Header("Values")]
+        public int intValue;        
+        public float floatValue;    
+        public string stringValue;  
+
+        [Header("Target References")]
+        public CharacterRequirement targetCharacter; // Chỉ định nhân vật cụ thể cần check status
+
+        public bool negate = false;
     }
 }
