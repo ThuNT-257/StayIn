@@ -19,5 +19,7 @@ MonoBehaviour:
   description: Defend yourself
   isStackable: 0
   maxStack: 1
+  hasDurability: 1
+  maxDurability: 3
   restoreValue: 0
-  sanityRestoreValue: 2
+  sanityRestoreValue: 0

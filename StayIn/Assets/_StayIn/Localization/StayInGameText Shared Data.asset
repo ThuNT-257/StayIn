@@ -319,6 +319,18 @@ MonoBehaviour:
     m_Key: event_data_02_desc3
     m_Metadata:
       m_Items: []
+  - m_Id: 40945449895202816
+    m_Key: event_02_outcome_yes_success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40966847309025280
+    m_Key: event_02_outcome_yes_fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40967959999156224
+    m_Key: event_02_outcome_no
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

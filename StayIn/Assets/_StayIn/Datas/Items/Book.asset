@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: becc539ac1bddc14d845d80991f7aaa3, type: 3}
-  m_Name: Medicine
+  m_Name: Book
   m_EditorClassIdentifier: 
-  itemID: item_03
-  itemName: Medicine
-  itemType: 2
-  itemIcon: {fileID: 21300000, guid: 00b7c165e0d1f204293438affd9065ea, type: 3}
-  description: Heal it
-  isStackable: 1
-  maxStack: 99
-  hasDurability: 0
-  maxDurability: 0
-  restoreValue: 10
-  sanityRestoreValue: 0
+  itemID: item_08
+  itemName: Book
+  itemType: 3
+  itemIcon: {fileID: 21300000, guid: 70bb87f2a484aa8468a48de571f1767d, type: 3}
+  description: Read it
+  isStackable: 0
+  maxStack: 0
+  hasDurability: 1
+  maxDurability: 5
+  restoreValue: 0
+  sanityRestoreValue: 2

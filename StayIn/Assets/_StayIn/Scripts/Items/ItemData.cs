@@ -16,6 +16,10 @@ public class ItemData : ScriptableObject {
     [SerializeField] private bool isStackable;
     [SerializeField] private int maxStack = 99;
 
+    [Header("Durability Settings")]
+    [SerializeField] private bool hasDurability;
+    [SerializeField] private int maxDurability = 0;
+
     [Header("Effects")]
     [SerializeField] private int restoreValue;
     [SerializeField] private int sanityRestoreValue;
@@ -25,6 +29,8 @@ public class ItemData : ScriptableObject {
     public ItemType ItemType => itemType;
     public Sprite ItemIcon => itemIcon;
     public string Description => description;
+    public bool HasDurability => hasDurability;
+    public int MaxDurability => maxDurability;
     public int RestoreValue => restoreValue;
     public int SanityRestoreValue => sanityRestoreValue;
     public bool IsStackable => isStackable;

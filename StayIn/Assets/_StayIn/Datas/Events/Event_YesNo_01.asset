@@ -101,7 +101,7 @@ MonoBehaviour:
         changeValue: -2
   - config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
     outcomes:
-    - outcomeID: outcome_04
+    - outcomeID: outcome_03
       isSuccess: 0
       outcomeText:
         m_TableReference:

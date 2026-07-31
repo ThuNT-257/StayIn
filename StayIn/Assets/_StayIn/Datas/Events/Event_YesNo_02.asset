@@ -12,16 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc7b356baca30948940dc5a34779339, type: 3}
   m_Name: Event_YesNo_02
   m_EditorClassIdentifier: 
-  eventID: event_yesno_02
+  eventID: evt_yesno_02
   interactionType: 0
-  category: 0
-  baseWeight: 10
+  category: 1
+  baseWeight: 1
   requiredCharacters: 0
-  minimumDay: 0
+  minimumDay: 4
   maximumDay: 999
-  cooldownDays: 3
+  cooldownDays: 0
   canTriggerMultipleTimes: 1
-  triggerConditions: []
+  triggerConditions:
+  - type: 0
+    intValue: 3
+    floatValue: 0
+    stringValue: 
+    targetCharacter: 0
+    weightBonus: 2
+    negate: 0
   descriptions:
   - m_TableReference:
       m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
@@ -48,11 +55,83 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   eventChoices:
-  - choiceID: 
-    config: {fileID: 0}
-    requiredItem: {fileID: 0}
-    requiresCharacter: 0
-    outcomes: []
+  - config: {fileID: 11400000, guid: f86ddc3c38f569c4abac255963e3c34b, type: 2}
+    outcomes:
+    - outcomeID: out_evt02_yes_success
+      isSuccess: 1
+      outcomeText:
+        m_TableReference:
+          m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
+        m_TableEntryReference:
+          m_KeyId: 40945449895202816
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      rewards:
+      - itemData: {fileID: 11400000, guid: 09dff62b327cc344c867c6291129f9d7, type: 2}
+        quantity: 1
+      - itemData: {fileID: 11400000, guid: 2097e84559a484249949f02092ea0e4d, type: 2}
+        quantity: 1
+      penalties: []
+      weight: 65
+      statusEffects:
+      - stat: 1
+        target: 0
+        specificCharacter: 0
+        targetCount: 0
+        changeValue: 3
+      - stat: 3
+        target: 0
+        specificCharacter: 0
+        targetCount: 0
+        changeValue: 1
+    - outcomeID: out_evt02_yes_fail
+      isSuccess: 0
+      outcomeText:
+        m_TableReference:
+          m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
+        m_TableEntryReference:
+          m_KeyId: 40966847309025280
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      rewards:
+      - itemData: {fileID: 11400000, guid: 09dff62b327cc344c867c6291129f9d7, type: 2}
+        quantity: 2
+      - itemData: {fileID: 11400000, guid: 2097e84559a484249949f02092ea0e4d, type: 2}
+        quantity: 1
+      penalties: []
+      weight: 35
+      statusEffects:
+      - stat: 0
+        target: 1
+        specificCharacter: 0
+        targetCount: 0
+        changeValue: -2
+      - stat: 3
+        target: 0
+        specificCharacter: 0
+        targetCount: 0
+        changeValue: -1
+  - config: {fileID: 11400000, guid: d3fe8218963b81d40a3592d31e93c699, type: 2}
+    outcomes:
+    - outcomeID: out_evt02_no_nothing
+      isSuccess: 1
+      outcomeText:
+        m_TableReference:
+          m_TableCollectionName: GUID:cc57f5139c87a1343bea2fdf258dd1bf
+        m_TableEntryReference:
+          m_KeyId: 40967959999156224
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      rewards: []
+      penalties: []
+      weight: 100
+      statusEffects: []
   references:
     version: 2
     RefIds: []

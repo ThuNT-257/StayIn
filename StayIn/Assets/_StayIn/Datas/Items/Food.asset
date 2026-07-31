@@ -19,5 +19,7 @@ MonoBehaviour:
   description: Eat it
   isStackable: 1
   maxStack: 99
+  hasDurability: 0
+  maxDurability: 0
   restoreValue: 5
   sanityRestoreValue: 0

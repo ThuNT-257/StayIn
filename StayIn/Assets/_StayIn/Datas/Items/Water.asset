@@ -15,8 +15,11 @@ MonoBehaviour:
   itemID: item_02
   itemName: Mineral Water
   itemType: 1
-  itemIcon: {fileID: -815763605235552116, guid: 52f5eea5e038b8a41ae355c4c26f1a63, type: 3}
+  itemIcon: {fileID: 21300000, guid: 70bb87f2a484aa8468a48de571f1767d, type: 3}
   description: Drink it
   isStackable: 1
   maxStack: 99
+  hasDurability: 0
+  maxDurability: 0
   restoreValue: 5
+  sanityRestoreValue: 0

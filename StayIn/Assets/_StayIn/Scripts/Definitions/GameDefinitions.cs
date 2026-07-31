@@ -246,8 +246,10 @@ namespace Assets._StayIn.Scripts.Definitions
         public string stringValue;  
 
         [Header("Target References")]
-        public CharacterRequirement targetCharacter; // Chỉ định nhân vật cụ thể cần check status
+        public CharacterRequirement targetCharacter;
+        public float weightBonus = 0f;
 
         public bool negate = false;
+
     }
 }

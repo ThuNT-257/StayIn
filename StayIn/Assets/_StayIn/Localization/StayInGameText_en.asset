@@ -888,6 +888,27 @@ MonoBehaviour:
       to be true... or just lucky? Should we risk it?"
     m_Metadata:
       m_Items: []
+  - m_Id: 40945449895202816
+    m_Localized: "We crept down quietly. The lobby was empty. We grabbed the clean
+      clothes and supplies, and got back up before anything could happen. The whole
+      place was eerily quiet \u2014 almost too quiet. But hey, free stuff! We're
+      basically apocalypse rich now."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40966847309025280
+    m_Localized: "We made it down, but the lobby wasn't as empty as we thought. We
+      reached for the supplies and knocked over a metal chair \u2014 CLANG. The sound
+      echoed through the open lobby. Something stirred from the hallway nearby. Something
+      that was NOT a laundry worker. We ran back up with just a handful of clean
+      socks and a single bottle of water \u2014 better than nothing."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40967959999156224
+    m_Localized: "We decided to stay on the 5th floor. Clean clothes are nice, but
+      staying alive is nicer. We'll figure out how to wash our stuff later \u2014
+      maybe with bottled water? Ugh. This is the worst part of the apocalypse."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

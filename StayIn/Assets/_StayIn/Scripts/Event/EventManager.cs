@@ -67,6 +67,14 @@ public class EventManager : MonoBehaviour
         Debug.Log($"[EventManager] Initialized {currentRunEvents.Count} events for this runtime.");
     }
 
+    /// <summary>
+    /// Dynamically adjusts event weights based on current resource levels.
+    /// Non-Special events start at weight 1. Weight bonuses are added for:
+    /// - Water events when water = 0
+    /// - Food events when food = 0  
+    /// - Health events when health = 0
+    /// - Raid events after day 10 when all survival stats are full (>1)
+    /// </summary>
     public void UpdateDynamicWeights() {
         if (currentRunEvents == null || currentRunEvents.Count == 0) return;
         int currentFood = ResourceManager.Instance.GetItemQuantity("item_01");
