@@ -5285,6 +5285,8 @@ GameObject:
   - component: {fileID: 2121292264}
   - component: {fileID: 2121292263}
   - component: {fileID: 2121292262}
+  - component: {fileID: 2121292266}
+  - component: {fileID: 2121292265}
   m_Layer: 5
   m_Name: ResourceButton
   m_TagString: Untagged
@@ -5342,8 +5344,8 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 272783c7f381bb7478d091de540b7931, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 272783c7f381bb7478d091de540b7931, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 5eb2883bf164dfc44b68a8bd3c112c0a, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 5eb2883bf164dfc44b68a8bd3c112c0a, type: 3}
     m_DisabledSprite: {fileID: 21300000, guid: 676971497d2e0414c9f8a2a0f4ec8d15, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -5406,6 +5408,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121292260}
   m_CullTransparentMesh: 1
+--- !u!114 &2121292265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121292260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d813ffc8273c04697c8c52dc089195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonImage: {fileID: 2121292263}
+  resourcePanel: {fileID: 1717536459}
+  idleSprite: {fileID: 21300000, guid: 676971497d2e0414c9f8a2a0f4ec8d15, type: 3}
+  openSprite: {fileID: 21300000, guid: 5eb2883bf164dfc44b68a8bd3c112c0a, type: 3}
+--- !u!114 &2121292266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121292260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0f8db74349d5f4797fb6cfc0848266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.1
+  scaleDownAmount: 0.75
+  scaleUpAmount: 1.2
 --- !u!1001 &3045530672077300040
 PrefabInstance:
   m_ObjectHideFlags: 0

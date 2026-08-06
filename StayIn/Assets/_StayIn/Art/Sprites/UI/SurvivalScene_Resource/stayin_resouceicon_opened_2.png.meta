@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c67601dc6fc47384495e36d24be91eb1
+guid: 5eb2883bf164dfc44b68a8bd3c112c0a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6744556384568337790
-    second: stayin_character_0_sick_0
+      213: -2622220580705393363
+    second: backpack_opened_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stayin_character_0_sick_0
+      name: backpack_opened_2_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 19
-        width: 220
-        height: 168
+        x: 56
+        y: 34
+        width: 196
+        height: 248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e75e9cd2c4a799d50800000000000000
-      internalID: 6744556384568337790
+      spriteID: d25265466400c9bd0800000000000000
+      internalID: -2622220580705393363
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      stayin_character_0_sick_0: 6744556384568337790
+      backpack_opened_2_0: -2622220580705393363
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
