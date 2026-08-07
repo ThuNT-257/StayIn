@@ -206,37 +206,6 @@ namespace Assets._StayIn.Scripts.Definitions
     [Serializable]
     public class EventTriggerCondition
     {
-        public enum ConditionType
-        {
-            HungerLessThan,
-            HungerGreaterThan,
-            HealthLessThan,
-            HealthGreaterThan,
-            SanityLessThan,
-            SanityGreaterThan,
-            ThirstLessThan,
-            ThirstGreaterThan,
-
-            HasFood,
-            HasWater,
-            HasMedicine,
-            HasNoFood,
-            HasNoWater,
-            HasNoMedicine,
-
-            CharacterHasExpeditionToday,
-            CharacterHasNotExpeditionToday,
-            CharacterIsAlive,
-            CharacterIsDead,
-
-            EventHappenedBefore,
-            EventNotHappenedBefore,
-            DaysSinceLastEvent,
-
-            DayIsEven,
-            DayIsOdd,
-            RandomCheck,
-        }
 
         public ConditionType type;
 
@@ -251,5 +220,37 @@ namespace Assets._StayIn.Scripts.Definitions
 
         public bool negate = false;
 
+    }
+
+    public enum ConditionType
+    {
+        HungerLessThan,
+        HungerGreaterThan,
+        HealthLessThan,
+        HealthGreaterThan,
+        SanityLessThan,
+        SanityGreaterThan,
+        ThirstLessThan,
+        ThirstGreaterThan,
+
+        HasFood,
+        HasWater,
+        HasMedicine,
+        HasNoFood,
+        HasNoWater,
+        HasNoMedicine,
+
+        CharacterHasExpeditionToday,
+        CharacterHasNotExpeditionToday,
+        CharacterIsAlive,
+        CharacterIsDead,
+
+        EventHappenedBefore,
+        EventNotHappenedBefore,
+        DaysSinceLastEvent,
+
+        DayIsEven,
+        DayIsOdd,
+        RandomCheck,
     }
 }

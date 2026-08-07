@@ -138,4 +138,32 @@ public class CharacterManager : MonoBehaviour {
             Debug.Log($"Character: {character.Name}, health: {character.Health}, hunger: {character.Hunger}, thirsty: {character.Thirsty}, sanity: {character.Sanity}");
         }
     }
+
+    public List<CharacterData> GetAliveCharacterList()
+    {
+        List<CharacterData> res = new List<CharacterData>();
+        foreach(CharacterData character in allCharacters)
+        {
+            if (!character.isDead)
+            {
+                res.Add(character);
+            }
+        }
+
+        return res;
+    }
+
+    public List<CharacterData> GetInRoomCharacterList()
+    {
+        List<CharacterData> res = GetAliveCharacterList();
+        foreach(CharacterData character in res)
+        {
+            if (character.isExploring)
+            {
+                res.Remove(character);
+            }
+        }
+
+        return res;
+    }
 }

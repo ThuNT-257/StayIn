@@ -1,4 +1,5 @@
 ﻿using Assets._StayIn.Scripts.Definitions;
+using Assets._StayIn.Scripts.Save;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -105,6 +106,7 @@ public class EventManager : MonoBehaviour
     }
 
     public EventData GetEventForToday() {
+        List<EventData> validEvents = GetCurrentValidEvents();
         UpdateDynamicWeights();
 
         return GetWeightedRandomEvent(currentRunEvents);
@@ -281,5 +283,87 @@ public class EventManager : MonoBehaviour
         effect.stat == CharacterStatType.Hunger ? effect.changeValue : 0,
         effect.stat == CharacterStatType.Thirst ? effect.changeValue : 0,
         effect.stat == CharacterStatType.Sanity ? effect.changeValue : 0);
+    }
+
+    private List<EventData> GetCurrentValidEvents()
+    {
+        if(currentRunEvents == null || currentRunEvents.Count == 0)
+        {
+            return null;
+        }
+
+        List<EventData> res = new List<EventData>();
+
+        foreach(EventData e in currentRunEvents)
+        {
+            if(IsValidEvent(e))
+            {
+                res.Add(e);
+            }
+        }
+        return res;
+    }
+
+    private bool IsValidEvent(EventData e)
+    {
+        //check minimum day
+        int day = DayManager.Instance.CurrentDay;
+        if(day < e.MinimumDay || day > e.MaximumDay)
+        {
+            return false;
+        }
+
+        //check cool down
+        if(e.CooldownDays > 0)
+        {
+            return false;
+        }
+
+        //check multiple used events
+        Dictionary<int, string> usedEvents = SaveManager.Instance.UsedEvent;
+
+        if(usedEvents.ContainsValue(e.EventID) && !e.CanTriggerMultipleTimes)
+        {
+            return false;
+        }
+
+        if(e.TriggerConditions.Count > 0)
+        {
+            //check trigger condition
+            foreach (EventTriggerCondition condition in e.TriggerConditions)
+            {
+                switch (condition.type)
+                {
+                    case ConditionType.HungerLessThan:
+                        CheckCondition(ConditionType.HungerLessThan, condition.intValue);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private bool CheckCondition(ConditionType type, int intValue = 0, float floatValue = 0, string stringValue = null)
+    {
+        switch (type)
+        {
+            case ConditionType.HungerLessThan:
+                List<CharacterData> inRoomCharacters = CharacterManager.Instance.GetInRoomCharacterList();
+                foreach(CharacterData character in inRoomCharacters)
+                {
+                    if(character.Hunger < intValue)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+
+            default:
+                break;
+        }
+        return false;
     }
 }

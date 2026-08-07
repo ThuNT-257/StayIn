@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._StayIn.Scripts.Save {
     public class SaveManager : MonoBehaviour{
@@ -14,5 +15,9 @@ namespace Assets._StayIn.Scripts.Save {
                 return instance;
             }
         }
+
+        private Dictionary<int, string> usedEvents = new Dictionary<int, string>();
+
+        public Dictionary<int, string> UsedEvent => usedEvents;
     }
 }
