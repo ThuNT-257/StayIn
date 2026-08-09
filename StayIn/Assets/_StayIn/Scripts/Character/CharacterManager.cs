@@ -153,17 +153,13 @@ public class CharacterManager : MonoBehaviour {
         return res;
     }
 
-    public List<CharacterData> GetInRoomCharacterList()
-    {
-        List<CharacterData> res = GetAliveCharacterList();
-        foreach(CharacterData character in res)
-        {
-            if (character.isExploring)
-            {
-                res.Remove(character);
+    public List<CharacterData> GetInRoomCharacterList() {
+        List<CharacterData> res = new List<CharacterData>();
+        foreach (CharacterData character in allCharacters) {
+            if (!character.isDead && !character.isExploring) {
+                res.Add(character);
             }
         }
-
         return res;
     }
 }

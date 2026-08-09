@@ -109,7 +109,7 @@ public class EventManager : MonoBehaviour
         List<EventData> validEvents = GetCurrentValidEvents();
         UpdateDynamicWeights();
 
-        return GetWeightedRandomEvent(currentRunEvents);
+        return GetWeightedRandomEvent(validEvents);
     }
 
     public EventData GetWeightedRandomEvent(List<EventData> validEvents)
@@ -221,7 +221,7 @@ public class EventManager : MonoBehaviour
                 return;
             }
 
-            List<CharacterData> aliveCharacters = allCharacters.Where(x => x != null && !x.isDead).ToList();
+            List<CharacterData> aliveCharacters = CharacterManager.Instance.GetInRoomCharacterList();
 
 
             foreach (StatusEffect effect in outcome.statusEffects)
@@ -266,11 +266,11 @@ public class EventManager : MonoBehaviour
                 {
 
                     CharacterData targetChar = aliveCharacters.FirstOrDefault(x => (x.RequirementType & effect.specificCharacter) != CharacterRequirement.None);
-                    Debug.Log("Apply effect target Specific " + targetChar.characterName);
 
                     if (targetChar != null)
                     {
                         ApplyStatChange(targetChar, effect);
+                        Debug.Log("Apply effect target Specific " + targetChar.characterName);
                     }
                 }
             }
@@ -313,18 +313,22 @@ public class EventManager : MonoBehaviour
             return false;
         }
 
-        //check cool down
-        if(e.CooldownDays > 0)
-        {
-            return false;
-        }
-
-        //check multiple used events
+        //check multiple used events and cool down
         Dictionary<int, string> usedEvents = SaveManager.Instance.UsedEvent;
 
-        if(usedEvents.ContainsValue(e.EventID) && !e.CanTriggerMultipleTimes)
+        if (usedEvents.ContainsValue(e.EventID))
         {
-            return false;
+            if (!e.CanTriggerMultipleTimes) {
+                return false;
+            }
+
+            if(e.CooldownDays > 0) {
+                int lastUsedDay = usedEvents.Where(x => x.Value == e.EventID).Max(x => x.Key);
+
+                if(DayManager.Instance.CurrentDay < lastUsedDay) {
+                    return false;
+                }
+            }
         }
 
         if(e.TriggerConditions.Count > 0)
@@ -332,13 +336,8 @@ public class EventManager : MonoBehaviour
             //check trigger condition
             foreach (EventTriggerCondition condition in e.TriggerConditions)
             {
-                switch (condition.type)
-                {
-                    case ConditionType.HungerLessThan:
-                        CheckCondition(ConditionType.HungerLessThan, condition.intValue);
-                        break;
-                    default:
-                        break;
+                if(!CheckCondition(condition.type, condition.intValue, condition.floatValue, condition.stringValue)) {
+                    return false;
                 }
             }
         }
