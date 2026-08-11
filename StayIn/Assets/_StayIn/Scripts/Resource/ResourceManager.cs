@@ -139,4 +139,10 @@ public class ResourceManager : MonoBehaviour {
         ResourceItem slot = resource.Find(x => x.itemData.ItemID == itemID);
         return slot != null ? slot.quantity : 0;
     }
+
+    public int GetItemQuantityByItemType(ItemType type)
+    {
+        ResourceItem slot = resource.Find(x => x.itemData.ItemType == type);
+        return slot != null ? slot.quantity : 0;
+    }
 }

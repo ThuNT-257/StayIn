@@ -34,8 +34,8 @@ public class EventData : ScriptableObject {
     public List<LocalizedString> Descriptions => descriptions;
     public List<EventChoice> EventChoices => eventChoices;
 
-    public void SetBaseWeight(int weight) => baseWeight = weight;
-    public void AddBaseWeight(int addWeight) => baseWeight += addWeight;
+    public void SetBaseWeight(float weight) => baseWeight = weight;
+    public void AddBaseWeight(float addWeight) => baseWeight += addWeight;
 
     public int MinimumDay => minimumDay;
     public int MaximumDay => maximumDay;

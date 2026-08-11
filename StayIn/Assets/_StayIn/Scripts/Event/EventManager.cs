@@ -68,38 +68,37 @@ public class EventManager : MonoBehaviour
         Debug.Log($"[EventManager] Initialized {currentRunEvents.Count} events for this runtime.");
     }
 
-    /// <summary>
-    /// Dynamically adjusts event weights based on current resource levels.
-    /// Non-Special events start at weight 1. Weight bonuses are added for:
-    /// - Water events when water = 0
-    /// - Food events when food = 0  
-    /// - Health events when health = 0
-    /// - Raid events after day 10 when all survival stats are full (>1)
-    /// </summary>
     public void UpdateDynamicWeights() {
         if (currentRunEvents == null || currentRunEvents.Count == 0) return;
-        int currentFood = ResourceManager.Instance.GetItemQuantity("item_01");
-        int currentWater = ResourceManager.Instance.GetItemQuantity("item_02");
-        int currentHealth = ResourceManager.Instance.GetItemQuantity("item_03");
-        bool isSurvivalFull = (currentWater > 1 && currentFood > 1 && currentHealth > 1);
+        int totalFood = ResourceManager.Instance.GetItemQuantityByItemType(ItemType.Food);
+        int totalWater = ResourceManager.Instance.GetItemQuantityByItemType(ItemType.Water);
+        int totalMedicine = ResourceManager.Instance.GetItemQuantityByItemType(ItemType.Medicine);
+        bool isSurvivalFull = (totalWater > 0 && totalFood > 0 && totalMedicine > 0);
 
         foreach(var evt in currentRunEvents) {
-            if (evt.Category != EventCategory.Special) {
-                evt.SetBaseWeight(1);
+            if (evt.Category != EventCategory.Special)
+            {
+                evt.SetBaseWeight(evt.BaseWeight);
             }
 
             if (evt.InteractionType == EventInteractionType.YesNo) {
-                if (evt.Category == EventCategory.Water && currentWater == 0) {
-                    evt.AddBaseWeight(1);
-                }
-                if (evt.Category == EventCategory.Food && currentFood == 0) {
-                    evt.AddBaseWeight(1);
-                }
-                if (evt.Category == EventCategory.Health && currentHealth == 0) {
-                    evt.AddBaseWeight(1);
-                }
-                if (isSurvivalFull && evt.Category == EventCategory.Raid && DayManager.Instance.CurrentDay > 10) {
-                    evt.AddBaseWeight(1);
+                switch (evt.Category)
+                {
+                    case EventCategory.Water:
+                        if (totalWater == 0) evt.AddBaseWeight(1);
+                        break;
+
+                    case EventCategory.Food:
+                        if (totalFood == 0) evt.AddBaseWeight(1);
+                        break;
+
+                    case EventCategory.Health:
+                        if (totalMedicine == 0) evt.AddBaseWeight(1);
+                        break;
+
+                    case EventCategory.Raid:
+                        if (isSurvivalFull && DayManager.Instance.CurrentDay > 10) evt.AddBaseWeight(1);
+                        break;
                 }
             }
         }
@@ -325,13 +324,13 @@ public class EventManager : MonoBehaviour
             if(e.CooldownDays > 0) {
                 int lastUsedDay = usedEvents.Where(x => x.Value == e.EventID).Max(x => x.Key);
 
-                if(DayManager.Instance.CurrentDay < lastUsedDay) {
+                if(DayManager.Instance.CurrentDay - lastUsedDay < e.CooldownDays) {
                     return false;
                 }
             }
         }
 
-        if(e.TriggerConditions.Count > 0)
+        if(e.TriggerConditions != null && e.TriggerConditions.Count > 0)
         {
             //check trigger condition
             foreach (EventTriggerCondition condition in e.TriggerConditions)
