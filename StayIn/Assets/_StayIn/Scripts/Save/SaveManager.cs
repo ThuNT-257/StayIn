@@ -16,6 +16,14 @@ namespace Assets._StayIn.Scripts.Save {
             }
         }
 
+        private void Awake() {
+            if (instance != null && instance != this) {
+                Destroy(gameObject);
+                return;
+            }
+            instance = this;
+        }
+
         private Dictionary<int, string> usedEvents = new Dictionary<int, string>();
 
         public Dictionary<int, string> UsedEvent => usedEvents;

@@ -19,9 +19,14 @@ public class EventManager : MonoBehaviour
             return instance;
         }
     }
-
+    
+    //All events
     [SerializeField] private List<EventData> allEvents;
+
+    //Valid events filtered by characters
     private List<EventData> currentRunEvents = new List<EventData>();
+
+    //Special events list for later===================================================================
     private List<EventData> specialEvents = new List<EventData>();
 
     private void Awake() {
@@ -32,15 +37,18 @@ public class EventManager : MonoBehaviour
         instance = this;
     }
 
+    /// <summary>
+    /// Initializes event data for the current run by filtering valid events.
+    /// </summary>
     public void Init() {
-        GenerateFilteredEvents();
+        GenerateCurrentRunEvents();
     }
 
     /// <summary>
     /// Filters all YesNo events based on alive character requirements. 
     /// Clones valid events; Special events are separated, normal events have base weight set to 0.
     /// </summary>
-    public void GenerateFilteredEvents() {
+    public void GenerateCurrentRunEvents() {
         currentRunEvents.Clear();
         specialEvents.Clear();
 
@@ -78,7 +86,7 @@ public class EventManager : MonoBehaviour
         foreach(var evt in currentRunEvents) {
             if (evt.Category != EventCategory.Special)
             {
-                evt.SetBaseWeight(evt.BaseWeight);
+                evt.SetBaseWeight(1);
             }
 
             if (evt.InteractionType == EventInteractionType.YesNo) {
@@ -105,8 +113,8 @@ public class EventManager : MonoBehaviour
     }
 
     public EventData GetEventForToday() {
-        List<EventData> validEvents = GetCurrentValidEvents();
         UpdateDynamicWeights();
+        List<EventData> validEvents = GetCurrentValidEvents();
 
         return GetWeightedRandomEvent(validEvents);
     }
